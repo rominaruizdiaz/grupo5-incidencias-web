@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { LoginPage } from '@/pages/LoginPage'
+import { PanelPage } from '@/pages/PanelPage'
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
 
@@ -21,7 +22,7 @@ function App() {
         path="/panel"
         element={
           <PrivateRoute>
-            <h1>Hola</h1>
+            <PanelPage />
           </PrivateRoute>
         }
       />
