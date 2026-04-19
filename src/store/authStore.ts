@@ -1,5 +1,6 @@
 import { UserRole, type Usuario } from '@/types'
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 interface AuthStore {
   usuario: Usuario | null
@@ -8,7 +9,6 @@ interface AuthStore {
 
   // funciones que cambian el estado
   setUsuario: (usuario: Usuario | null) => void
-  setLoading: (loading: boolean) => void
   logout: () => void
 
   // lógica de permisos
@@ -18,47 +18,38 @@ interface AuthStore {
   isTecnico: () => boolean
 }
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
-  usuario: null,
-  isAuthenticated: false,
-  isLoading: true,
-
-  setUsuario: usuario => {
-    set({
-      usuario,
-      isAuthenticated: !!usuario,
-    })
-  },
-
-  setLoading: loading => {
-    set({ isLoading: loading })
-  },
-
-  logout: () => {
-    localStorage.removeItem('usuarioId')
-    set({
+export const useAuthStore = create<AuthStore>()(
+  persist(
+    (set, get) => ({
       usuario: null,
       isAuthenticated: false,
-    })
-  },
+      isLoading: false,
 
-  hasRole: role => {
-    const { usuario } = get()
-    return usuario?.rol === role
-  },
+      setUsuario: usuario => {
+        set({
+          usuario,
+          isAuthenticated: !!usuario,
+        })
+      },
 
-  isAdmin: () => {
-    const { usuario } = get()
-    return usuario?.rol === UserRole.ADMIN
-  },
+      logout: () => {
+        set({
+          usuario: null,
+          isAuthenticated: false,
+        })
+      },
 
-  isProfesor: () => {
-    const { usuario } = get()
-    return usuario?.rol === UserRole.PROFESOR
-  },
-
-  isTecnico: () => {
-    const { usuario } = get()
-    return usuario?.rol === UserRole.TECNICO
-  },
-}))
+      hasRole: role => get().usuario?.rol === role,
+      isAdmin: () => get().usuario?.rol === UserRole.ADMIN,
+      isProfesor: () => get().usuario?.rol === UserRole.PROFESOR,
+      isTecnico: () => get().usuario?.rol === UserRole.TECNICO,
+    }),
+    {
+      name: 'auth-storage',
+      partialize: state => ({
+        usuario: state.usuario,
+        isAuthenticated: state.isAuthenticated,
+      }),
+    }
+  )
+)
