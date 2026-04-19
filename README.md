@@ -5,7 +5,7 @@ Frontend del sistema de gestión de incidencias desarrollado con React, Vite y T
 ## Instalación
 
 ```bash
-git clone <URL_DEL_REPO>
+git clone https://github.com/rominaruizdiaz/grupo5-incidencias-web.git
 cd grupo5-incidencias-web
 ```
 
@@ -17,14 +17,31 @@ npm install
 
 ## Ejecutar la aplicación
 
+OPCIÓN 1:
+
 ```bash
-npm run dev
+npm run dev # Terminal 1 (frontend)
+npm run server # Terminal 2 (backend fake)
+```
+
+OPCIÓN 2:
+
+```bash
+npm run dev-all # Todo junto
 ```
 
 La app estará disponible en:
 
+Frontend:
+
 ```
 http://localhost:5173
+```
+
+Backend:
+
+```
+http://localhost:3001
 ```
 
 ---
@@ -52,13 +69,13 @@ Asegúrate de tener en src/index.css:
 Ejecutar API simulada:
 
 ```bash
-npx json-server --watch db.json --port 3000
+npm run server
 ```
 
 API disponible en:
 
 ```
-http://localhost:3000
+http://localhost:3001
 ```
 
 ---
@@ -79,7 +96,10 @@ http://localhost:3000
 ## Scripts disponibles
 
 ```bash
-npm run dev       # desarrollo
+npm run dev       # frontend (Vite)
+npm run server    # backend fake (json-server)
+npm run dev-all   # frontend + backend simultáneo
 npm run build     # build producción
 npm run preview   # preview del build
+npm run lint      # análisis de código
 ```

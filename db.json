@@ -1,0 +1,190 @@
+{
+  "usuarios": [
+    {
+      "idUsuario": 1,
+      "nombre": "Admin",
+      "email": "admin@example.com",
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "fotoPerfil": null,
+      "modoOscuro": false,
+      "rol": 1,
+      "fechaRegistro": "2024-01-01"
+    },
+    {
+      "idUsuario": 2,
+      "nombre": "Juan Profesor",
+      "email": "profesor@example.com",
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "fotoPerfil": null,
+      "modoOscuro": false,
+      "rol": 2,
+      "fechaRegistro": "2024-01-02"
+    },
+    {
+      "idUsuario": 3,
+      "nombre": "María Técnico",
+      "email": "tecnico@example.com",
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "fotoPerfil": null,
+      "modoOscuro": false,
+      "rol": 3,
+      "fechaRegistro": "2024-01-03"
+    }
+  ],
+  "departamentos": [
+    {
+      "idDepartamento": 1,
+      "nombre": "Informática",
+      "fechaCreacion": "2024-01-01"
+    },
+    {
+      "idDepartamento": 2,
+      "nombre": "Laboratorio",
+      "fechaCreacion": "2024-01-01"
+    },
+    {
+      "idDepartamento": 3,
+      "nombre": "Aula 101",
+      "fechaCreacion": "2024-01-01"
+    },
+    {
+      "idDepartamento": 4,
+      "nombre": "Biblioteca",
+      "fechaCreacion": "2024-01-01"
+    },
+    {
+      "idDepartamento": 5,
+      "nombre": "Secretaría",
+      "fechaCreacion": "2024-01-01"
+    }
+  ],
+  "etiquetas": [
+    { "idEtiqueta": 1, "nombre": "Hardware" },
+    { "idEtiqueta": 2, "nombre": "Software" },
+    { "idEtiqueta": 3, "nombre": "Mobiliario" },
+    { "idEtiqueta": 4, "nombre": "Infraestructura" },
+    { "idEtiqueta": 5, "nombre": "Limpieza" },
+    { "idEtiqueta": 6, "nombre": "Electricidad" },
+    { "idEtiqueta": 7, "nombre": "Fontanería" },
+    { "idEtiqueta": 8, "nombre": "Audiovisuales" },
+    { "idEtiqueta": 9, "nombre": "Climatización" },
+    { "idEtiqueta": 10, "nombre": "Jardinería" },
+    { "idEtiqueta": 11, "nombre": "Otros" }
+  ],
+  "incidencias": [
+    {
+      "idIncidencia": 1,
+      "titulo": "Pantalla rota en aula 101",
+      "descripcion": "La pantalla del proyector está completamente rota",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 101",
+      "estado": "Activo",
+      "urgencia": "Alta",
+      "fecha": "2024-01-15",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null
+    },
+    {
+      "idIncidencia": 2,
+      "titulo": "Falta tinta en impresora",
+      "descripcion": "La impresora de secretaría no tiene tinta",
+      "categoria": "Hardware",
+      "ubicacion": "Secretaría",
+      "estado": "En curso",
+      "urgencia": "Media",
+      "fecha": "2024-01-14",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": 3,
+      "fechaResolucion": null
+    },
+    {
+      "idIncidencia": 3,
+      "titulo": "Aire acondicionado no funciona",
+      "descripcion": "El aire acondicionado del laboratorio está roto",
+      "categoria": "Climatización",
+      "ubicacion": "Laboratorio",
+      "estado": "Resuelto",
+      "urgencia": "Alta",
+      "fecha": "2024-01-10",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": 3,
+      "fechaResolucion": "2024-01-12"
+    },
+    {
+      "idIncidencia": 4,
+      "titulo": "Falta limpieza en pasillo",
+      "descripcion": "El pasillo necesita limpieza urgente",
+      "categoria": "Limpieza",
+      "ubicacion": "Biblioteca",
+      "estado": "Activo",
+      "urgencia": "Baja",
+      "fecha": "2024-01-16",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null
+    }
+  ],
+  "usuarioDepartamento": [
+    { "idUsuario": 1, "idDepartamento": 1 },
+    { "idUsuario": 1, "idDepartamento": 2 },
+    { "idUsuario": 1, "idDepartamento": 3 },
+    { "idUsuario": 1, "idDepartamento": 4 },
+    { "idUsuario": 1, "idDepartamento": 5 },
+    { "idUsuario": 2, "idDepartamento": 1 },
+    { "idUsuario": 2, "idDepartamento": 2 },
+    { "idUsuario": 2, "idDepartamento": 3 },
+    { "idUsuario": 3, "idDepartamento": 1 },
+    { "idUsuario": 3, "idDepartamento": 2 }
+  ],
+  "usuarioEtiqueta": [
+    { "idUsuario": 3, "idEtiqueta": 1 },
+    { "idUsuario": 3, "idEtiqueta": 2 },
+    { "idUsuario": 3, "idEtiqueta": 6 },
+    { "idUsuario": 3, "idEtiqueta": 7 },
+    { "idUsuario": 3, "idEtiqueta": 9 }
+  ],
+  "mensajeIncidencia": [
+    {
+      "idMensaje": 1,
+      "idIncidencia": 2,
+      "idUsuario": 3,
+      "mensaje": "Cambió el estado a 'En curso'",
+      "fecha": "2024-01-14T10:30:00"
+    },
+    {
+      "idMensaje": 2,
+      "idIncidencia": 2,
+      "idUsuario": 3,
+      "mensaje": "Estoy reparando la impresora, tendré lista en 1 hora",
+      "fecha": "2024-01-14T11:00:00"
+    },
+    {
+      "idMensaje": 3,
+      "idIncidencia": 3,
+      "idUsuario": 3,
+      "mensaje": "Cambió el estado a 'Resuelto'",
+      "fecha": "2024-01-12T15:30:00"
+    }
+  ],
+  "notificaciones": [
+    {
+      "idNotificacion": 1,
+      "idUsuarioDestino": 3,
+      "titulo": "Nueva incidencia",
+      "mensaje": "Pantalla rota en aula 101 - ALTA prioridad",
+      "leida": false,
+      "fechaCreacion": "2024-01-15T09:00:00",
+      "idIncidenciaVinculada": 1
+    },
+    {
+      "idNotificacion": 2,
+      "idUsuarioDestino": 2,
+      "titulo": "Estado actualizado",
+      "mensaje": "Tu incidencia 'Falta tinta' ha pasado a 'En curso'",
+      "leida": false,
+      "fechaCreacion": "2024-01-14T10:35:00",
+      "idIncidenciaVinculada": 2
+    }
+  ]
+}
