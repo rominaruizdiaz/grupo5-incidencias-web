@@ -3,6 +3,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { PanelPage } from '@/pages/PanelPage'
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
+import { CreateIncidenciaPage } from './pages/CreateIncidenciasPage'
 
 function App() {
   return (
@@ -23,6 +24,15 @@ function App() {
         element={
           <PrivateRoute>
             <PanelPage />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/createIncidencia"
+        element={
+          <PrivateRoute>
+            <CreateIncidenciaPage />
           </PrivateRoute>
         }
       />
