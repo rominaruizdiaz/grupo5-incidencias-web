@@ -169,6 +169,32 @@
       "idUsuarioAsignado": null,
       "fechaResolucion": null,
       "id": 5
+    },
+    {
+      "titulo": "sdsad",
+      "descripcion": "sadasd",
+      "categoria": "Software",
+      "ubicacion": "Laboratorio",
+      "urgencia": "Alta",
+      "idUsuarioReporta": 1,
+      "estado": "Activo",
+      "fecha": "2026-04-19T15:30:28.614Z",
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null,
+      "id": 6
+    },
+    {
+      "titulo": "sadasd",
+      "descripcion": "sadasdasdasdasd",
+      "categoria": "Red",
+      "ubicacion": "Aula 101",
+      "urgencia": "Media",
+      "idUsuarioReporta": 1,
+      "estado": "Activo",
+      "fecha": "2026-04-19T15:30:46.460Z",
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null,
+      "id": 7
     }
   ],
   "usuarioDepartamento": [
