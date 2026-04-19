@@ -36,7 +36,7 @@ export interface Departamento {
 }
 
 export interface Incidencia {
-  idIncidencia: number
+  id: number
   titulo: string
   descripcion: string
   categoria: string
@@ -67,7 +67,7 @@ export interface UsuarioEtiqueta {
 
 export interface MensajeIncidencia {
   idMensaje: number
-  idIncidencia: number
+  id: number
   idUsuario: number
   mensaje: string
   fecha: string
@@ -80,7 +80,7 @@ export interface Notificacion {
   mensaje: string
   leida: boolean
   fechaCreacion: string
-  idIncidenciaVinculada?: number | null
+  idVinculada?: number | null
 }
 
 // DTOs para requests
