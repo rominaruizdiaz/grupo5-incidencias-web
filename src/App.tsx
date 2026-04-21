@@ -1,63 +1,47 @@
 import { Routes, Route } from 'react-router-dom'
+
 import { LoginPage } from '@/pages/LoginPage'
+import { RegisterPage } from '@/pages/RegisterPage'
+
 import { PanelPage } from '@/pages/PanelPage'
+import { CreateIncidenciaPage } from '@/pages/CreateIncidenciasPage'
+import { UserProfilePage } from '@/pages/UserProfilePage'
+
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
-import { CreateIncidenciaPage } from './pages/CreateIncidenciasPage'
-import { RegisterPage } from './pages/RegisterPage'
-import { UserProfilePage } from './pages/UserProfilePage'
+
+import { MainLayout } from '@/components/layout/MainLayout'
+import { AuthLayout } from './components/layout/AuthLayout'
 
 function App() {
   return (
     <Routes>
-      {/* LOGIN */}
+      {/* AUTH */}
       <Route
-        path="/login"
         element={
           <PublicRoute>
-            <LoginPage />
+            <AuthLayout />
           </PublicRoute>
         }
-      />
+      >
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
 
+      {/* APP PRIVADA */}
       <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <RegisterPage />
-          </PublicRoute>
-        }
-      />
-
-      {/* RUTAS PROTEGIDAS */}
-      <Route
-        path="/panel"
         element={
           <PrivateRoute>
-            <PanelPage />
+            <MainLayout />
           </PrivateRoute>
         }
-      />
+      >
+        <Route path="/panel" element={<PanelPage />} />
+        <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
+        <Route path="/userProfile" element={<UserProfilePage />} />
+      </Route>
 
-      <Route
-        path="/createIncidencia"
-        element={
-          <PrivateRoute>
-            <CreateIncidenciaPage />
-          </PrivateRoute>
-        }
-      />
-
-      <Route
-        path="/userProfile"
-        element={
-          <PrivateRoute>
-            <UserProfilePage />
-          </PrivateRoute>
-        }
-      />
-
-      {/* NOT FOUND */}
+      {/* 404 */}
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   )
