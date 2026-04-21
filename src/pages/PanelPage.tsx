@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getIncidencias } from '@/services/incidencias'
-import { useAuthStore } from '@/store/authStore'
+import { useAuthStore } from '@/store/auth.store'
 import type { Incidencia } from '@/types'
 
 export const PanelPage = () => {

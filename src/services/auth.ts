@@ -1,11 +1,15 @@
 import api from './api'
+import type { LoginRequest, RegisterRequest, AuthResponse } from '@/types'
 
 // usa axios para realizar el login, logout y registro
-export const loginRequest = async (email: string, password: string) => {
-  const { data } = await api.post('/login', {
-    email,
-    password,
-  })
+// LOGIN
+export const loginRequest = async (data: LoginRequest) => {
+  const { data: response } = await api.post<AuthResponse>('/login', data)
+  return response
+}
 
-  return data
+// REGISTER
+export const registerRequest = async (data: RegisterRequest) => {
+  const { data: response } = await api.post<AuthResponse>('/register', data)
+  return response
 }

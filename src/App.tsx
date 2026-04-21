@@ -4,6 +4,7 @@ import { PanelPage } from '@/pages/PanelPage'
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
 import { CreateIncidenciaPage } from './pages/CreateIncidenciasPage'
+import { RegisterPage } from './pages/RegisterPage'
 
 function App() {
   return (
@@ -14,6 +15,15 @@ function App() {
         element={
           <PublicRoute>
             <LoginPage />
+          </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <RegisterPage />
           </PublicRoute>
         }
       />

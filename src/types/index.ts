@@ -89,11 +89,23 @@ export interface LoginRequest {
   password: string
 }
 
+export interface RegisterRequest {
+  nombre: string
+  email: string
+  password: string
+}
+
+export interface AuthResponse {
+  user: Usuario
+  token: string
+}
+
 export interface CreateIncidenciaRequest {
   titulo: string
   descripcion: string
   categoria: string
   ubicacion: string
+  estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   idUsuarioReporta: number
 }
