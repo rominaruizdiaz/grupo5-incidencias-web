@@ -12,6 +12,7 @@ import { PublicRoute } from '@/components/routes/PublicRoute'
 
 import { MainLayout } from '@/components/layout/MainLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
+import { IncidenciaDetailPage } from './pages/IncidenciaDetailPage'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/panel" element={<PanelPage />} />
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
+        <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />
       </Route>
 
       {/* PAGINA 404 */}

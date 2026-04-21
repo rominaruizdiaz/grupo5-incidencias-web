@@ -204,6 +204,26 @@
       "idUsuarioAsignado": null,
       "fechaResolucion": null,
       "id": 7
+    },
+    {
+      "titulo": "sdsa",
+      "descripcion": "sada",
+      "categoria": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "idUsuarioReporta": 1776789180727,
+      "estado": "Activo",
+      "id": 8
+    },
+    {
+      "titulo": "sadasd",
+      "descripcion": "sadsa",
+      "categoria": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "idUsuarioReporta": 1776789180727,
+      "estado": "Activo",
+      "id": 9
     }
   ],
   "usuarioDepartamento": [
