@@ -29,6 +29,15 @@
       "modoOscuro": false,
       "rol": 3,
       "fechaRegistro": "2024-01-03"
+    },
+    {
+      "idUsuario": 1776789180727,
+      "nombre": "sdsad",
+      "email": "romi@romi.romi",
+      "passwordHash": "fake",
+      "rol": 2,
+      "modoOscuro": false,
+      "fechaRegistro": "2026-04-21T16:33:00.727Z"
     }
   ],
   "departamentos": [

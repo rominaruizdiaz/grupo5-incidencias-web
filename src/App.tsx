@@ -5,6 +5,7 @@ import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
 import { CreateIncidenciaPage } from './pages/CreateIncidenciasPage'
 import { RegisterPage } from './pages/RegisterPage'
+import { UserProfilePage } from './pages/UserProfilePage'
 
 function App() {
   return (
@@ -43,6 +44,15 @@ function App() {
         element={
           <PrivateRoute>
             <CreateIncidenciaPage />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/userProfile"
+        element={
+          <PrivateRoute>
+            <UserProfilePage />
           </PrivateRoute>
         }
       />
