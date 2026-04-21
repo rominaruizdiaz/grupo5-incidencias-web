@@ -1,5 +1,5 @@
 import api from './api'
-import type { Incidencia } from '@/types'
+import type { Incidencia, CreateIncidenciaRequest } from '@/types'
 
 // Obtener todas las incidencias
 export const getIncidencias = async (): Promise<Incidencia[]> => {
@@ -8,7 +8,7 @@ export const getIncidencias = async (): Promise<Incidencia[]> => {
 }
 
 // Crear incidencia
-export const createIncidencia = async (incidencia: Partial<Incidencia>) => {
+export const createIncidencia = async (incidencia: CreateIncidenciaRequest) => {
   const { data } = await api.post('/incidencias', incidencia)
   return data
 }

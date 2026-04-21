@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { createIncidencia } from '@/services/incidencias'
-import { useAuthStore } from '@/store/authStore'
+import { useAuthStore } from '@/store/auth.store'
 
 import {
   IncidenciaEstado,
@@ -27,6 +28,11 @@ export const useCreateIncidencia = () => {
   const create = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (!usuario) {
+      setError('Usuario no autenticado')
+      return
+    }
+
     if (!titulo || !descripcion) {
       setError('Rellena todos los campos')
       return
@@ -42,16 +48,11 @@ export const useCreateIncidencia = () => {
         categoria,
         ubicacion,
         urgencia,
-        idUsuarioReporta: usuario!.idUsuario,
+        idUsuarioReporta: usuario.idUsuario,
+        estado: IncidenciaEstado.ACTIVO,
       }
 
-      await createIncidencia({
-        ...payload,
-        estado: IncidenciaEstado.ACTIVO,
-        fecha: new Date().toISOString(),
-        idUsuarioAsignado: null,
-        fechaResolucion: null,
-      })
+      await createIncidencia(payload)
 
       navigate('/panel')
     } catch {

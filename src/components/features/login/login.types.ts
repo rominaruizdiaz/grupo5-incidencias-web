@@ -4,15 +4,6 @@ export type LoginFormData = {
   password: string
 }
 
-export type LoginResponse = {
-  token: string
-  user: {
-    id: string
-    name: string
-    email: string
-  }
-}
-
 export type LoginError = {
   message: string
   code?: string
