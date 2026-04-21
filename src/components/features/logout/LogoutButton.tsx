@@ -1,4 +1,4 @@
-import { useLogout } from './useLogout'
+import { useLogout } from '../../../hooks/useLogout'
 
 export const LogoutButton = () => {
   const { handleLogout } = useLogout()

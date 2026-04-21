@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import type { LoginFormData } from './login.types'
 import { setUsuario, setLoading } from '@/store/auth.selectors'
 import { loginRequest } from '@/services/auth'
 import { useNavigate } from 'react-router-dom'
+import type { LoginFormData } from '@/components/features/login/login.types'
 
 export const useLogin = () => {
   const navigate = useNavigate()

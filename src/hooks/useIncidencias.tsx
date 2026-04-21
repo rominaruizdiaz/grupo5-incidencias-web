@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { getIncidencias } from '@/services/incidencias'
-import { useAuthStore } from '@/store/authStore'
+import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, IncidenciaUrgencia, type Incidencia } from '@/types'
 
 export type SortType = 'estado' | 'urgencia' | 'fecha'

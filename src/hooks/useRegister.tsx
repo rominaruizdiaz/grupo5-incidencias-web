@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { registerRequest } from '@/services/auth'
 import { useAuthStore } from '@/store/auth.store'
 import { UserRole } from '@/types'
-import type { RegisterFormData } from './register.types'
+import type { RegisterFormData } from '@/components/features/register/register.types'
 
 export const useRegister = () => {
   const navigate = useNavigate()

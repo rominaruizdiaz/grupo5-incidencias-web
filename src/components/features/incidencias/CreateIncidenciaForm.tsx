@@ -1,4 +1,4 @@
-import { useCreateIncidencia } from './useCreateIncidencia'
+import { useCreateIncidencia } from '../../../hooks/useCreateIncidencia'
 import { IncidenciaUrgencia } from '@/types'
 
 export const CreateIncidenciaForm = () => {

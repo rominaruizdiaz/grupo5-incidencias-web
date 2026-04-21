@@ -1,5 +1,5 @@
+import { useRegister } from '@/hooks/useRegister'
 import { useState } from 'react'
-import { useRegister } from './useRegister'
 
 export const RegisterForm = () => {
   const { register, loading, error } = useRegister()

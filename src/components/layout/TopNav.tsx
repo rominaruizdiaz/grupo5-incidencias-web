@@ -8,7 +8,7 @@ export const TopNav = () => {
 
   return (
     <nav className="hidden md:flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-900 shadow">
-      <div className="font-bold text-lg">🛠️ IncidenciasApp</div>
+      <div className="font-bold text-lg"> Incidencias App</div>
 
       <div className="flex gap-6">
         <NavLink to="/panel" className={linkClass}>

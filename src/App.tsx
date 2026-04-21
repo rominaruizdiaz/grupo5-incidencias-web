@@ -11,7 +11,7 @@ import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
 
 import { MainLayout } from '@/components/layout/MainLayout'
-import { AuthLayout } from './components/layout/AuthLayout'
+import { AuthLayout } from '@/components/layout/AuthLayout'
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
-      {/* APP PRIVADA */}
+      {/* APP */}
       <Route
         element={
           <PrivateRoute>
@@ -41,7 +41,7 @@ function App() {
         <Route path="/userProfile" element={<UserProfilePage />} />
       </Route>
 
-      {/* 404 */}
+      {/* PAGINA 404 */}
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   )
