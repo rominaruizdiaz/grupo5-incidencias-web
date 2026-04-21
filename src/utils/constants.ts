@@ -1,25 +1,13 @@
 import { IncidenciaEstado, IncidenciaUrgencia, UserRole } from '@/types'
 
-// constantes centralizadas del proyecto
-
+// roles legibles
 export const ROLES = {
   [UserRole.ADMIN]: 'Administración',
   [UserRole.PROFESOR]: 'Profesorado',
   [UserRole.TECNICO]: 'Técnico/Mantenimiento',
 }
 
-export const ESTADOS_INCIDENCIA = [
-  IncidenciaEstado.ACTIVO,
-  IncidenciaEstado.EN_CURSO,
-  IncidenciaEstado.RESUELTO,
-]
-
-export const URGENCIAS_INCIDENCIA = [
-  IncidenciaUrgencia.BAJA,
-  IncidenciaUrgencia.MEDIA,
-  IncidenciaUrgencia.ALTA,
-]
-
+// categorías
 export const CATEGORIAS_DEFECTO = [
   'Hardware',
   'Software',
@@ -34,6 +22,7 @@ export const CATEGORIAS_DEFECTO = [
   'Otros',
 ]
 
+// colores UI
 export const COLOR_URGENCIA = {
   [IncidenciaUrgencia.BAJA]: 'bg-yellow-100 text-yellow-800',
   [IncidenciaUrgencia.MEDIA]: 'bg-orange-100 text-orange-800',
