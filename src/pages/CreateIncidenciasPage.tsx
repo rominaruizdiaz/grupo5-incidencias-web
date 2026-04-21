@@ -1,9 +1,8 @@
-import { CreateIncidenciaForm } from '@/components/features/incidencias/CreateIncidenciaForm'
+import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
+import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 
 export const CreateIncidenciaPage = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <CreateIncidenciaForm />
-    </div>
-  )
+  const form = useIncidenciaForm()
+
+  return <IncidenciaForm mode="create" onSubmit={form.submit} {...form} />
 }

@@ -23,13 +23,16 @@ export const useIncidencias = () => {
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
   const [loading, setLoading] = useState(true)
   const [sort, setSort] = useState<SortType>('estado')
+  const [error, setError] = useState<string | null>(null)
 
-  // FETCH
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true)
         const data = await getIncidencias()
         setIncidencias(data)
+      } catch (err) {
+        setError('Error al cargar incidencias')
       } finally {
         setLoading(false)
       }
@@ -38,56 +41,66 @@ export const useIncidencias = () => {
     fetchData()
   }, [])
 
-  // FILTRO POR ROL
-  const filtered = useMemo(() => {
+  // FILTRADO POR EL ROL
+  const filteredIncidencias = useMemo(() => {
     if (!usuario) return []
 
-    // ADMIN
-    if (usuario.rol === 1) return incidencias
+    switch (usuario.rol) {
+      case 1: // ADMIN
+        return incidencias
 
-    // PROFESOR
-    if (usuario.rol === 2) {
-      return incidencias.filter(i => i.idUsuarioReporta === usuario.idUsuario)
+      case 2: // PROFESOR
+        return incidencias.filter(i => i.idUsuarioReporta === usuario.idUsuario)
+
+      case 3: // TECNICO
+        return incidencias.filter(
+          i => i.idUsuarioAsignado === usuario.idUsuario
+        )
+
+      default:
+        return []
     }
-
-    // TÉCNICO
-    if (usuario.rol === 3) {
-      return incidencias.filter(i => i.idUsuarioAsignado === usuario.idUsuario)
-    }
-
-    return []
   }, [incidencias, usuario])
 
-  // ORDENAMIENTO
+  // ORDENACIÓN
   const sortedIncidencias = useMemo(() => {
-    const list = [...filtered]
+    const list = [...filteredIncidencias]
 
     return list.sort((a, b) => {
-      if (sort === 'estado') {
-        return estadoPriority[a.estado] - estadoPriority[b.estado]
-      }
+      switch (sort) {
+        case 'estado':
+          return estadoPriority[a.estado] - estadoPriority[b.estado]
 
-      if (sort === 'urgencia') {
-        return urgenciaPriority[a.urgencia] - urgenciaPriority[b.urgencia]
-      }
+        case 'urgencia':
+          return urgenciaPriority[a.urgencia] - urgenciaPriority[b.urgencia]
 
-      if (sort === 'fecha') {
-        return new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-      }
+        case 'fecha':
+          return new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
 
-      return 0
+        default:
+          return 0
+      }
     })
-  }, [filtered, sort])
+  }, [filteredIncidencias, sort])
 
   // ACTIONS
   const changeSort = (type: SortType) => {
     setSort(type)
   }
 
+  const refresh = async () => {
+    setLoading(true)
+    const data = await getIncidencias()
+    setIncidencias(data)
+    setLoading(false)
+  }
+
   return {
     incidencias: sortedIncidencias,
     loading,
+    error,
     sort,
     changeSort,
+    refresh,
   }
 }
