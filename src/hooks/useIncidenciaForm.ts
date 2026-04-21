@@ -1,46 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-import { createIncidencia, updateIncidencia } from '@/services/incidencias'
 import { useAuthStore } from '@/store/auth.store'
+import { IncidenciaEstado, type Incidencia } from '@/types'
 
-import {
-  IncidenciaEstado,
-  IncidenciaUrgencia,
-  type Incidencia,
-  type CreateIncidenciaRequest,
-} from '@/types'
+import { useIncidenciaFormState } from './useIncidenciaFormState'
+import { useIncidenciaFormActions } from './useIncidenciaActions'
 
 export const useIncidenciaForm = (initial?: Incidencia) => {
   const navigate = useNavigate()
   const usuario = useAuthStore(state => state.usuario)
+  const { create, update } = useIncidenciaFormActions()
 
   const isEdit = !!initial
 
-  // state del formulario
-  const [titulo, setTitulo] = useState(initial?.titulo ?? '')
-  const [descripcion, setDescripcion] = useState(initial?.descripcion ?? '')
-  const [categoria, setCategoria] = useState(initial?.categoria ?? 'Software')
-  const [ubicacion, setUbicacion] = useState(
-    initial?.ubicacion ?? 'Informática'
-  )
-  const [urgencia, setUrgencia] = useState<IncidenciaUrgencia>(
-    initial?.urgencia ?? IncidenciaUrgencia.MEDIA
-  )
+  const form = useIncidenciaFormState(initial)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  // si cambia la incidencia
-  useEffect(() => {
-    if (!initial) return
-
-    setTitulo(initial.titulo)
-    setDescripcion(initial.descripcion)
-    setCategoria(initial.categoria)
-    setUbicacion(initial.ubicacion)
-    setUrgencia(initial.urgencia)
-  }, [initial])
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,7 +26,7 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
       return
     }
 
-    if (!titulo || !descripcion) {
+    if (!form.titulo || !form.descripcion) {
       setError('Completa los campos obligatorios')
       return
     }
@@ -60,25 +36,23 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
       setError(null)
 
       if (isEdit && initial) {
-        await updateIncidencia(initial.id, {
-          titulo,
-          descripcion,
-          categoria,
-          ubicacion,
-          urgencia,
+        await update(initial.id, {
+          titulo: form.titulo,
+          descripcion: form.descripcion,
+          categoria: form.categoria,
+          ubicacion: form.ubicacion,
+          urgencia: form.urgencia,
         })
       } else {
-        const payload: CreateIncidenciaRequest = {
-          titulo,
-          descripcion,
-          categoria,
-          ubicacion,
-          urgencia,
+        await create({
+          titulo: form.titulo,
+          descripcion: form.descripcion,
+          categoria: form.categoria,
+          ubicacion: form.ubicacion,
+          urgencia: form.urgencia,
           estado: IncidenciaEstado.ACTIVO,
           idUsuarioReporta: usuario.idUsuario,
-        }
-
-        await createIncidencia(payload)
+        })
       }
 
       navigate('/panel')
@@ -90,24 +64,10 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
   }
 
   return {
-    // state
-    titulo,
-    setTitulo,
-    descripcion,
-    setDescripcion,
-    categoria,
-    setCategoria,
-    ubicacion,
-    setUbicacion,
-    urgencia,
-    setUrgencia,
-
-    // ui state
+    ...form,
     loading,
     error,
     isEdit,
-
-    // actions
     submit,
   }
 }
