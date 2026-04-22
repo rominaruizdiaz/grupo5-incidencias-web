@@ -5,6 +5,8 @@ import { IncidenciaEstado, IncidenciaUrgencia, type Incidencia } from '@/types'
 import { getUsuarios } from '@/services/personal'
 import type { Usuario } from '@/types'
 
+import { getNombreUsuario as resolveNombre } from '@/utils/usuarios'
+
 export type SortType = 'estado' | 'urgencia' | 'fecha'
 
 const estadoPriority: Record<IncidenciaEstado, number> = {
@@ -41,17 +43,17 @@ export const useIncidencias = () => {
 
         setUsuarios(usuariosData)
 
-        const normalizadas: Incidencia[] = incidenciasData.map(i => ({
-          ...i,
-          fecha: i.fecha ?? new Date().toISOString(),
-          estado: i.estado ?? IncidenciaEstado.ACTIVO,
-          urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
-          idReporta: i.idReporta ?? null,
-          idAsignado: i.idAsignado ?? null,
-          fechaResolucion: i.fechaResolucion ?? null,
-        }))
-
-        setIncidencias(normalizadas)
+        setIncidencias(
+          incidenciasData.map(i => ({
+            ...i,
+            fecha: i.fecha ?? new Date().toISOString(),
+            estado: i.estado ?? IncidenciaEstado.ACTIVO,
+            urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
+            idReporta: i.idReporta ?? null,
+            idAsignado: i.idAsignado ?? null,
+            fechaResolucion: i.fechaResolucion ?? null,
+          }))
+        )
       } catch {
         setError('Error al cargar incidencias')
       } finally {
@@ -62,35 +64,26 @@ export const useIncidencias = () => {
     fetchData()
   }, [])
 
-  const getNombreUsuario = (id?: number | null) => {
-    if (!id) return 'Desconocido'
-    return usuarios.find(u => u.id === id)?.nombre ?? 'Desconocido'
-  }
+  // 👇 wrapper limpio
+  const getNombreUsuario = (id?: number | null) => resolveNombre(usuarios, id)
 
-  // FILTRADO POR EL ROL
   const filteredIncidencias = useMemo(() => {
     if (!usuario) return []
 
     switch (usuario.rol) {
-      case 1: // ADMIN
+      case 1:
         return incidencias
-
-      case 2: // PROFESOR
+      case 2:
         return incidencias.filter(i => i.idReporta === usuario.id)
-
-      case 3: // TECNICO
+      case 3:
         return incidencias.filter(i => i.idAsignado === usuario.id)
-
       default:
         return []
     }
   }, [incidencias, usuario])
 
-  // ORDENACIÓN
   const sortedIncidencias = useMemo(() => {
-    const list = [...filteredIncidencias]
-
-    return list.sort((a, b) => {
+    return [...filteredIncidencias].sort((a, b) => {
       switch (sort) {
         case 'estado':
           return estadoPriority[a.estado] - estadoPriority[b.estado]
@@ -99,9 +92,7 @@ export const useIncidencias = () => {
           return urgenciaPriority[a.urgencia] - urgenciaPriority[b.urgencia]
 
         case 'fecha':
-          return (
-            new Date(b.fecha ?? 0).getTime() - new Date(a.fecha ?? 0).getTime()
-          )
+          return new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
 
         default:
           return 0
@@ -109,35 +100,24 @@ export const useIncidencias = () => {
     })
   }, [filteredIncidencias, sort])
 
-  // ACTIONS
-  const changeSort = (type: SortType) => {
-    setSort(type)
-  }
+  const changeSort = (type: SortType) => setSort(type)
 
   const refresh = async () => {
-    try {
-      setLoading(true)
+    const [incidenciasData, usuariosData] = await Promise.all([
+      getIncidencias(),
+      getUsuarios(),
+    ])
 
-      const [incidenciasData, usuariosData] = await Promise.all([
-        getIncidencias(),
-        getUsuarios(),
-      ])
+    setUsuarios(usuariosData)
 
-      setUsuarios(usuariosData)
-
-      const normalizadas: Incidencia[] = incidenciasData.map(i => ({
+    setIncidencias(
+      incidenciasData.map(i => ({
         ...i,
         fecha: i.fecha ?? new Date().toISOString(),
         estado: i.estado ?? IncidenciaEstado.ACTIVO,
         urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
       }))
-
-      setIncidencias(normalizadas)
-    } catch {
-      setError('Error al refrescar incidencias')
-    } finally {
-      setLoading(false)
-    }
+    )
   }
 
   return {
