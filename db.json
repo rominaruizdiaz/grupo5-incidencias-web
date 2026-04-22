@@ -1,336 +1,236 @@
 {
   "usuarios": [
     {
-      "idUsuario": 1,
-      "nombre": "Admin",
+      "id": 1,
+      "nombre": "Admin User",
       "email": "admin@example.com",
-      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "passwordHash": "$2b$10$YourHashedPasswordHere",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 1,
-      "fechaRegistro": "2024-01-01"
+      "fechaRegistro": "2024-01-15T10:00:00Z",
+      "departamentos": [
+        1
+      ]
     },
     {
-      "idUsuario": 2,
+      "id": 2,
       "nombre": "Juan Profesor",
-      "email": "profesor@example.com",
-      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "email": "juan@example.com",
+      "passwordHash": "$2b$10$YourHashedPasswordHere",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 2,
-      "fechaRegistro": "2024-01-02"
+      "fechaRegistro": "2024-02-10T10:00:00Z",
+      "departamentos": [
+        1,
+        2,
+        3
+      ]
     },
     {
-      "idUsuario": 3,
-      "nombre": "María Técnico",
-      "email": "tecnico@example.com",
-      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "id": 3,
+      "nombre": "María Técnica",
+      "email": "maria@example.com",
+      "passwordHash": "$2b$10$YourHashedPasswordHere",
+      "fotoPerfil": null,
+      "modoOscuro": true,
+      "rol": 3,
+      "fechaRegistro": "2024-02-15T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "nombre": "Carlos Profesor",
+      "email": "carlos@example.com",
+      "passwordHash": "$2b$10$YourHashedPasswordHere",
       "fotoPerfil": null,
       "modoOscuro": false,
-      "rol": 3,
-      "fechaRegistro": "2024-01-03"
+      "rol": 2,
+      "fechaRegistro": "2024-03-01T10:00:00Z"
     },
     {
-      "idUsuario": 1776789180727,
-      "nombre": "sdsad",
+      "id": 5,
+      "nombre": "Ana Técnica",
+      "email": "ana@example.com",
+      "passwordHash": "$2b$10$YourHashedPasswordHere",
+      "fotoPerfil": null,
+      "modoOscuro": false,
+      "rol": 1,
+      "fechaRegistro": "2024-03-05T10:00:00Z",
+      "departamentos": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 1776845224676,
+      "nombre": "romi",
       "email": "romi@romi.romi",
       "passwordHash": "fake",
       "rol": 2,
       "modoOscuro": false,
-      "fechaRegistro": "2026-04-21T16:33:00.727Z"
+      "fechaRegistro": "2026-04-22T08:07:04.676Z"
+    }
+  ],
+  "incidencias": [
+    {
+      "id": 1,
+      "titulo": "Problema con el proyector del aula 101",
+      "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 101",
+      "estado": "Activo",
+      "urgencia": "Alta",
+      "fecha": "2024-04-15T08:30:00Z",
+      "idReporta": 2,
+      "idAsignado": 3,
+      "fechaResolucion": null
+    },
+    {
+      "id": 2,
+      "titulo": "Fallo en conexión WiFi",
+      "descripcion": "La red WiFi en el ala norte está muy lenta",
+      "categoria": "Conectividad",
+      "ubicacion": "Ala norte",
+      "estado": "En curso",
+      "urgencia": "Media",
+      "fecha": "2024-04-14T10:15:00Z",
+      "idReporta": 4,
+      "idAsignado": 5,
+      "fechaResolucion": null
+    },
+    {
+      "id": 3,
+      "titulo": "Teclado del laboratorio dañado",
+      "descripcion": "El teclado de la estación 5 tiene varias teclas rotas",
+      "categoria": "Hardware",
+      "ubicacion": "Laboratorio",
+      "estado": "Resuelto",
+      "urgencia": "Baja",
+      "fecha": "2024-04-10T14:20:00Z",
+      "idReporta": 2,
+      "idAsignado": 3,
+      "fechaResolucion": "2024-04-12T16:45:00Z"
+    },
+    {
+      "id": 4,
+      "titulo": "Software de análisis no instala",
+      "descripcion": "No puedo instalar el software de análisis de datos en mi máquina",
+      "categoria": "Software",
+      "ubicacion": "Despacho",
+      "estado": "Activo",
+      "urgencia": "Media",
+      "fecha": "2024-04-16T09:00:00Z",
+      "idReporta": 4,
+      "idAsignado": 5,
+      "fechaResolucion": null
+    },
+    {
+      "id": 5,
+      "titulo": "Pantalla de monitor rota",
+      "descripcion": "Monitor de la sala de profesores tiene la pantalla agrietada",
+      "categoria": "Hardware",
+      "ubicacion": "Sala de profesores",
+      "estado": "En curso",
+      "urgencia": "Alta",
+      "fecha": "2024-04-13T11:30:00Z",
+      "idReporta": 2,
+      "idAsignado": 3,
+      "fechaResolucion": null
     }
   ],
   "departamentos": [
     {
       "idDepartamento": 1,
       "nombre": "Informática",
-      "fechaCreacion": "2024-01-01"
+      "fechaCreacion": "2024-01-01T00:00:00Z"
     },
     {
       "idDepartamento": 2,
-      "nombre": "Laboratorio",
-      "fechaCreacion": "2024-01-01"
+      "nombre": "Matemáticas",
+      "fechaCreacion": "2024-01-01T00:00:00Z"
     },
     {
       "idDepartamento": 3,
-      "nombre": "Aula 101",
-      "fechaCreacion": "2024-01-01"
+      "nombre": "Lengua",
+      "fechaCreacion": "2024-01-01T00:00:00Z"
     },
     {
       "idDepartamento": 4,
-      "nombre": "Biblioteca",
-      "fechaCreacion": "2024-01-01"
+      "nombre": "Inglés",
+      "fechaCreacion": "2024-01-01T00:00:00Z"
     },
     {
       "idDepartamento": 5,
-      "nombre": "Secretaría",
-      "fechaCreacion": "2024-01-01"
-    }
-  ],
-  "etiquetas": [
-    {
-      "idEtiqueta": 1,
-      "nombre": "Hardware"
-    },
-    {
-      "idEtiqueta": 2,
-      "nombre": "Software"
-    },
-    {
-      "idEtiqueta": 3,
-      "nombre": "Mobiliario"
-    },
-    {
-      "idEtiqueta": 4,
-      "nombre": "Infraestructura"
-    },
-    {
-      "idEtiqueta": 5,
-      "nombre": "Limpieza"
-    },
-    {
-      "idEtiqueta": 6,
-      "nombre": "Electricidad"
-    },
-    {
-      "idEtiqueta": 7,
-      "nombre": "Fontanería"
-    },
-    {
-      "idEtiqueta": 8,
-      "nombre": "Audiovisuales"
-    },
-    {
-      "idEtiqueta": 9,
-      "nombre": "Climatización"
-    },
-    {
-      "idEtiqueta": 10,
-      "nombre": "Jardinería"
-    },
-    {
-      "idEtiqueta": 11,
-      "nombre": "Otros"
-    }
-  ],
-  "incidencias": [
-    {
-      "id": 1,
-      "titulo": "Pantalla rota en aula 101",
-      "descripcion": "La pantalla del proyector está completamente rota",
-      "categoria": "Hardware",
-      "ubicacion": "Aula 101",
-      "estado": "Activo",
-      "urgencia": "Alta",
-      "fecha": "2024-01-15",
-      "idUsuarioReporta": 2,
-      "idUsuarioAsignado": null,
-      "fechaResolucion": null
-    },
-    {
-      "id": 2,
-      "titulo": "Falta tinta en impresora",
-      "descripcion": "La impresora de secretaría no tiene tinta",
-      "categoria": "Hardware",
-      "ubicacion": "Secretaría",
-      "estado": "En curso",
-      "urgencia": "Media",
-      "fecha": "2024-01-14",
-      "idUsuarioReporta": 2,
-      "idUsuarioAsignado": 3,
-      "fechaResolucion": null
-    },
-    {
-      "id": 3,
-      "titulo": "Aire acondicionado no funciona",
-      "descripcion": "El aire acondicionado del laboratorio está roto",
-      "categoria": "Climatización",
-      "ubicacion": "Laboratorio",
-      "estado": "Resuelto",
-      "urgencia": "Alta",
-      "fecha": "2024-01-10",
-      "idUsuarioReporta": 2,
-      "idUsuarioAsignado": 3,
-      "fechaResolucion": "2024-01-12"
-    },
-    {
-      "id": 4,
-      "titulo": "Falta limpieza en pasillo",
-      "descripcion": "El pasillo necesita limpieza urgente",
-      "categoria": "Limpieza",
-      "ubicacion": "Biblioteca",
-      "estado": "Activo",
-      "urgencia": "Baja",
-      "fecha": "2024-01-16",
-      "idUsuarioReporta": 2,
-      "idUsuarioAsignado": null,
-      "fechaResolucion": null
-    },
-    {
-      "titulo": "dsadas",
-      "descripcion": "sadsad",
-      "categoria": "Software",
-      "ubicacion": "Informática",
-      "urgencia": "Media",
-      "idUsuarioReporta": 1,
-      "estado": "Activo",
-      "fecha": "2026-04-19T15:00:13.637Z",
-      "idUsuarioAsignado": null,
-      "fechaResolucion": null,
-      "id": 5
-    },
-    {
-      "titulo": "sdsad",
-      "descripcion": "sadasd",
-      "categoria": "Software",
-      "ubicacion": "Laboratorio",
-      "urgencia": "Alta",
-      "idUsuarioReporta": 1,
-      "estado": "Activo",
-      "fecha": "2026-04-19T15:30:28.614Z",
-      "idUsuarioAsignado": null,
-      "fechaResolucion": null,
-      "id": 6
-    },
-    {
-      "titulo": "sadasd",
-      "descripcion": "sadasdasdasdasd",
-      "categoria": "Red",
-      "ubicacion": "Aula 101",
-      "urgencia": "Media",
-      "idUsuarioReporta": 1,
-      "estado": "Activo",
-      "fecha": "2026-04-19T15:30:46.460Z",
-      "idUsuarioAsignado": null,
-      "fechaResolucion": null,
-      "id": 7
-    },
-    {
-      "titulo": "sdsa",
-      "descripcion": "sada",
-      "categoria": "Software",
-      "ubicacion": "Informática",
-      "urgencia": "Media",
-      "idUsuarioReporta": 1776789180727,
-      "estado": "Activo",
-      "id": 8
-    },
-    {
-      "titulo": "sadasd",
-      "descripcion": "sadsa",
-      "categoria": "Software",
-      "ubicacion": "Informática",
-      "urgencia": "Media",
-      "idUsuarioReporta": 1776789180727,
-      "estado": "Activo",
-      "id": 9
+      "nombre": "Ciencias",
+      "fechaCreacion": "2024-01-01T00:00:00Z"
     }
   ],
   "usuarioDepartamento": [
     {
-      "idUsuario": 1,
+      "id": 1,
+      "usuarioId": 2,
       "idDepartamento": 1
     },
     {
-      "idUsuario": 1,
-      "idDepartamento": 2
-    },
-    {
-      "idUsuario": 1,
-      "idDepartamento": 3
-    },
-    {
-      "idUsuario": 1,
-      "idDepartamento": 4
-    },
-    {
-      "idUsuario": 1,
-      "idDepartamento": 5
-    },
-    {
-      "idUsuario": 2,
-      "idDepartamento": 1
-    },
-    {
-      "idUsuario": 2,
-      "idDepartamento": 2
-    },
-    {
-      "idUsuario": 2,
-      "idDepartamento": 3
-    },
-    {
-      "idUsuario": 3,
-      "idDepartamento": 1
-    },
-    {
-      "idUsuario": 3,
-      "idDepartamento": 2
-    }
-  ],
-  "usuarioEtiqueta": [
-    {
-      "idUsuario": 3,
-      "idEtiqueta": 1
-    },
-    {
-      "idUsuario": 3,
-      "idEtiqueta": 2
-    },
-    {
-      "idUsuario": 3,
-      "idEtiqueta": 6
-    },
-    {
-      "idUsuario": 3,
-      "idEtiqueta": 7
-    },
-    {
-      "idUsuario": 3,
-      "idEtiqueta": 9
-    }
-  ],
-  "mensajeIncidencia": [
-    {
-      "idMensaje": 1,
       "id": 2,
-      "idUsuario": 3,
-      "mensaje": "Cambió el estado a 'En curso'",
-      "fecha": "2024-01-14T10:30:00"
+      "usuarioId": 2,
+      "idDepartamento": 2
     },
     {
-      "idMensaje": 2,
-      "id": 2,
-      "idUsuario": 3,
-      "mensaje": "Estoy reparando la impresora, tendré lista en 1 hora",
-      "fecha": "2024-01-14T11:00:00"
-    },
-    {
-      "idMensaje": 3,
       "id": 3,
-      "idUsuario": 3,
-      "mensaje": "Cambió el estado a 'Resuelto'",
-      "fecha": "2024-01-12T15:30:00"
-    }
-  ],
-  "notificaciones": [
-    {
-      "idNotificacion": 1,
-      "idUsuarioDestino": 3,
-      "titulo": "Nueva incidencia",
-      "mensaje": "Pantalla rota en aula 101 - ALTA prioridad",
-      "leida": false,
-      "fechaCreacion": "2024-01-15T09:00:00",
-      "idVinculada": 1
+      "usuarioId": 3,
+      "idDepartamento": 1
     },
     {
-      "idNotificacion": 2,
-      "idUsuarioDestino": 2,
-      "titulo": "Estado actualizado",
-      "mensaje": "Tu incidencia 'Falta tinta' ha pasado a 'En curso'",
-      "leida": false,
-      "fechaCreacion": "2024-01-14T10:35:00",
-      "idVinculada": 2
+      "id": 4,
+      "usuarioId": 4,
+      "idDepartamento": 2
+    },
+    {
+      "id": 5,
+      "usuarioId": 4,
+      "idDepartamento": 3
+    },
+    {
+      "id": 6,
+      "usuarioId": 5,
+      "idDepartamento": 1
+    },
+    {
+      "usuarioId": 2,
+      "idDepartamento": 3,
+      "id": 11
+    },
+    {
+      "usuarioId": 2,
+      "idDepartamento": 4,
+      "id": 13
+    },
+    {
+      "usuarioId": 1,
+      "idDepartamento": 1,
+      "id": 14
+    },
+    {
+      "usuarioId": 1,
+      "idDepartamento": 2,
+      "id": 15
+    },
+    {
+      "usuarioId": 1,
+      "idDepartamento": 3,
+      "id": 16
+    },
+    {
+      "usuarioId": 1,
+      "idDepartamento": 4,
+      "id": 17
+    },
+    {
+      "usuarioId": 1,
+      "idDepartamento": 5,
+      "id": 18
     }
   ]
 }

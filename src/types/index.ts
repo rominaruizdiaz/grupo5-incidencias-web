@@ -19,7 +19,7 @@ export enum IncidenciaUrgencia {
 
 // entidades
 export interface Usuario {
-  idUsuario: number
+  id: number
   nombre: string
   email: string
   passwordHash?: string
@@ -38,8 +38,8 @@ export interface Incidencia {
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   fecha: string
-  idUsuarioReporta?: number | null
-  idUsuarioAsignado?: number | null
+  idReporta?: number | null
+  idAsignado?: number | null
   fechaResolucion?: string | null
 }
 
@@ -51,5 +51,47 @@ export interface CreateIncidenciaRequest {
   ubicacion: string
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
-  idUsuarioReporta: number
+  idReporta: number
+}
+
+export interface Departamento {
+  idDepartamento: number
+  nombre: string
+  fechaCreacion: string
+}
+
+export interface UsuarioDepartamento {
+  id: number
+  usuarioId: number
+  idDepartamento: number
+}
+
+export interface PersonalFiltersState {
+  departamentoId: number | null
+  rol: UserRole | null
+}
+
+export interface PersonalTableRow extends Usuario {
+  departamentos?: string[]
+}
+
+export type UsuarioWithDepartamentos = Usuario & {
+  departamentos: number[]
+}
+
+// AUTH TYPES - Tipos faltantes que causaban los errores
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export interface RegisterRequest {
+  nombre: string
+  email: string
+  password: string
+}
+
+export interface AuthResponse {
+  token: string
+  user: Usuario
 }
