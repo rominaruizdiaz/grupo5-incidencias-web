@@ -26,7 +26,7 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
       return
     }
 
-    if (!form.titulo || !form.descripcion) {
+    if (!form.titulo.trim() || !form.descripcion.trim()) {
       setError('Completa los campos obligatorios')
       return
     }
@@ -37,21 +37,21 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
 
       if (isEdit && initial) {
         await update(initial.id, {
-          titulo: form.titulo,
-          descripcion: form.descripcion,
+          titulo: form.titulo.trim(),
+          descripcion: form.descripcion.trim(),
           categoria: form.categoria,
           ubicacion: form.ubicacion,
           urgencia: form.urgencia,
         })
       } else {
         await create({
-          titulo: form.titulo,
-          descripcion: form.descripcion,
+          titulo: form.titulo.trim(),
+          descripcion: form.descripcion.trim(),
           categoria: form.categoria,
           ubicacion: form.ubicacion,
           urgencia: form.urgencia,
           estado: IncidenciaEstado.ACTIVO,
-          idUsuarioReporta: usuario.idUsuario,
+          idReporta: usuario.id,
         })
       }
 

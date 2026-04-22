@@ -29,9 +29,21 @@ export const useIncidencias = () => {
     const fetchData = async () => {
       try {
         setLoading(true)
+
         const data = await getIncidencias()
-        setIncidencias(data)
-      } catch (err) {
+
+        const normalizadas: Incidencia[] = data.map(i => ({
+          ...i,
+          fecha: i.fecha ?? new Date().toISOString(),
+          estado: i.estado ?? IncidenciaEstado.ACTIVO,
+          urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
+          idReporta: i.idReporta ?? null,
+          idAsignado: i.idAsignado ?? null,
+          fechaResolucion: i.fechaResolucion ?? null,
+        }))
+
+        setIncidencias(normalizadas)
+      } catch {
         setError('Error al cargar incidencias')
       } finally {
         setLoading(false)
@@ -50,12 +62,10 @@ export const useIncidencias = () => {
         return incidencias
 
       case 2: // PROFESOR
-        return incidencias.filter(i => i.idUsuarioReporta === usuario.idUsuario)
+        return incidencias.filter(i => i.idReporta === usuario.id)
 
       case 3: // TECNICO
-        return incidencias.filter(
-          i => i.idUsuarioAsignado === usuario.idUsuario
-        )
+        return incidencias.filter(i => i.idAsignado === usuario.id)
 
       default:
         return []
@@ -75,7 +85,9 @@ export const useIncidencias = () => {
           return urgenciaPriority[a.urgencia] - urgenciaPriority[b.urgencia]
 
         case 'fecha':
-          return new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+          return (
+            new Date(b.fecha ?? 0).getTime() - new Date(a.fecha ?? 0).getTime()
+          )
 
         default:
           return 0
@@ -89,10 +101,27 @@ export const useIncidencias = () => {
   }
 
   const refresh = async () => {
-    setLoading(true)
-    const data = await getIncidencias()
-    setIncidencias(data)
-    setLoading(false)
+    try {
+      setLoading(true)
+
+      const data = await getIncidencias()
+
+      const normalizadas: Incidencia[] = data.map(i => ({
+        ...i,
+        fecha: i.fecha ?? new Date().toISOString(),
+        estado: i.estado ?? IncidenciaEstado.ACTIVO,
+        urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
+        idReporta: i.idReporta ?? null,
+        idAsignado: i.idAsignado ?? null,
+        fechaResolucion: i.fechaResolucion ?? null,
+      }))
+
+      setIncidencias(normalizadas)
+    } catch {
+      setError('Error al refrescar incidencias')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return {
