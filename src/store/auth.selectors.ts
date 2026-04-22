@@ -5,6 +5,11 @@ export const useUsuario = () => useAuthStore(state => state.usuario)
 
 export const useIsLoading = () => useAuthStore(state => state.isLoading)
 
+// roles
+export const useIsAdmin = () => useAuthStore(state => state.isAdmin())
+export const useIsProfesor = () => useAuthStore(state => state.isProfesor())
+export const useIsTecnico = () => useAuthStore(state => state.isTecnico())
+
 // actions
 export const setUsuario = (user: any) =>
   useAuthStore.getState().setUsuario(user)

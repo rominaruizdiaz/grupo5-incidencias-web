@@ -1,6 +1,10 @@
 import { NavLink } from 'react-router-dom'
+import { useAuthStore } from '@/store/auth.store'
 
 export const BottomNav = () => {
+  const usuario = useAuthStore(state => state.usuario)
+  const isAdmin = usuario?.rol === 1
+
   const base = 'flex-1 text-center py-3 text-sm'
   const active = 'text-blue-600'
   const inactive = 'text-gray-500'
@@ -20,6 +24,17 @@ export const BottomNav = () => {
       >
         Crear
       </NavLink>
+
+      {isAdmin && (
+        <NavLink
+          to="/personal"
+          className={({ isActive }) =>
+            `${base} ${isActive ? active : inactive}`
+          }
+        >
+          Gestión Personal
+        </NavLink>
+      )}
 
       <NavLink
         to="/userProfile"

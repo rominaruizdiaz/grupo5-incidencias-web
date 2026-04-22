@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       // ROLES
-      hasRole: role => get().usuario?.rol === role,
+      hasRole: (role: UserRole) => get().usuario?.rol === role,
 
       isAdmin: () => get().usuario?.rol === UserRole.ADMIN,
       isProfesor: () => get().usuario?.rol === UserRole.PROFESOR,

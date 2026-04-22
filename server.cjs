@@ -21,7 +21,7 @@ server.post("/login", (req, res) => {
 
   res.json({
     user,
-    token: "fake-jwt-token-" + user.idUsuario,
+    token: "fake-jwt-token-" + user.id,
   });
 });
 
@@ -38,7 +38,7 @@ server.post("/register", (req, res) => {
   }
 
   const newUser = {
-    idUsuario: Date.now(),
+    id: Date.now(),
     nombre,
     email,
     passwordHash: "fake",
@@ -51,7 +51,7 @@ server.post("/register", (req, res) => {
 
   res.json({
     user: newUser,
-    token: "fake-jwt-token-" + newUser.idUsuario,
+    token: "fake-jwt-token-" + newUser.id,
   });
 });
 

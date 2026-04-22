@@ -6,9 +6,11 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { PanelPage } from '@/pages/PanelPage'
 import { CreateIncidenciaPage } from '@/pages/CreateIncidenciasPage'
 import { UserProfilePage } from '@/pages/UserProfilePage'
+import { PersonalPage } from './pages/PersonalPage'
 
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
+import { RoleRoute } from '@/components/routes/RoleRoute'
 
 import { MainLayout } from '@/components/layout/MainLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
@@ -41,9 +43,17 @@ function App() {
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
         <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />
+
+        <Route
+          path="/personal"
+          element={
+            <RoleRoute roles={[1]}>
+              <PersonalPage />
+            </RoleRoute>
+          }
+        />
       </Route>
 
-      {/* PAGINA 404 */}
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   )

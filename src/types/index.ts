@@ -79,7 +79,7 @@ export type UsuarioWithDepartamentos = Usuario & {
   departamentos: number[]
 }
 
-// AUTH TYPES - Tipos faltantes que causaban los errores
+// AUTH TYPES
 export interface LoginRequest {
   email: string
   password: string
