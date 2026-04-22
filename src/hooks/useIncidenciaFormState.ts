@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IncidenciaUrgencia, type Incidencia } from '@/types'
+import { IncidenciaUrgencia, IncidenciaEstado, type Incidencia } from '@/types'
 
 export const useIncidenciaFormState = (initial?: Incidencia) => {
   const [titulo, setTitulo] = useState('')
@@ -10,6 +10,10 @@ export const useIncidenciaFormState = (initial?: Incidencia) => {
     IncidenciaUrgencia.MEDIA
   )
 
+  const [estado, setEstado] = useState<IncidenciaEstado>(
+    initial?.estado ?? IncidenciaEstado.ACTIVO
+  )
+
   useEffect(() => {
     if (!initial) return
 
@@ -18,6 +22,7 @@ export const useIncidenciaFormState = (initial?: Incidencia) => {
     setCategoria(initial.categoria ?? 'Software')
     setUbicacion(initial.ubicacion ?? 'Informática')
     setUrgencia(initial.urgencia ?? IncidenciaUrgencia.MEDIA)
+    setEstado(initial.estado ?? IncidenciaEstado.ACTIVO)
   }, [initial])
 
   return {
@@ -31,5 +36,7 @@ export const useIncidenciaFormState = (initial?: Incidencia) => {
     setUbicacion,
     urgencia,
     setUrgencia,
+    estado,
+    setEstado,
   }
 }

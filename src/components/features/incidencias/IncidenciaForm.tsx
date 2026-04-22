@@ -1,6 +1,6 @@
-import type { IncidenciaUrgencia } from '@/types'
+import type { IncidenciaUrgencia, IncidenciaEstado } from '@/types'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
-import { URGENCIA_OPTIONS } from '@/utils/incidenciaOptions'
+import { URGENCIA_OPTIONS, ESTADO_OPTIONS } from '@/utils/incidenciaOptions'
 
 type Props = {
   mode: 'create' | 'edit'
@@ -17,13 +17,19 @@ type Props = {
   setUbicacion: (v: string) => void
   urgencia: IncidenciaUrgencia
   setUrgencia: (v: IncidenciaUrgencia) => void
+  estado?: IncidenciaEstado
+  setEstado?: (v: IncidenciaEstado) => void
+  fecha?: string
+  reportadoPor?: string
 }
 
 export const IncidenciaForm = (props: Props) => {
+  const isEdit = props.mode === 'edit'
+
   return (
     <form onSubmit={props.onSubmit} className="space-y-4">
       <h2 className="text-xl font-bold">
-        {props.mode === 'create' ? 'Nueva incidencia' : 'Editar incidencia'}
+        {isEdit ? 'Gestión de incidencia' : 'Nueva incidencia'}
       </h2>
 
       <input
@@ -32,18 +38,6 @@ export const IncidenciaForm = (props: Props) => {
         className="border p-2 w-full"
         placeholder="Título"
       />
-
-      <select
-        value={props.ubicacion}
-        onChange={e => props.setUbicacion(e.target.value)}
-        className="border p-2 w-full"
-      >
-        <option value="Informática">Informática</option>
-        <option value="Laboratorio">Laboratorio</option>
-        <option value="Aula 101">Aula 101</option>
-        <option value="Biblioteca">Biblioteca</option>
-        <option value="Secretaría">Secretaría</option>
-      </select>
 
       <select
         value={props.urgencia}
@@ -55,6 +49,31 @@ export const IncidenciaForm = (props: Props) => {
             {u}
           </option>
         ))}
+      </select>
+
+      {isEdit && (
+        <div className="p-3 bg-gray-50 border rounded text-sm space-y-1">
+          <p>
+            <strong>Fecha:</strong> {props.fecha}
+          </p>
+          {props.reportadoPor && (
+            <p>
+              <strong>Reportado por:</strong> {props.reportadoPor}
+            </p>
+          )}
+        </div>
+      )}
+
+      <select
+        value={props.ubicacion}
+        onChange={e => props.setUbicacion(e.target.value)}
+        className="border p-2 w-full"
+      >
+        <option value="Informática">Informática</option>
+        <option value="Laboratorio">Laboratorio</option>
+        <option value="Aula 101">Aula 101</option>
+        <option value="Biblioteca">Biblioteca</option>
+        <option value="Secretaría">Secretaría</option>
       </select>
 
       <select
@@ -73,14 +92,28 @@ export const IncidenciaForm = (props: Props) => {
         value={props.descripcion}
         onChange={e => props.setDescripcion(e.target.value)}
         className="border p-2 w-full"
-        placeholder="Descripción"
+        placeholder="Detalles"
       />
+
+      {isEdit && props.setEstado && (
+        <select
+          value={props.estado}
+          onChange={e => props.setEstado!(e.target.value as IncidenciaEstado)}
+          className="border p-2 w-full"
+        >
+          {ESTADO_OPTIONS.map(s => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      )}
 
       <button
         disabled={props.loading}
         className="bg-blue-600 text-white p-2 w-full"
       >
-        {props.mode === 'create' ? 'Crear' : 'Guardar cambios'}
+        {isEdit ? 'Guardar cambios' : 'Crear'}
       </button>
     </form>
   )

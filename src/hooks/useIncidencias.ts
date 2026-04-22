@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { getIncidencias } from '@/services/incidencias'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, IncidenciaUrgencia, type Incidencia } from '@/types'
+import { getUsuarios } from '@/services/personal'
+import type { Usuario } from '@/types'
 
 export type SortType = 'estado' | 'urgencia' | 'fecha'
 
@@ -21,6 +23,8 @@ export const useIncidencias = () => {
   const usuario = useAuthStore(state => state.usuario)
 
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
+  const [usuarios, setUsuarios] = useState<Usuario[]>([])
+
   const [loading, setLoading] = useState(true)
   const [sort, setSort] = useState<SortType>('estado')
   const [error, setError] = useState<string | null>(null)
@@ -30,9 +34,14 @@ export const useIncidencias = () => {
       try {
         setLoading(true)
 
-        const data = await getIncidencias()
+        const [incidenciasData, usuariosData] = await Promise.all([
+          getIncidencias(),
+          getUsuarios(),
+        ])
 
-        const normalizadas: Incidencia[] = data.map(i => ({
+        setUsuarios(usuariosData)
+
+        const normalizadas: Incidencia[] = incidenciasData.map(i => ({
           ...i,
           fecha: i.fecha ?? new Date().toISOString(),
           estado: i.estado ?? IncidenciaEstado.ACTIVO,
@@ -52,6 +61,11 @@ export const useIncidencias = () => {
 
     fetchData()
   }, [])
+
+  const getNombreUsuario = (id?: number | null) => {
+    if (!id) return 'Desconocido'
+    return usuarios.find(u => u.id === id)?.nombre ?? 'Desconocido'
+  }
 
   // FILTRADO POR EL ROL
   const filteredIncidencias = useMemo(() => {
@@ -104,16 +118,18 @@ export const useIncidencias = () => {
     try {
       setLoading(true)
 
-      const data = await getIncidencias()
+      const [incidenciasData, usuariosData] = await Promise.all([
+        getIncidencias(),
+        getUsuarios(),
+      ])
 
-      const normalizadas: Incidencia[] = data.map(i => ({
+      setUsuarios(usuariosData)
+
+      const normalizadas: Incidencia[] = incidenciasData.map(i => ({
         ...i,
         fecha: i.fecha ?? new Date().toISOString(),
         estado: i.estado ?? IncidenciaEstado.ACTIVO,
         urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
-        idReporta: i.idReporta ?? null,
-        idAsignado: i.idAsignado ?? null,
-        fechaResolucion: i.fechaResolucion ?? null,
       }))
 
       setIncidencias(normalizadas)
@@ -131,5 +147,6 @@ export const useIncidencias = () => {
     sort,
     changeSort,
     refresh,
+    getNombreUsuario,
   }
 }
