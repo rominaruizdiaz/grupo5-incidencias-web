@@ -1,4 +1,8 @@
-import { createIncidencia, updateIncidencia } from '@/services/incidencias'
+import {
+  createIncidencia,
+  updateIncidencia,
+  deleteIncidencia,
+} from '@/services/incidencias'
 import type { CreateIncidenciaRequest, Incidencia } from '@/types'
 
 export const useIncidenciaFormActions = () => {
@@ -10,5 +14,9 @@ export const useIncidenciaFormActions = () => {
     return updateIncidencia(id, data)
   }
 
-  return { create, update }
+  const remove = async (id: number) => {
+    return deleteIncidencia(id)
+  }
+
+  return { create, update, remove }
 }
