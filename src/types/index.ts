@@ -22,7 +22,7 @@ export interface Usuario {
   id: number
   nombre: string
   email: string
-  passwordHash?: string
+  password?: string
   fotoPerfil?: string | null
   modoOscuro: boolean
   rol: UserRole

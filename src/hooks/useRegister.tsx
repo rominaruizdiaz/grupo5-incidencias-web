@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { registerRequest } from '@/services/auth'
 import { useAuthStore } from '@/store/auth.store'
-import { UserRole } from '@/types'
 import type { RegisterFormData } from '@/components/features/register/register.types'
 
 export const useRegister = () => {
@@ -14,7 +13,6 @@ export const useRegister = () => {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
   const register = async (data: RegisterFormData) => {
     try {
       setLoading(true)
@@ -29,7 +27,6 @@ export const useRegister = () => {
 
       setUsuario({
         ...res.user,
-        rol: UserRole.PROFESOR,
       })
 
       localStorage.setItem('token', res.token)
