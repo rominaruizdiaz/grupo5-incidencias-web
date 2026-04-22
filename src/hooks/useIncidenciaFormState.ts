@@ -1,16 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IncidenciaUrgencia, type Incidencia } from '@/types'
 
 export const useIncidenciaFormState = (initial?: Incidencia) => {
-  const [titulo, setTitulo] = useState(initial?.titulo ?? '')
-  const [descripcion, setDescripcion] = useState(initial?.descripcion ?? '')
-  const [categoria, setCategoria] = useState(initial?.categoria ?? 'Software')
-  const [ubicacion, setUbicacion] = useState(
-    initial?.ubicacion ?? 'Informática'
-  )
+  const [titulo, setTitulo] = useState('')
+  const [descripcion, setDescripcion] = useState('')
+  const [categoria, setCategoria] = useState('Software')
+  const [ubicacion, setUbicacion] = useState('Informática')
   const [urgencia, setUrgencia] = useState<IncidenciaUrgencia>(
-    initial?.urgencia ?? IncidenciaUrgencia.MEDIA
+    IncidenciaUrgencia.MEDIA
   )
+
+  useEffect(() => {
+    if (!initial) return
+
+    setTitulo(initial.titulo ?? '')
+    setDescripcion(initial.descripcion ?? '')
+    setCategoria(initial.categoria ?? 'Software')
+    setUbicacion(initial.ubicacion ?? 'Informática')
+    setUrgencia(initial.urgencia ?? IncidenciaUrgencia.MEDIA)
+  }, [initial])
 
   return {
     titulo,
