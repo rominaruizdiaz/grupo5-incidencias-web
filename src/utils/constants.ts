@@ -7,8 +7,7 @@ export const ROLES = {
   [UserRole.TECNICO]: 'Técnico/Mantenimiento',
 }
 
-// categorías
-export const CATEGORIAS_DEFECTO = [
+export const ESPECIALIDADES_DEFECTO = [
   'Hardware',
   'Software',
   'Mobiliario',

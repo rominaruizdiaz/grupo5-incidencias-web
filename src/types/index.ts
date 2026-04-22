@@ -33,8 +33,8 @@ export interface Incidencia {
   id: number
   titulo: string
   descripcion: string
-  categoria: string
-  ubicacion: string
+  especialidad: string // quién la resuelve
+  ubicacion: string // área afectada
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   fecha: string
@@ -47,8 +47,8 @@ export interface Incidencia {
 export interface CreateIncidenciaRequest {
   titulo: string
   descripcion: string
-  categoria: string
-  ubicacion: string
+  especialidad: string // quién la resuelve
+  ubicacion: string // área afectada
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   idReporta: number

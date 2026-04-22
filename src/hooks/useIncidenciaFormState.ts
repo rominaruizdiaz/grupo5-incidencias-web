@@ -4,7 +4,7 @@ import { IncidenciaUrgencia, IncidenciaEstado, type Incidencia } from '@/types'
 export const useIncidenciaFormState = (initial?: Incidencia) => {
   const [titulo, setTitulo] = useState('')
   const [descripcion, setDescripcion] = useState('')
-  const [categoria, setCategoria] = useState('Software')
+  const [especialidad, setEspecialidad] = useState('Software')
   const [ubicacion, setUbicacion] = useState('Informática')
   const [urgencia, setUrgencia] = useState<IncidenciaUrgencia>(
     IncidenciaUrgencia.MEDIA
@@ -19,7 +19,7 @@ export const useIncidenciaFormState = (initial?: Incidencia) => {
 
     setTitulo(initial.titulo ?? '')
     setDescripcion(initial.descripcion ?? '')
-    setCategoria(initial.categoria ?? 'Software')
+    setEspecialidad(initial.especialidad ?? 'Software')
     setUbicacion(initial.ubicacion ?? 'Informática')
     setUrgencia(initial.urgencia ?? IncidenciaUrgencia.MEDIA)
     setEstado(initial.estado ?? IncidenciaEstado.ACTIVO)
@@ -30,8 +30,8 @@ export const useIncidenciaFormState = (initial?: Incidencia) => {
     setTitulo,
     descripcion,
     setDescripcion,
-    categoria,
-    setCategoria,
+    especialidad,
+    setEspecialidad,
     ubicacion,
     setUbicacion,
     urgencia,

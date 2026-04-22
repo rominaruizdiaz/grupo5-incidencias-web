@@ -84,7 +84,8 @@
       "fecha": "2024-04-15T08:30:00Z",
       "idReporta": 2,
       "idAsignado": 3,
-      "fechaResolucion": null
+      "fechaResolucion": null,
+      "especialidad": "Software"
     },
     {
       "id": 2,
@@ -97,7 +98,8 @@
       "fecha": "2024-04-14T10:15:00Z",
       "idReporta": 4,
       "idAsignado": 5,
-      "fechaResolucion": null
+      "fechaResolucion": null,
+      "especialidad": "Software"
     },
     {
       "id": 3,
@@ -110,7 +112,8 @@
       "fecha": "2024-04-10T14:20:00Z",
       "idReporta": 2,
       "idAsignado": 3,
-      "fechaResolucion": "2024-04-12T16:45:00Z"
+      "fechaResolucion": "2024-04-12T16:45:00Z",
+      "especialidad": "Software"
     },
     {
       "id": 4,
@@ -123,7 +126,8 @@
       "fecha": "2024-04-16T09:00:00Z",
       "idReporta": 4,
       "idAsignado": 5,
-      "fechaResolucion": null
+      "fechaResolucion": null,
+      "especialidad": "Software"
     },
     {
       "id": 5,
@@ -136,7 +140,8 @@
       "fecha": "2024-04-13T11:30:00Z",
       "idReporta": 2,
       "idAsignado": 3,
-      "fechaResolucion": null
+      "fechaResolucion": null,
+      "especialidad": "Software"
     }
   ],
   "departamentos": [

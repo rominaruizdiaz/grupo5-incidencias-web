@@ -39,7 +39,7 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
         await update(initial.id, {
           titulo: form.titulo.trim(),
           descripcion: form.descripcion.trim(),
-          categoria: form.categoria,
+          especialidad: form.especialidad,
           ubicacion: form.ubicacion,
           urgencia: form.urgencia,
         })
@@ -47,7 +47,7 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
         await create({
           titulo: form.titulo.trim(),
           descripcion: form.descripcion.trim(),
-          categoria: form.categoria,
+          especialidad: form.especialidad,
           ubicacion: form.ubicacion,
           urgencia: form.urgencia,
           estado: IncidenciaEstado.ACTIVO,

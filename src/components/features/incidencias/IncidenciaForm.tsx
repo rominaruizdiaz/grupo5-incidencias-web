@@ -1,18 +1,17 @@
 import type { IncidenciaUrgencia, IncidenciaEstado } from '@/types'
-import { CATEGORIAS_DEFECTO } from '@/utils/constants'
+import { ESPECIALIDADES_DEFECTO } from '@/utils/constants'
 import { URGENCIA_OPTIONS, ESTADO_OPTIONS } from '@/utils/incidenciaOptions'
 
 type Props = {
   mode: 'create' | 'edit'
   loading: boolean
   onSubmit: (e: React.FormEvent) => void
-
   titulo: string
   setTitulo: (v: string) => void
   descripcion: string
   setDescripcion: (v: string) => void
-  categoria: string
-  setCategoria: (v: string) => void
+  especialidad: string
+  setEspecialidad: (v: string) => void
   ubicacion: string
   setUbicacion: (v: string) => void
   urgencia: IncidenciaUrgencia
@@ -77,11 +76,11 @@ export const IncidenciaForm = (props: Props) => {
       </select>
 
       <select
-        value={props.categoria}
-        onChange={e => props.setCategoria(e.target.value)}
+        value={props.especialidad}
+        onChange={e => props.setEspecialidad(e.target.value)}
         className="border p-2 w-full"
       >
-        {CATEGORIAS_DEFECTO.map(c => (
+        {ESPECIALIDADES_DEFECTO.map(c => (
           <option key={c} value={c}>
             {c}
           </option>

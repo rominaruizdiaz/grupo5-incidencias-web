@@ -24,8 +24,8 @@ export const IncidenciaDetailPage = () => {
         setTitulo={form.setTitulo}
         descripcion={form.descripcion}
         setDescripcion={form.setDescripcion}
-        categoria={form.categoria}
-        setCategoria={form.setCategoria}
+        especialidad={form.especialidad}
+        setEspecialidad={form.setEspecialidad}
         ubicacion={form.ubicacion}
         setUbicacion={form.setUbicacion}
         urgencia={form.urgencia}
