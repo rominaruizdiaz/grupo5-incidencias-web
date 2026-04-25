@@ -12,7 +12,6 @@ server.use(jsonServer.bodyParser);
 server.post("/register", (req, res, next) => {
   req.body = {
     ...req.body,
-
     rol: 2,
     modoOscuro: false,
     fotoPerfil: null,
@@ -23,10 +22,10 @@ server.post("/register", (req, res, next) => {
 });
 
 const rules = auth.rewriter({
-  users: 660,
-  incidencias: 660,
-  departamentos: 444,
-  usuarioDepartamento: 660,
+  users: 666,
+  incidencias: 666,
+  departamentos: 666,
+  usuarioDepartamento: 666,
 });
 
 server.use(rules);

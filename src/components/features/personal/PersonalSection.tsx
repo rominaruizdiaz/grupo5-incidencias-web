@@ -57,7 +57,7 @@ export function PersonalSection({
               <td className="px-6 py-4 text-sm text-gray-600">
                 {departamentos
                   .filter(d =>
-                    (usuario as any).departamentos?.includes(d.idDepartamento)
+                    (usuario as any).departamentos?.includes(d.id)
                   )
                   .map(d => d.nombre)
                   .join(', ') || '-'}

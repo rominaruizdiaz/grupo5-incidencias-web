@@ -25,6 +25,17 @@ export const BottomNav = () => {
         Crear
       </NavLink>
 
+      {!isAdmin && (
+        <NavLink
+          to="/areas"
+          className={({ isActive }) =>
+            `${base} ${isActive ? active : inactive}`
+          }
+        >
+          Mis Áreas
+        </NavLink>
+      )}
+
       {isAdmin && (
         <NavLink
           to="/personal"
@@ -33,6 +44,17 @@ export const BottomNav = () => {
           }
         >
           Gestión Personal
+        </NavLink>
+      )}
+
+      {isAdmin && (
+        <NavLink
+          to="/departamentos"
+          className={({ isActive }) =>
+            `${base} ${isActive ? active : inactive}`
+          }
+        >
+          Departamentos
         </NavLink>
       )}
 

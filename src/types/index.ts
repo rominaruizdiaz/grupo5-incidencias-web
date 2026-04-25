@@ -62,8 +62,14 @@ export interface CreateIncidenciaRequest {
 // ================= DEPARTAMENTOS =================
 
 export interface Departamento {
-  id: number
+  id?: number
   nombre: string
+}
+
+export interface UsuarioDepartamento {
+  id?: number
+  usuarioId: number
+  departamentoId: number
 }
 
 // ================= FILTROS =================

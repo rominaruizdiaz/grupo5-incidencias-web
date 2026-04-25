@@ -1,6 +1,14 @@
 import type { Usuario } from '@/types'
 
-export const getNombreUsuario = (usuarios: Usuario[], id?: number | null) => {
-  if (!id) return 'Desconocido'
-  return usuarios.find(u => u.id === id)?.nombre ?? 'Desconocido'
+export const getNombreUsuario = (
+  usuarios: Usuario[],
+  id?: number | string | null
+): string => {
+  if (id === null || id === undefined) return 'Desconocido'
+
+  const numericId = Number(id)
+
+  const usuario = usuarios.find(u => u.id === numericId)
+
+  return usuario?.nombre ?? 'Desconocido'
 }

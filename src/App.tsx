@@ -6,7 +6,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { PanelPage } from '@/pages/PanelPage'
 import { CreateIncidenciaPage } from '@/pages/CreateIncidenciasPage'
 import { UserProfilePage } from '@/pages/UserProfilePage'
-// import { PersonalPage } from './pages/PersonalPage'
+import { PersonalPage } from '@/pages/PersonalPage'
 
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
@@ -15,6 +15,8 @@ import { RoleRoute } from '@/components/routes/RoleRoute'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
 import { IncidenciaDetailPage } from './pages/IncidenciaDetailPage'
+import { DepartamentosPage } from './pages/DepartamentosPage'
+import { AreasPage } from './pages/AreasPage'
 
 function App() {
   return (
@@ -40,13 +42,27 @@ function App() {
         }
       >
         <Route path="/panel" element={<PanelPage />} />
+        <Route path="/areas" element={<AreasPage />} />
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
         <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />
 
         <Route
           path="/personal"
-          element={<RoleRoute roles={[1]}>{/* <PersonalPage /> */}</RoleRoute>}
+          element={
+            <RoleRoute roles={[1]}>
+              <PersonalPage />
+            </RoleRoute>
+          }
+        />
+
+        <Route
+          path="/departamentos"
+          element={
+            <RoleRoute roles={[1]}>
+              <DepartamentosPage />
+            </RoleRoute>
+          }
         />
       </Route>
 

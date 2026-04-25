@@ -4,20 +4,21 @@
       "id": 1,
       "nombre": "Admin User",
       "email": "admin@gmail.com",
-      "password": "$2a$10$.hx.1bd./tZ1Bz4csG9sTuPcSbB4k3Zj0g4qk1w2iXwZnpqE29qGy",
+      "password": "$2a$10$reQwbhwUsSDnBlNfV2r.m.u6YWYAn1Vd5W5qMpziIBe8OJ3sRat2y",
       "fotoPerfil": null,
       "modoOscuro": false,
-      "rol": null,
+      "rol": 1,
       "fechaRegistro": "2024-01-15T10:00:00Z",
       "departamentos": [
-        5
+        3,
+        4
       ]
     },
     {
       "id": 2,
       "nombre": "Juan Profesor",
       "email": "juan@gmail.com",
-      "password": "1234",
+      "password": "$2a$10$qtAXVdhgYlFa31RvFlpbaOQN9SrC5JJSpOJ4772WTyLRzcberxE7O",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 2,
@@ -25,7 +26,8 @@
       "departamentos": [
         1,
         2,
-        3
+        3,
+        4
       ]
     },
     {
@@ -64,9 +66,9 @@
     },
     {
       "email": "romina@romina.romina",
-      "password": "$2a$10$9ZIqlzZkyxC9hq2gxavbQe4a/UUwUMf.DYx2Yu6HFW7koiSGkt7L2",
+      "password": "$2a$10$sLC0JPPTJO7ucdN0gfw/AeBDoBkpOSZFdxH7oJb7BmOwaLgVMBdKS",
       "nombre": "romina",
-      "rol": 2,
+      "rol": 1,
       "modoOscuro": false,
       "fotoPerfil": null,
       "fechaRegistro": "2026-04-22T20:50:55.182Z",
@@ -164,100 +166,121 @@
       "estado": "Activo",
       "idReporta": 7,
       "id": 6
+    },
+    {
+      "titulo": "asdsa",
+      "descripcion": "asdsa",
+      "especialidad": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idReporta": 1,
+      "id": 7
+    },
+    {
+      "titulo": "rtyhrt",
+      "descripcion": "yrtytr",
+      "especialidad": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idReporta": 6,
+      "id": 8
+    },
+    {
+      "titulo": "aaaaaaaaaa",
+      "descripcion": "aaaaaaaaaaa",
+      "especialidad": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idReporta": 1,
+      "id": 9
+    },
+    {
+      "titulo": "asdas",
+      "descripcion": "asasd",
+      "especialidad": "Software",
+      "ubicacion": "Informática",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idReporta": 1,
+      "id": 10
     }
   ],
   "departamentos": [
     {
-      "idDepartamento": 1,
-      "nombre": "Informática",
-      "fechaCreacion": "2024-01-01T00:00:00Z"
+      "id": 3,
+      "nombre": "Lengua"
     },
     {
-      "idDepartamento": 2,
-      "nombre": "Matemáticas",
-      "fechaCreacion": "2024-01-01T00:00:00Z"
+      "id": 4,
+      "nombre": "Inglés"
     },
     {
-      "idDepartamento": 3,
-      "nombre": "Lengua",
-      "fechaCreacion": "2024-01-01T00:00:00Z"
+      "id": 5,
+      "nombre": "Ciencias"
     },
     {
-      "idDepartamento": 4,
-      "nombre": "Inglés",
-      "fechaCreacion": "2024-01-01T00:00:00Z"
-    },
-    {
-      "idDepartamento": 5,
-      "nombre": "Ciencias",
-      "fechaCreacion": "2024-01-01T00:00:00Z"
+      "nombre": "sdaasd",
+      "id": 6
     }
   ],
   "usuarioDepartamento": [
     {
-      "id": 1,
-      "usuarioId": 2,
-      "idDepartamento": 1
-    },
-    {
-      "id": 2,
-      "usuarioId": 2,
-      "idDepartamento": 2
-    },
-    {
-      "id": 3,
-      "usuarioId": 3,
-      "idDepartamento": 1
-    },
-    {
-      "id": 4,
-      "usuarioId": 4,
-      "idDepartamento": 2
-    },
-    {
       "id": 5,
       "usuarioId": 4,
-      "idDepartamento": 3
-    },
-    {
-      "id": 6,
-      "usuarioId": 5,
-      "idDepartamento": 1
+      "departamentoId": 3
     },
     {
       "usuarioId": 2,
-      "idDepartamento": 3,
+      "departamentoId": 3,
       "id": 11
     },
     {
       "usuarioId": 2,
-      "idDepartamento": 4,
+      "departamentoId": 4,
       "id": 13
     },
     {
       "usuarioId": 1,
-      "idDepartamento": 5,
-      "id": 18
-    },
-    {
-      "usuarioId": 1,
-      "idDepartamento": 1,
-      "id": 19
-    },
-    {
-      "usuarioId": 1,
-      "idDepartamento": 2,
-      "id": 20
-    },
-    {
-      "usuarioId": 1,
-      "idDepartamento": 3,
+      "departamentoId": 3,
       "id": 21
     },
     {
-      "usuarioId": 1,
-      "idDepartamento": 4,
+      "usuarioId": 6,
+      "departamentoId": 3,
       "id": 22
+    },
+    {
+      "usuarioId": 6,
+      "departamentoId": 4,
+      "id": 23
+    },
+    {
+      "usuarioId": 6,
+      "departamentoId": 5,
+      "id": 24
+    },
+    {
+      "usuarioId": 6,
+      "departamentoId": 6,
+      "id": 25
+    },
+    {
+      "usuarioId": 1,
+      "departamentoId": 4,
+      "id": 26
+    },
+    {
+      "usuarioId": 1,
+      "departamentoId": 5,
+      "id": 27
+    },
+    {
+      "usuarioId": 1,
+      "departamentoId": 6,
+      "id": 28
     }
   ]
 }

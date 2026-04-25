@@ -1,7 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 import type { Usuario } from '@/types'
 import { getUsuarios, updateUsuario, deleteUsuario } from '@/services/personal'
-import { updateUsuarioDepartamentos } from '@/services/usuarioDepartamento'
+import {
+  getUsuarioDepartamentos,
+  createUsuarioDepartamento,
+  deleteUsuarioDepartamento,
+} from '@/services/usuarioDepartamentos'
+import toast from 'react-hot-toast'
 
 export const usePersonal = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
@@ -28,12 +33,36 @@ export const usePersonal = () => {
         setError(null)
 
         await updateUsuario(usuario.id, usuario)
-        await updateUsuarioDepartamentos(usuario.id, departamentos)
+
+        const allRelations = await getUsuarioDepartamentos()
+        const currentRelations = allRelations.filter(
+          r => r.usuarioId === usuario.id
+        )
+
+        for (const rel of currentRelations) {
+          if (!departamentos.includes(rel.departamentoId)) {
+            await deleteUsuarioDepartamento(rel.id!)
+          }
+        }
+
+        for (const deptId of departamentos) {
+          const exists = currentRelations.some(
+            r => r.departamentoId === deptId
+          )
+          if (!exists) {
+            await createUsuarioDepartamento({
+              usuarioId: usuario.id,
+              departamentoId: deptId,
+            })
+          }
+        }
 
         await fetchUsuarios()
-      } catch {
+        toast.success('Usuario actualizado')
+      } catch (err) {
         setError('Error al actualizar usuario')
-        throw new Error()
+        toast.error('Error al actualizar usuario')
+        throw err
       } finally {
         setLoading(false)
       }
@@ -48,9 +77,11 @@ export const usePersonal = () => {
 
         await deleteUsuario(id)
         await fetchUsuarios()
-      } catch {
+        toast.success('Usuario eliminado')
+      } catch (err) {
         setError('Error al eliminar usuario')
-        throw new Error()
+        toast.error('Error al eliminar usuario')
+        throw err
       } finally {
         setLoading(false)
       }

@@ -3,8 +3,9 @@ import { useAuthStore } from '@/store/auth.store'
 
 export const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const usuario = useAuthStore(state => state.usuario)
+  const token = localStorage.getItem('token')
 
-  if (!usuario) {
+  if (!usuario && !token) {
     return <Navigate to="/login" replace />
   }
 

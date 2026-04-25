@@ -22,10 +22,21 @@ export const TopNav = () => {
           Crear
         </NavLink>
 
-        {isAdmin && (
-          <NavLink to="/personal" className={linkClass}>
-            Gestión Personal
+        {!isAdmin && (
+          <NavLink to="/areas" className={linkClass}>
+            Mis Áreas
           </NavLink>
+        )}
+
+        {isAdmin && (
+          <>
+            <NavLink to="/personal" className={linkClass}>
+              Personal
+            </NavLink>
+            <NavLink to="/departamentos" className={linkClass}>
+              Departamentos
+            </NavLink>
+          </>
         )}
 
         <NavLink to="/userProfile" className={linkClass}>

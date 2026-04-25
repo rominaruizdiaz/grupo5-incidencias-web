@@ -118,16 +118,16 @@ export function PersonalModal({
               <div className="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
                 {departamentos.map(depto => (
                   <label
-                    key={depto.idDepartamento}
+                    key={depto.id}
                     className="flex items-center"
                   >
                     <input
                       type="checkbox"
                       checked={selectedDepartamentos.includes(
-                        depto.idDepartamento
+                        depto.id!
                       )}
                       onChange={() =>
-                        handleDepartamentoChange(depto.idDepartamento)
+                        handleDepartamentoChange(depto.id!)
                       }
                       disabled={loading}
                       className="mr-2"
