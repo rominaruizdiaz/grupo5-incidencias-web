@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { registerRequest } from '@/services/auth'
 import { useAuthStore } from '@/store/auth.store'
-import type { RegisterFormData } from '@/components/features/register/register.types'
+
+import type { RegisterRequest } from '@/types'
 
 export const useRegister = () => {
   const navigate = useNavigate()
@@ -13,36 +14,32 @@ export const useRegister = () => {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const register = async (data: RegisterFormData) => {
+
+  const register = async (data: RegisterRequest) => {
     try {
       setLoading(true)
       setLoadingGlobal(true)
       setError(null)
 
-      const res = await registerRequest({
-        nombre: data.nombre,
-        email: data.email,
-        password: data.password,
-      })
+      const res = await registerRequest(data)
 
-      setUsuario({
-        ...res.user,
-      })
+      localStorage.setItem('token', res.accessToken)
 
-      localStorage.setItem('token', res.token)
+      setUsuario(res.user)
 
       navigate('/panel')
     } catch (err: any) {
-      setError(err?.response?.data?.message || 'Error en registro')
+      const backendError =
+        typeof err?.response?.data === 'string'
+          ? err.response.data
+          : err?.response?.data?.message
+
+      setError(backendError || 'Error en registro')
     } finally {
       setLoading(false)
       setLoadingGlobal(false)
     }
   }
 
-  return {
-    register,
-    loading,
-    error,
-  }
+  return { register, loading, error }
 }

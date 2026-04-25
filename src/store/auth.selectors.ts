@@ -1,17 +1,22 @@
 import { useAuthStore } from './auth.store'
+import type { Usuario } from '@/types'
 
-// state
+// ================= STATE =================
 export const useUsuario = () => useAuthStore(state => state.usuario)
 
 export const useIsLoading = () => useAuthStore(state => state.isLoading)
 
-// roles
-export const useIsAdmin = () => useAuthStore(state => state.isAdmin())
-export const useIsProfesor = () => useAuthStore(state => state.isProfesor())
-export const useIsTecnico = () => useAuthStore(state => state.isTecnico())
+// ================= ROLES (OPTIMIZADO) =================
+export const useIsAdmin = () => useAuthStore(state => state.usuario?.rol === 1)
 
-// actions
-export const setUsuario = (user: any) =>
+export const useIsProfesor = () =>
+  useAuthStore(state => state.usuario?.rol === 2)
+
+export const useIsTecnico = () =>
+  useAuthStore(state => state.usuario?.rol === 3)
+
+// ================= ACTIONS =================
+export const setUsuario = (user: Usuario | null) =>
   useAuthStore.getState().setUsuario(user)
 
 export const setLoading = (value: boolean) =>

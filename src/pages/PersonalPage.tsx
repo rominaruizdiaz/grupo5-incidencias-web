@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+/* import { useState, useEffect } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 
 import { usePersonal } from '@/hooks/usePersonal'
@@ -112,3 +112,4 @@ export function PersonalPage() {
     </div>
   )
 }
+ */

@@ -13,18 +13,18 @@ export interface PersonalFiltersProps {
 }
 
 export interface PersonalTableProps {
-  usuarios: Usuario[]
+  usuarios: UsuarioWithDepartamentos[]
   departamentos: Departamento[]
-  onEditUsuario: (usuario: Usuario) => void
-  onDeleteUsuario: (usuario: Usuario) => void
+  onEditUsuario: (usuario: UsuarioWithDepartamentos) => void
+  onDeleteUsuario: (usuario: UsuarioWithDepartamentos) => void
   loading?: boolean
 }
 
 export interface PersonalCardProps {
-  usuario: Usuario
+  usuario: UsuarioWithDepartamentos
   departamentos: Departamento[]
-  onEdit: (usuario: Usuario) => void
-  onDelete: (usuario: Usuario) => void
+  onEdit: (usuario: UsuarioWithDepartamentos) => void
+  onDelete: (usuario: UsuarioWithDepartamentos) => void
 }
 
 export interface PersonalModalProps {
@@ -33,8 +33,5 @@ export interface PersonalModalProps {
   isOpen: boolean
   loading?: boolean
   onClose: () => void
-  onSave: (
-    usuario: UsuarioWithDepartamentos,
-    departamentoIds: number[]
-  ) => Promise<void>
+  onSave: (usuario: UsuarioWithDepartamentos) => Promise<void>
 }

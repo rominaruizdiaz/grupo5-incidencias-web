@@ -10,25 +10,23 @@ server.use(jsonServer.defaults());
 server.use(jsonServer.bodyParser);
 
 server.post("/register", (req, res, next) => {
-  const { nombre } = req.body;
-
   req.body = {
     ...req.body,
-    nombre,
+
     rol: 2,
     modoOscuro: false,
     fotoPerfil: null,
     fechaRegistro: new Date().toISOString(),
-    departamentos: [],
   };
 
   next();
 });
 
 const rules = auth.rewriter({
-  users: 600,
+  users: 660,
   incidencias: 660,
-  departamentos: 644,
+  departamentos: 444,
+  usuarioDepartamento: 660,
 });
 
 server.use(rules);

@@ -7,10 +7,8 @@ export const useLogout = () => {
 
   const handleLogout = () => {
     logout()
-    navigate('/login')
+    navigate('/login', { replace: true })
   }
 
-  return {
-    handleLogout,
-  }
+  return { handleLogout }
 }

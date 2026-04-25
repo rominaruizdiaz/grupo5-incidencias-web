@@ -1,17 +1,15 @@
 import axios, { type AxiosInstance } from 'axios'
 
-//configuración de axios
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 
-export const api: AxiosInstance = axios.create({
+const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
-// Interceptor para agregar el token solo si existe
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
 
@@ -22,7 +20,6 @@ api.interceptors.request.use(config => {
   return config
 })
 
-// Interceptor para el manejo de errores globales
 api.interceptors.response.use(
   response => response,
   error => {

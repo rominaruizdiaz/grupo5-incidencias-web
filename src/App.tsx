@@ -6,7 +6,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { PanelPage } from '@/pages/PanelPage'
 import { CreateIncidenciaPage } from '@/pages/CreateIncidenciasPage'
 import { UserProfilePage } from '@/pages/UserProfilePage'
-import { PersonalPage } from './pages/PersonalPage'
+// import { PersonalPage } from './pages/PersonalPage'
 
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
@@ -46,11 +46,7 @@ function App() {
 
         <Route
           path="/personal"
-          element={
-            <RoleRoute roles={[1]}>
-              <PersonalPage />
-            </RoleRoute>
-          }
+          element={<RoleRoute roles={[1]}>{/* <PersonalPage /> */}</RoleRoute>}
         />
       </Route>
 

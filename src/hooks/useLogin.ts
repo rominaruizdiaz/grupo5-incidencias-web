@@ -1,14 +1,18 @@
 import { useState } from 'react'
-
-import { setUsuario, setLoading } from '@/store/auth.selectors'
-import { loginRequest } from '@/services/auth'
 import { useNavigate } from 'react-router-dom'
-import type { LoginFormData } from '@/components/features/login/login.types'
+
+import { useAuthStore } from '@/store/auth.store'
+import { loginRequest } from '@/services/auth'
+
+import type { LoginRequest } from '@/types'
 
 export const useLogin = () => {
   const navigate = useNavigate()
 
-  const [form, setForm] = useState<LoginFormData>({
+  const setUsuario = useAuthStore(state => state.setUsuario)
+  const setLoadingGlobal = useAuthStore(state => state.setLoading)
+
+  const [form, setForm] = useState<LoginRequest>({
     email: '',
     password: '',
   })
@@ -22,30 +26,39 @@ export const useLogin = () => {
     setForm(prev => ({ ...prev, password }))
 
   const login = async () => {
+    if (!form.email || !form.password) {
+      setError('Email y contraseña obligatorios')
+      return
+    }
+
     try {
       setLoadingLocal(true)
-      setLoading(true)
+      setLoadingGlobal(true)
       setError(null)
 
-      const res = await loginRequest({
-        email: form.email,
-        password: form.password,
-      })
+      const res = await loginRequest(form)
+
+      localStorage.setItem('token', res.accessToken)
 
       setUsuario(res.user)
-      localStorage.setItem('token', res.token)
 
       navigate('/panel')
     } catch (err: any) {
-      setError(err?.response?.data?.message || 'Error al iniciar sesión')
+      const backendError =
+        typeof err?.response?.data === 'string'
+          ? err.response.data
+          : err?.response?.data?.message
+
+      setError(backendError || 'Error al iniciar sesión')
     } finally {
       setLoadingLocal(false)
-      setLoading(false)
+      setLoadingGlobal(false)
     }
   }
 
   return {
-    ...form,
+    email: form.email,
+    password: form.password,
     setEmail,
     setPassword,
     login,

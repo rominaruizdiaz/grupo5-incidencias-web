@@ -1,4 +1,3 @@
-// roles del sistema
 export enum UserRole {
   ADMIN = 1,
   PROFESOR = 2,
@@ -17,7 +16,8 @@ export enum IncidenciaUrgencia {
   ALTA = 'Alta',
 }
 
-// entidades
+// ================= USERS =================
+
 export interface Usuario {
   id: number
   nombre: string
@@ -29,12 +29,18 @@ export interface Usuario {
   fechaRegistro: string
 }
 
+export interface UsuarioWithDepartamentos extends Usuario {
+  departamentos: number[]
+}
+
+// ================= INCIDENCIAS =================
+
 export interface Incidencia {
   id: number
   titulo: string
   descripcion: string
-  especialidad: string // quién la resuelve
-  ubicacion: string // área afectada
+  especialidad: string
+  ubicacion: string
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   fecha: string
@@ -43,43 +49,32 @@ export interface Incidencia {
   fechaResolucion?: string | null
 }
 
-// DTO
 export interface CreateIncidenciaRequest {
   titulo: string
   descripcion: string
-  especialidad: string // quién la resuelve
-  ubicacion: string // área afectada
+  especialidad: string
+  ubicacion: string
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   idReporta: number
 }
 
+// ================= DEPARTAMENTOS =================
+
 export interface Departamento {
-  idDepartamento: number
+  id: number
   nombre: string
-  fechaCreacion: string
 }
 
-export interface UsuarioDepartamento {
-  id: number
-  usuarioId: number
-  idDepartamento: number
-}
+// ================= FILTROS =================
 
 export interface PersonalFiltersState {
-  departamentoId: number | null
   rol: UserRole | null
+  departamentoId: number | null
 }
 
-export interface PersonalTableRow extends Usuario {
-  departamentos?: string[]
-}
+// ================= AUTH =================
 
-export type UsuarioWithDepartamentos = Usuario & {
-  departamentos: number[]
-}
-
-// AUTH TYPES
 export interface LoginRequest {
   email: string
   password: string
@@ -92,6 +87,6 @@ export interface RegisterRequest {
 }
 
 export interface AuthResponse {
-  token: string
+  accessToken: string
   user: Usuario
 }
