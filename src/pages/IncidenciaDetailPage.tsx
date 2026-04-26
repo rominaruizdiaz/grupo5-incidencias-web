@@ -1,18 +1,59 @@
+import { useState } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
+import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 import { useIncidencias } from '@/hooks/useIncidencias'
+import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
+import { getEtiquetas } from '@/services/etiquetas'
 
 export const IncidenciaDetailPage = () => {
   const { id } = useParams()
   const usuario = useAuthStore(state => state.usuario)
   const { incidencias, getNombreUsuario } = useIncidencias()
+  const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
+
+  const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
+  const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
 
   const incidencia = incidencias.find(i => i.id === Number(id))
 
   const form = useIncidenciaForm(incidencia)
+
+  // Obtener etiqueta actual basada en la categoría
+  const loadEtiquetaActual = async () => {
+    if (incidencia?.categoria) {
+      try {
+        const etiquetas = await getEtiquetas()
+        const encontrada = etiquetas.find(e => e.nombre === incidencia.categoria)
+        setEtiquetaActual(encontrada || null)
+      } catch (err) {
+        console.error('Error cargando etiqueta:', err)
+      }
+    }
+  }
+
+  const handleAbrirAsignar = async () => {
+    await loadEtiquetaActual()
+    setIsModalAsignarOpen(true)
+  }
+
+  const handleAsignarTecnico = async (idTecnico: number, nombreTecnico: string) => {
+    if (!incidencia) return
+    const exito = await asignarTecnico(
+      incidencia.id,
+      idTecnico,
+      nombreTecnico,
+      incidencia.titulo
+    )
+    if (exito) {
+      setIsModalAsignarOpen(false)
+      // Refresh incidencias
+      setTimeout(() => window.location.reload(), 1000)
+    }
+  }
 
   if (!incidencia) return <p>No encontrada</p>
 
@@ -46,7 +87,11 @@ export const IncidenciaDetailPage = () => {
         {puedeEliminar && <DeleteIncidenciaButton id={incidencia.id} />}
 
         {puedeAsignar && (
-          <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+          <button
+            onClick={handleAbrirAsignar}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+            disabled={loadingAsignar}
+          >
             Asignar Técnico
           </button>
         )}
@@ -80,6 +125,13 @@ export const IncidenciaDetailPage = () => {
         />
       ) : (
         <div className="bg-white rounded-lg shadow p-6 space-y-4">
+          {incidencia.idUsuarioAsignado && (
+            <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-sm text-green-900">
+                <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
+              </p>
+            </div>
+          )}
           <div>
             <p className="text-sm font-medium text-gray-600">Título</p>
             <p className="text-lg font-semibold text-gray-900">{incidencia.titulo}</p>
@@ -109,6 +161,16 @@ export const IncidenciaDetailPage = () => {
           <p className="text-xs text-gray-500">Solo el creador o administrador puede editar</p>
         </div>
       )}
+
+      {/* Modal para asignar técnico */}
+      <AsignarTecnicoModal
+        isOpen={isModalAsignarOpen}
+        onClose={() => setIsModalAsignarOpen(false)}
+        onAsignar={handleAsignarTecnico}
+        categoria={incidencia?.categoria}
+        etiquetaActual={etiquetaActual}
+        loading={loadingAsignar}
+      />
     </div>
   )
 }
