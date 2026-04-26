@@ -20,22 +20,20 @@ export const actualizarEtiquetasUsuario = async (
   usuarioId: number,
   etiquetaIds: number[]
 ) => {
-  // Obtener etiquetas actuales del usuario
-  const actuales = await getEtiquetasPorUsuario(usuarioId)
+  // Obtener todos los registros de usuarioEtiqueta del usuario
+  const { data: registros } = await api.get(`/usuarioEtiqueta?usuarioId=${usuarioId}`)
 
   // Eliminar las que ya no están
-  for (const id of actuales) {
-    if (!etiquetaIds.includes(id)) {
-      const registro = await api.get(`/usuarioEtiqueta?usuarioId=${usuarioId}&etiquetaId=${id}`)
-      if (registro.data.length > 0) {
-        await api.delete(`/usuarioEtiqueta/${registro.data[0].id}`)
-      }
+  for (const registro of registros) {
+    if (!etiquetaIds.includes(registro.etiquetaId)) {
+      await api.delete(`/usuarioEtiqueta/${registro.id}`)
     }
   }
 
   // Agregar las nuevas
+  const actualesIds = registros.map((r: UsuarioEtiqueta) => r.etiquetaId)
   for (const etiquetaId of etiquetaIds) {
-    if (!actuales.includes(etiquetaId)) {
+    if (!actualesIds.includes(etiquetaId)) {
       await api.post('/usuarioEtiqueta', { usuarioId, etiquetaId })
     }
   }
