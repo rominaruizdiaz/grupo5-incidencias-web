@@ -1,10 +1,13 @@
 import { useCallback, useState } from 'react'
 import { createMensaje } from '@/services/mensajes'
-import type { MensajeIncidencia } from '@/types'
+import type { MensajeIncidencia, Incidencia } from '@/types'
 import toast from 'react-hot-toast'
+import { getIncidenciaById } from '@/services/incidencias'
+import { useNotificarInvolucrados } from './useNotificarInvolucrados'
 
 export const useEnviarMensaje = () => {
   const [loading, setLoading] = useState(false)
+  const { notificarCambio } = useNotificarInvolucrados()
 
   const enviarMensaje = useCallback(
     async (idIncidencia: number, idUsuario: number, mensaje: string) => {
@@ -25,6 +28,15 @@ export const useEnviarMensaje = () => {
         }
 
         await createMensaje(nuevoMensaje)
+
+        // Notify involved parties that a comment was added
+        try {
+          const incidencia = await getIncidenciaById(idIncidencia)
+          await notificarCambio(incidencia, 'Nuevo comentario en la incidencia')
+        } catch (err) {
+          console.error('Error notificando sobre comentario:', err)
+        }
+
         toast.success('Mensaje enviado')
         return true
       } catch (err) {
@@ -35,7 +47,7 @@ export const useEnviarMensaje = () => {
         setLoading(false)
       }
     },
-    []
+    [notificarCambio]
   )
 
   return { enviarMensaje, loading }

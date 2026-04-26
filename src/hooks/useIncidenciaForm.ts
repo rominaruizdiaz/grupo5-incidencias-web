@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, type Incidencia } from '@/types'
 import { crearMensajeTracking, mensajesCambioEstado } from '@/services/mensajesTracking'
+import { useNotificarInvolucrados } from './useNotificarInvolucrados'
 
 import { useIncidenciaFormState } from './useIncidenciaFormState'
 import { useIncidenciaFormActions } from './useIncidenciaActions'
@@ -11,6 +12,7 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
   const navigate = useNavigate()
   const usuario = useAuthStore(state => state.usuario)
   const { create, update } = useIncidenciaFormActions()
+  const { notificarCambio } = useNotificarInvolucrados()
 
   const isEdit = !!initial
 
@@ -46,19 +48,25 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
           estado: form.estado,
         })
 
-        // Si el estado cambió, crear mensaje automático de tracking
+        // Si el estado cambió, crear mensaje automático de tracking y notificar involucrados
         if (initial.estado !== form.estado) {
           let mensajeTracking = ''
+          let accion = ''
           if (form.estado === IncidenciaEstado.ACTIVO) {
             mensajeTracking = mensajesCambioEstado.aActivo(usuario.nombre)
+            accion = 'Cambio de estado a Activo'
           } else if (form.estado === IncidenciaEstado.EN_CURSO) {
             mensajeTracking = mensajesCambioEstado.aEnCurso(usuario.nombre)
+            accion = 'Cambio de estado a En Curso'
           } else if (form.estado === IncidenciaEstado.RESUELTO) {
             mensajeTracking = mensajesCambioEstado.aResuelto(usuario.nombre)
+            accion = 'Cambio de estado a Resuelto'
           }
 
           if (mensajeTracking) {
             await crearMensajeTracking(initial.id, usuario, mensajeTracking)
+            // Notify all involved parties
+            await notificarCambio(initial, accion)
           }
         }
       } else {

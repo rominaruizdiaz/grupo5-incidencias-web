@@ -145,11 +145,11 @@ export const IncidenciaDetailPage = () => {
 
   // Permisos de edición
   const puedeEditarTextos = (esCreador || esAdmin) && incidencia.estado !== 'Resuelto'
-  const puedeResolverEnumerations = (esTecnico && esAsignado) || esAdmin
+  const puedeCambiarEstado = (esAdmin || (esTecnico && esAsignado)) && incidencia.estado !== 'Resuelto'
   const puedeAsignar = esAdmin
   const puedeEliminar = (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
 
-  if (!puedeEditarTextos && !puedeResolverEnumerations && !puedeAsignar) {
+  if (!puedeEditarTextos && !puedeCambiarEstado && !puedeAsignar) {
     return (
       <div className="p-6">
         <div className="bg-red-50 border border-red-200 rounded-lg p-6 inline-block">
@@ -217,6 +217,95 @@ export const IncidenciaDetailPage = () => {
           reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
           loading={form.loading}
         />
+      ) : puedeCambiarEstado && !puedeEditarTextos ? (
+        <div className="space-y-6">
+          <div className="bg-white rounded-lg shadow p-6 space-y-4">
+            {incidencia.idUsuarioAsignado && (
+              <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-green-900">
+                  <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
+                </p>
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-medium text-gray-600">Título</p>
+              <p className="text-lg font-semibold text-gray-900">{incidencia.titulo}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-600">Descripción</p>
+              <p className="text-gray-700">{incidencia.descripcion}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Estado</p>
+                <p className="text-gray-900">{incidencia.estado}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Urgencia</p>
+                <p className="text-gray-900">{incidencia.urgencia}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Categoría</p>
+                <p className="text-gray-900">{incidencia.categoria}</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-600">Ubicación</p>
+                <p className="text-gray-900">{incidencia.ubicacion}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-6 space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Cambiar Estado</h3>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  form.setEstado(IncidenciaEstado.ACTIVO)
+                  form.submit({
+                    preventDefault: () => {},
+                  } as React.FormEvent)
+                }}
+                className={`px-4 py-2 rounded text-white transition ${
+                  incidencia.estado === IncidenciaEstado.ACTIVO
+                    ? 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-gray-400 hover:bg-gray-500'
+                }`}
+              >
+                Activo
+              </button>
+              <button
+                onClick={() => {
+                  form.setEstado(IncidenciaEstado.EN_CURSO)
+                  form.submit({
+                    preventDefault: () => {},
+                  } as React.FormEvent)
+                }}
+                className={`px-4 py-2 rounded text-white transition ${
+                  incidencia.estado === IncidenciaEstado.EN_CURSO
+                    ? 'bg-yellow-600 hover:bg-yellow-700'
+                    : 'bg-gray-400 hover:bg-gray-500'
+                }`}
+              >
+                En Curso
+              </button>
+              <button
+                onClick={() => {
+                  form.setEstado(IncidenciaEstado.RESUELTO)
+                  form.submit({
+                    preventDefault: () => {},
+                  } as React.FormEvent)
+                }}
+                className={`px-4 py-2 rounded text-white transition ${
+                  incidencia.estado === IncidenciaEstado.RESUELTO
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : 'bg-gray-400 hover:bg-gray-500'
+                }`}
+              >
+                Resuelto
+              </button>
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="bg-white rounded-lg shadow p-6 space-y-4">
           {incidencia.idUsuarioAsignado && (

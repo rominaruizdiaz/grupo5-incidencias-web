@@ -4,6 +4,10 @@ import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, IncidenciaUrgencia, type Incidencia } from '@/types'
 import { getUsuarios } from '@/services/personal'
 import type { Usuario } from '@/types'
+import { getEtiquetasPorUsuario, getUsuarioEtiquetas } from '@/services/usuarioEtiquetas'
+import { getEtiquetas } from '@/services/etiquetas'
+import { getDepartamentos } from '@/services/departamentos'
+import { getUsuarioDepartamentos } from '@/services/usuarioDepartamentos'
 
 import { getNombreUsuario as resolveNombre } from '@/utils/usuarios'
 
@@ -26,6 +30,10 @@ export const useIncidencias = () => {
 
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
+  const [etiquetas, setEtiquetas] = useState<any[]>([])
+  const [departamentos, setDepartamentos] = useState<any[]>([])
+  const [usuarioDepartamentos, setUsuarioDepartamentos] = useState<any[]>([])
+  const [usuarioEtiquetasIds, setUsuarioEtiquetasIds] = useState<number[]>([])
 
   const [loading, setLoading] = useState(true)
   const [sort, setSort] = useState<SortType>('estado')
@@ -36,12 +44,24 @@ export const useIncidencias = () => {
       try {
         setLoading(true)
 
-        const [incidenciasData, usuariosData] = await Promise.all([
+        const [incidenciasData, usuariosData, etiquetasData, departamentosData, usuarioDepartamentosData] = await Promise.all([
           getIncidencias(),
           getUsuarios(),
+          getEtiquetas(),
+          getDepartamentos(),
+          getUsuarioDepartamentos(),
         ])
 
         setUsuarios(usuariosData)
+        setEtiquetas(etiquetasData)
+        setDepartamentos(departamentosData)
+        setUsuarioDepartamentos(usuarioDepartamentosData)
+
+        // Load user etiquetas if user is a technician
+        if (usuario && usuario.rol === 3) {
+          const etiquetasIds = await getEtiquetasPorUsuario(usuario.id)
+          setUsuarioEtiquetasIds(etiquetasIds)
+        }
 
         setIncidencias(
           incidenciasData.map(i => ({
@@ -62,7 +82,7 @@ export const useIncidencias = () => {
     }
 
     fetchData()
-  }, [])
+  }, [usuario])
 
   // 👇 wrapper limpio
   const getNombreUsuario = (id?: number | null) => resolveNombre(usuarios, id)
@@ -75,12 +95,42 @@ export const useIncidencias = () => {
         return incidencias
       case 2:
         return incidencias.filter(i => i.idUsuarioReporta === usuario.id)
-      case 3:
-        return incidencias.filter(i => i.idUsuarioAsignado === usuario.id)
+      case 3: {
+        // Technician: incidents assigned to them + created by them + incidents in their departments with their specialties
+        const misDepartamentos = usuarioDepartamentos
+          .filter(ud => ud.usuarioId === usuario.id)
+          .map(ud => {
+            const depto = departamentos.find(d => d.id === ud.departamentoId)
+            return depto?.nombre
+          })
+          .filter(Boolean)
+
+        const misEtiquetas = usuarioEtiquetasIds
+          .map(etqId => {
+            const etq = etiquetas.find(e => e.id === etqId)
+            return etq?.nombre
+          })
+          .filter(Boolean)
+
+        // Incidents assigned to tech OR created by tech
+        const asignadas = incidencias.filter(
+          i => i.idUsuarioAsignado === usuario.id || i.idUsuarioReporta === usuario.id
+        )
+
+        // Incidents in their departments with their specialties
+        const porEspecialidad = incidencias.filter(
+          i =>
+            misDepartamentos.includes(i.ubicacion) &&
+            misEtiquetas.includes(i.categoria)
+        )
+
+        // Combine and deduplicate by id
+        return [...new Map([...asignadas, ...porEspecialidad].map(i => [i.id, i])).values()]
+      }
       default:
         return []
     }
-  }, [incidencias, usuario])
+  }, [incidencias, usuario, usuarioDepartamentos, departamentos, usuarioEtiquetasIds, etiquetas])
 
   const sortedIncidencias = useMemo(() => {
     return [...filteredIncidencias].sort((a, b) => {
@@ -103,12 +153,23 @@ export const useIncidencias = () => {
   const changeSort = (type: SortType) => setSort(type)
 
   const refresh = async () => {
-    const [incidenciasData, usuariosData] = await Promise.all([
+    const [incidenciasData, usuariosData, etiquetasData, departamentosData, usuarioDepartamentosData] = await Promise.all([
       getIncidencias(),
       getUsuarios(),
+      getEtiquetas(),
+      getDepartamentos(),
+      getUsuarioDepartamentos(),
     ])
 
     setUsuarios(usuariosData)
+    setEtiquetas(etiquetasData)
+    setDepartamentos(departamentosData)
+    setUsuarioDepartamentos(usuarioDepartamentosData)
+
+    if (usuario && usuario.rol === 3) {
+      const etiquetasIds = await getEtiquetasPorUsuario(usuario.id)
+      setUsuarioEtiquetasIds(etiquetasIds)
+    }
 
     setIncidencias(
       incidenciasData.map(i => ({
