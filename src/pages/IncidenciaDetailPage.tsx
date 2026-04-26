@@ -2,10 +2,14 @@ import { useState } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
+import { MensajesList } from '@/components/features/incidencias/MensajesList'
+import { NuevoMensajeInput } from '@/components/features/incidencias/NuevoMensajeInput'
 import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 import { useIncidencias } from '@/hooks/useIncidencias'
 import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
 import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
+import { useMensajes } from '@/hooks/useMensajes'
+import { useEnviarMensaje } from '@/hooks/useEnviarMensaje'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
@@ -17,6 +21,8 @@ export const IncidenciaDetailPage = () => {
   const { incidencias, getNombreUsuario } = useIncidencias()
   const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
   const { resolverIncidencia, loading: loadingResolver } = useResolverIncidencia()
+  const { mensajes, loading: loadingMensajes, refresh: refreshMensajes } = useMensajes(Number(id) || 0)
+  const { enviarMensaje, loading: loadingEnviar } = useEnviarMensaje()
 
   const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
   const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
@@ -75,6 +81,14 @@ export const IncidenciaDetailPage = () => {
       setIsModalResolverOpen(false)
       // Refresh incidencias
       setTimeout(() => window.location.reload(), 1000)
+    }
+  }
+
+  const handleEnviarMensaje = async (mensaje: string) => {
+    if (!usuario || !incidencia) return
+    const exito = await enviarMensaje(incidencia.id, usuario.id, mensaje)
+    if (exito) {
+      await refreshMensajes()
     }
   }
 
@@ -188,6 +202,29 @@ export const IncidenciaDetailPage = () => {
           <p className="text-xs text-gray-500">Solo el creador o administrador puede editar</p>
         </div>
       )}
+
+      {/* Sección de mensajes */}
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            Registro de Seguimiento
+          </h3>
+          <div className="bg-white rounded-lg border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
+            <MensajesList
+              mensajes={mensajes}
+              getNombreUsuario={getNombreUsuario}
+              usuarioActualId={usuario?.id}
+              loading={loadingMensajes}
+            />
+          </div>
+        </div>
+
+        <NuevoMensajeInput
+          onEnviar={handleEnviarMensaje}
+          loading={loadingEnviar}
+          disabled={false}
+        />
+      </div>
 
       {/* Modal para asignar técnico */}
       <AsignarTecnicoModal
