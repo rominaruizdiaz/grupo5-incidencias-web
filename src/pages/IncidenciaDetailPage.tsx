@@ -3,6 +3,7 @@ import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
 import { ReabrirIncidenciaModal } from '@/components/features/incidencias/ReabrirIncidenciaModal'
+import { CambiarEstadoModal } from '@/components/features/incidencias/CambiarEstadoModal'
 import { MensajesList } from '@/components/features/incidencias/MensajesList'
 import { NuevoMensajeInput } from '@/components/features/incidencias/NuevoMensajeInput'
 import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
@@ -10,6 +11,7 @@ import { useIncidencias } from '@/hooks/useIncidencias'
 import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
 import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
 import { useReabrirIncidencia } from '@/hooks/useReabrirIncidencia'
+import { useCambiarEstado } from '@/hooks/useCambiarEstado'
 import { useMensajes } from '@/hooks/useMensajes'
 import { useEnviarMensaje } from '@/hooks/useEnviarMensaje'
 import { useAuthStore } from '@/store/auth.store'
@@ -25,12 +27,14 @@ export const IncidenciaDetailPage = () => {
   const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
   const { resolverIncidencia, loading: loadingResolver } = useResolverIncidencia()
   const { reabrirIncidencia, loading: loadingReabrir } = useReabrirIncidencia()
+  const { cambiarEstado, loading: loadingCambiarEstado } = useCambiarEstado()
   const { mensajes, loading: loadingMensajes, refresh: refreshMensajes } = useMensajes(Number(id) || 0)
   const { enviarMensaje, loading: loadingEnviar } = useEnviarMensaje()
 
   const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
   const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
   const [isModalReabrirOpen, setIsModalReabrirOpen] = useState(false)
+  const [isModalCambiarEstadoOpen, setIsModalCambiarEstadoOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
 
   const incidencia = incidencias.find(i => i.id === Number(id))
@@ -116,6 +120,20 @@ export const IncidenciaDetailPage = () => {
     }
   }
 
+  const handleAbrirCambiarEstado = () => {
+    setIsModalCambiarEstadoOpen(true)
+  }
+
+  const handleCambiarEstado = async (nuevoEstado: IncidenciaEstado) => {
+    if (!incidencia) return
+    const exito = await cambiarEstado(incidencia.id, nuevoEstado)
+    if (exito) {
+      setIsModalCambiarEstadoOpen(false)
+      // Refresh incidencias
+      setTimeout(() => window.location.reload(), 1000)
+    }
+  }
+
   if (!incidencia) return <p>No encontrada</p>
 
   // Calcular permisos
@@ -174,6 +192,16 @@ export const IncidenciaDetailPage = () => {
             disabled={loadingReabrir}
           >
             Reabrir Incidencia
+          </button>
+        )}
+
+        {(esAdmin || (esTecnico && esAsignado)) && (
+          <button
+            onClick={handleAbrirCambiarEstado}
+            className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:bg-gray-400"
+            disabled={loadingCambiarEstado}
+          >
+            Cambiar Estado
           </button>
         )}
       </div>
@@ -286,6 +314,15 @@ export const IncidenciaDetailPage = () => {
         onReabrir={handleReabrirIncidencia}
         loading={loadingReabrir}
         tituloIncidencia={incidencia?.titulo}
+      />
+
+      {/* Modal para cambiar estado */}
+      <CambiarEstadoModal
+        isOpen={isModalCambiarEstadoOpen}
+        onClose={() => setIsModalCambiarEstadoOpen(false)}
+        onCambiar={handleCambiarEstado}
+        loading={loadingCambiarEstado}
+        estadoActual={incidencia?.estado as IncidenciaEstado}
       />
     </div>
   )
