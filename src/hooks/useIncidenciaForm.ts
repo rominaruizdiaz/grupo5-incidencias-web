@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, type Incidencia } from '@/types'
-import { crearMensajeTracking, mensajesCambioEstado } from '@/services/mensajesTracking'
+import { crearMensajeTracking, mensajesCambioEstado } from '@/services/tracking'
 import { useNotificarInvolucrados } from './useNotificarInvolucrados'
 
 import { useIncidenciaFormState } from './useIncidenciaFormState'

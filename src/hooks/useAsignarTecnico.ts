@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { updateIncidencia } from '@/services/incidencias'
 import { createNotificacion } from '@/services/notificaciones'
-import { crearMensajeTracking, mensajesAsignacion } from '@/services/mensajesTracking'
+import { crearMensajeTracking, mensajesAsignacion } from '@/services/tracking'
 import { useAuthStore } from '@/store/auth.store'
 import toast from 'react-hot-toast'
 
@@ -37,7 +37,10 @@ export const useAsignarTecnico = () => {
 
         // 3. Crear mensaje de tracking
         if (usuario) {
-          const mensajeTracking = mensajesAsignacion.asignado(usuario.nombre, nombreTecnico)
+          const mensajeTracking = mensajesAsignacion.asignado(
+            usuario.nombre,
+            nombreTecnico
+          )
           await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
         }
 

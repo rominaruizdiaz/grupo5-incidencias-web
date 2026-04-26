@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { updateIncidencia } from '@/services/incidencias'
 import { createNotificacion } from '@/services/notificaciones'
-import { crearMensajeTracking, mensajesResolucion } from '@/services/mensajesTracking'
+import { crearMensajeTracking, mensajesResolucion } from '@/services/tracking'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado } from '@/types'
 import toast from 'react-hot-toast'
@@ -40,7 +40,10 @@ export const useResolverIncidencia = () => {
 
         // 3. Crear mensaje de tracking
         if (usuario) {
-          const mensajeTracking = mensajesResolucion.resuelto(usuario.nombre, descripcionResolucion)
+          const mensajeTracking = mensajesResolucion.resuelto(
+            usuario.nombre,
+            descripcionResolucion
+          )
           await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
         }
 

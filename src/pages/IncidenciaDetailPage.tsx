@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
 import { getEtiquetas } from '@/services/etiquetas'
 import { getIncidenciaById } from '@/services/incidencias'
+import { getEtiquetasPorUsuario } from '@/services/usuarioEtiquetas'
 import { type Incidencia, IncidenciaEstado } from '@/types'
 
 export const IncidenciaDetailPage = () => {
@@ -34,6 +35,8 @@ export const IncidenciaDetailPage = () => {
   const [isModalReabrirOpen, setIsModalReabrirOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
   const [incidenciaDirecta, setIncidenciaDirecta] = useState<Incidencia | null>(null)
+  const [etiquetasUsuario, setEtiquetasUsuario] = useState<number[]>([])
+  const [etiquetas, setEtiquetas] = useState<any[]>([])
 
   let incidencia = incidencias.find(i => i.id === Number(id))
   if (!incidencia && incidenciaDirecta) {
@@ -53,6 +56,25 @@ export const IncidenciaDetailPage = () => {
       fetchIncidencia()
     }
   }, [id, incidencia])
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        // Cargar etiquetas globales
+        const etiquetasData = await getEtiquetas()
+        setEtiquetas(etiquetasData)
+
+        // Cargar etiquetas del usuario técnico actual si es técnico
+        if (usuario && usuario.rol === 3) {
+          const etiquetasDelUsuario = await getEtiquetasPorUsuario(usuario.id)
+          setEtiquetasUsuario(etiquetasDelUsuario)
+        }
+      } catch (err) {
+        console.error('Error cargando etiquetas:', err)
+      }
+    }
+    cargarDatos()
+  }, [usuario])
 
   const form = useIncidenciaForm(incidencia)
 
@@ -143,23 +165,21 @@ export const IncidenciaDetailPage = () => {
   const esTecnico = usuario?.rol === 3
   const esAsignado = usuario?.id === incidencia.idUsuarioAsignado
 
+  // Calcular si el técnico tiene la especialización necesaria
+  const tieneespecializacion = (() => {
+    if (!esTecnico || !incidencia.categoria) return false
+    const etiquetaCategoria = etiquetas.find(e => e.nombre === incidencia.categoria)
+    return etiquetaCategoria ? etiquetasUsuario.includes(etiquetaCategoria.id) : false
+  })()
+
   // Permisos de edición
   const puedeEditarTextos = (esCreador || esAdmin) && incidencia.estado !== 'Resuelto'
   const puedeCambiarEstado = (esAdmin || (esTecnico && esAsignado)) && incidencia.estado !== 'Resuelto'
   const puedeAsignar = esAdmin
+  const puedeResolver = esAdmin || (esTecnico && (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion))) && incidencia.estado !== 'Resuelto'
   const puedeEliminar = (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
 
-  if (!puedeEditarTextos && !puedeCambiarEstado && !puedeAsignar) {
-    return (
-      <div className="p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 inline-block">
-          <p className="text-red-900 font-semibold">
-            No tienes permiso para ver o editar esta incidencia.
-          </p>
-        </div>
-      </div>
-    )
-  }
+  const tieneAccesoAlChat = puedeEditarTextos || puedeCambiarEstado || puedeAsignar
 
   return (
     <div className="space-y-4">
@@ -176,7 +196,7 @@ export const IncidenciaDetailPage = () => {
           </button>
         )}
 
-        {puedeResolverEnumerations && incidencia.estado !== 'Resuelto' && (
+        {puedeResolver && (
           <button
             onClick={handleAbrirResolver}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
@@ -345,28 +365,30 @@ export const IncidenciaDetailPage = () => {
         </div>
       )}
 
-      {/* Sección de mensajes */}
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">
-            Registro de Seguimiento
-          </h3>
-          <div className="bg-white rounded-lg border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
-            <MensajesList
-              mensajes={mensajes}
-              getNombreUsuario={getNombreUsuario}
-              usuarioActualId={usuario?.id}
-              loading={loadingMensajes}
-            />
+      {/* Sección de mensajes - solo visible si tiene acceso */}
+      {tieneAccesoAlChat && (
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Registro de Seguimiento
+            </h3>
+            <div className="bg-white rounded-lg border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
+              <MensajesList
+                mensajes={mensajes}
+                getNombreUsuario={getNombreUsuario}
+                usuarioActualId={usuario?.id}
+                loading={loadingMensajes}
+              />
+            </div>
           </div>
-        </div>
 
-        <NuevoMensajeInput
-          onEnviar={handleEnviarMensaje}
-          loading={loadingEnviar}
-          disabled={false}
-        />
-      </div>
+          <NuevoMensajeInput
+            onEnviar={handleEnviarMensaje}
+            loading={loadingEnviar}
+            disabled={false}
+          />
+        </div>
+      )}
 
       {/* Modal para asignar técnico */}
       <AsignarTecnicoModal
