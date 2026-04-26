@@ -5,7 +5,8 @@ import { getDepartamentos } from '@/services/departamentos'
 import { getIncidencias } from '@/services/incidencias'
 import { getUsuarioDepartamentos } from '@/services/usuarioDepartamentos'
 import { type Departamento, type Incidencia } from '@/types'
-import { ChevronDown } from 'lucide-react'
+import { IncidenciaCard } from '@/components/features/incidencias/IncidenciaCard'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export function AreasPage() {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ export function AreasPage() {
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
   const [usuarioDepartamentos, setUsuarioDepartamentos] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [expandedDepartamento, setExpandedDepartamento] = useState<number | null>(null)
 
   useEffect(() => {
     const fetch = async () => {
@@ -51,23 +53,8 @@ export function AreasPage() {
   const getIncidenciasDelDepartamento = (departamentoId: number) => {
     const nombreDepartamento = departamentos.find(d => d.id === departamentoId)?.nombre
 
-    return incidencias.filter(inc => {
-      const perteneceAlArea = inc.ubicacion === nombreDepartamento
-      if (!perteneceAlArea) return false
-
-      // Filtrar según rol
-      if (usuario.rol === 1) {
-        // Admin ve todas del departamento
-        return true
-      } else if (usuario.rol === 2) {
-        // Profesor SOLO ve las que ÉL creó
-        return inc.idUsuarioReporta === usuario.id
-      } else if (usuario.rol === 3) {
-        // Técnico SOLO ve las asignadas a ÉL
-        return inc.idUsuarioAsignado === usuario.id
-      }
-      return false
-    })
+    // Mostrar TODAS las incidencias de este departamento, sin filtrar por rol
+    return incidencias.filter(inc => inc.ubicacion === nombreDepartamento)
   }
 
   return (
@@ -95,16 +82,21 @@ export function AreasPage() {
           <div className="space-y-4">
             {departamentosInfo.map(area => {
               const incidenciasArea = getIncidenciasDelDepartamento(area.id!)
+              const isExpanded = expandedDepartamento === area.id
 
               return (
                 <div
                   key={area.id}
-                  className="bg-white rounded-lg shadow overflow-hidden cursor-pointer hover:shadow-lg transition"
-                  onClick={() => navigate(`/areas/${area.id}`)}
+                  className="bg-white rounded-lg shadow overflow-hidden"
                 >
                   {/* HEADER ÁREA */}
-                  <div className="px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                  <div
+                    className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition"
+                    onClick={() =>
+                      setExpandedDepartamento(isExpanded ? null : area.id!)
+                    }
+                  >
+                    <div className="flex items-center gap-4 flex-1">
                       <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
                       <div className="text-left">
                         <h2 className="text-lg font-semibold text-gray-900">
@@ -116,8 +108,31 @@ export function AreasPage() {
                         </p>
                       </div>
                     </div>
-                    <ChevronDown className="text-gray-600" />
+                    {isExpanded ? (
+                      <ChevronUp className="text-gray-600" />
+                    ) : (
+                      <ChevronDown className="text-gray-600" />
+                    )}
                   </div>
+
+                  {/* INCIDENCIAS */}
+                  {isExpanded && incidenciasArea.length > 0 && (
+                    <div className="border-t px-6 py-4 space-y-3 bg-gray-50">
+                      {incidenciasArea.map(incidencia => (
+                        <IncidenciaCard
+                          key={incidencia.id}
+                          incidencia={incidencia}
+                          onClick={() => navigate(`/incidencia/${incidencia.id}`)}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {isExpanded && incidenciasArea.length === 0 && (
+                    <div className="border-t px-6 py-4 bg-gray-50 text-center text-gray-500">
+                      No hay incidencias en esta área
+                    </div>
+                  )}
                 </div>
               )
             })}

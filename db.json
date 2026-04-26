@@ -4,7 +4,7 @@
       "id": 1,
       "nombre": "Admin User",
       "email": "admin@gmail.com",
-      "password": "$2a$10$EKZ73ZaAMKhTwwYWSN9VG.oujS/ZbD5RXnl201rsxq4qiIMVi.2Wm",
+      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 1,
@@ -20,7 +20,7 @@
       "id": 2,
       "nombre": "Juan Profesor",
       "email": "juan@gmail.com",
-      "password": "$2a$10$RRH7kcWVZ/Xc6/9JFK4ZEeUgPfItGOzVJMH7.m3gg8doxG1oWP/au",
+      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 2,
@@ -36,7 +36,7 @@
       "id": 3,
       "nombre": "María Técnica",
       "email": "maria@gmail.com",
-      "password": "$2a$10$To6ToXUp0g/AJmyr.rPRU.NBLENHsTi7V5ohqO4jDR9SJSjpFurU6",
+      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": true,
       "rol": 3,
@@ -193,10 +193,11 @@
       "categoria": "Hardware",
       "ubicacion": "Aula 01",
       "urgencia": "Media",
-      "estado": "Activo",
+      "estado": "En curso",
       "idUsuarioReporta": 6,
       "id": 9,
-      "idUsuarioAsignado": 3
+      "idUsuarioAsignado": 3,
+      "fechaResolucion": null
     }
   ],
   "departamentos": [
@@ -385,7 +386,7 @@
       "idUsuarioDestino": 3,
       "titulo": "Incidencia Reabierta",
       "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: En curso",
-      "leida": false,
+      "leida": true,
       "fechaCreacion": "2026-04-26T10:02:11.546Z",
       "idIncidenciaVinculada": 1,
       "id": 5
@@ -394,7 +395,7 @@
       "idUsuarioDestino": 3,
       "titulo": "Incidencia Reabierta",
       "mensaje": "La incidencia \"Teclado del laboratorio dañado\" ha sido reabierta. Estado: En curso",
-      "leida": false,
+      "leida": true,
       "fechaCreacion": "2026-04-26T10:02:45.569Z",
       "idIncidenciaVinculada": 3,
       "id": 6
@@ -412,7 +413,7 @@
       "idUsuarioDestino": 3,
       "titulo": "Incidencia Reabierta",
       "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: Activo",
-      "leida": false,
+      "leida": true,
       "fechaCreacion": "2026-04-26T10:34:25.776Z",
       "idIncidenciaVinculada": 1,
       "id": 8
@@ -430,7 +431,7 @@
       "idUsuarioDestino": 3,
       "titulo": "Incidencia Asignada",
       "mensaje": "Se te ha asignado: Problema con el proyector del aula 01",
-      "leida": false,
+      "leida": true,
       "fechaCreacion": "2026-04-26T10:37:57.080Z",
       "idIncidenciaVinculada": 1,
       "id": 10
@@ -466,10 +467,28 @@
       "idUsuarioDestino": 3,
       "titulo": "Incidencia Asignada",
       "mensaje": "Se te ha asignado: dsad",
-      "leida": false,
+      "leida": true,
       "fechaCreacion": "2026-04-26T10:40:01.367Z",
       "idIncidenciaVinculada": 9,
       "id": 14
+    },
+    {
+      "idUsuarioDestino": 6,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"dsad\" ha sido resuelta: dsad",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:45:16.286Z",
+      "idIncidenciaVinculada": 9,
+      "id": 15
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"dsad\" ha sido reabierta. Estado: En curso",
+      "leida": true,
+      "fechaCreacion": "2026-04-26T10:45:21.462Z",
+      "idIncidenciaVinculada": 9,
+      "id": 16
     }
   ],
   "mensajesIncidencia": [
@@ -570,6 +589,20 @@
       "mensaje": "romi asignó la incidencia a María Técnica",
       "fecha": "2026-04-26T10:40:01.398Z",
       "id": 14
+    },
+    {
+      "idIncidencia": 9,
+      "idUsuario": 3,
+      "mensaje": "María Técnica marcó como resuelto: dsad",
+      "fecha": "2026-04-26T10:45:16.329Z",
+      "id": 15
+    },
+    {
+      "idIncidencia": 9,
+      "idUsuario": 3,
+      "mensaje": "María Técnica reabrió la incidencia con estado: En curso",
+      "fecha": "2026-04-26T10:45:21.526Z",
+      "id": 16
     }
   ]
 }

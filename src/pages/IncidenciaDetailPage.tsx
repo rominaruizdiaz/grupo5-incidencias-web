@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
@@ -16,7 +16,8 @@ import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
 import { getEtiquetas } from '@/services/etiquetas'
-import { IncidenciaEstado } from '@/types'
+import { getIncidenciaById } from '@/services/incidencias'
+import { type Incidencia, IncidenciaEstado } from '@/types'
 
 export const IncidenciaDetailPage = () => {
   const { id } = useParams()
@@ -32,8 +33,26 @@ export const IncidenciaDetailPage = () => {
   const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
   const [isModalReabrirOpen, setIsModalReabrirOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
+  const [incidenciaDirecta, setIncidenciaDirecta] = useState<Incidencia | null>(null)
 
-  const incidencia = incidencias.find(i => i.id === Number(id))
+  let incidencia = incidencias.find(i => i.id === Number(id))
+  if (!incidencia && incidenciaDirecta) {
+    incidencia = incidenciaDirecta
+  }
+
+  useEffect(() => {
+    if (!incidencia && id) {
+      const fetchIncidencia = async () => {
+        try {
+          const data = await getIncidenciaById(Number(id))
+          setIncidenciaDirecta(data)
+        } catch (err) {
+          console.error('Error cargando incidencia:', err)
+        }
+      }
+      fetchIncidencia()
+    }
+  }, [id, incidencia])
 
   const form = useIncidenciaForm(incidencia)
 

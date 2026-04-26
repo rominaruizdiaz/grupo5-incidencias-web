@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getIncidencias } from '@/services/incidencias'
+import { useAuthStore } from '@/store/auth.store'
 import { type Incidencia, IncidenciaEstado } from '@/types'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { Check, AlertCircle, Clock } from 'lucide-react'
 
 export const StatisticsPage = () => {
+  const usuario = useAuthStore(state => state.usuario)
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -12,7 +14,21 @@ export const StatisticsPage = () => {
     const fetch = async () => {
       try {
         const data = await getIncidencias()
-        setIncidencias(data)
+
+        // Filtrar según el rol del usuario
+        let filtradas = data
+        if (usuario) {
+          if (usuario.rol === 2) {
+            // Profesor: solo sus incidencias (idUsuarioReporta = su id)
+            filtradas = data.filter(i => i.idUsuarioReporta === usuario.id)
+          } else if (usuario.rol === 3) {
+            // Técnico: solo sus asignaciones (idUsuarioAsignado = su id)
+            filtradas = data.filter(i => i.idUsuarioAsignado === usuario.id)
+          }
+          // Admin (rol 1): ve todas, sin filtro
+        }
+
+        setIncidencias(filtradas)
       } catch (err) {
         console.error('Error cargando incidencias:', err)
       } finally {
@@ -21,7 +37,7 @@ export const StatisticsPage = () => {
     }
 
     fetch()
-  }, [])
+  }, [usuario])
 
   if (loading) {
     return (
@@ -70,6 +86,13 @@ export const StatisticsPage = () => {
           <p className="text-gray-600 mt-2">
             Rendimiento en la resolución de incidencias
           </p>
+          {usuario && (
+            <p className="text-sm text-gray-500 mt-2">
+              {usuario.rol === 1 && '📊 Mostrando estadísticas globales (Admin)'}
+              {usuario.rol === 2 && '📋 Mostrando solo tus incidencias reportadas (Profesor)'}
+              {usuario.rol === 3 && '🔧 Mostrando solo tus incidencias asignadas (Técnico)'}
+            </p>
+          )}
         </div>
 
         {/* GRÁFICO CIRCULAR */}
