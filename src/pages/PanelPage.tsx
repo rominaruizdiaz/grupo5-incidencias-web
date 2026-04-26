@@ -37,23 +37,18 @@ export const PanelPage = () => {
 
         setMisDepartamentos(nombresDepartamentos)
 
-        // Filtrar incidencias según rol y departamento
+        // Filtrar incidencias según rol
         let filtered = incids
 
         if (usuario.rol === 1) {
-          // Admin ve todas
+          // Admin ve TODAS las incidencias
           filtered = incids
-        } else {
-          // Profesor/Técnico ven solo las de sus departamentos
-          filtered = incids.filter(i => {
-            const enSuDepartamento = nombresDepartamentos.includes(i.ubicacion || '')
-            if (usuario.rol === 2) {
-              return enSuDepartamento && i.idUsuarioReporta === usuario.id
-            } else if (usuario.rol === 3) {
-              return enSuDepartamento && i.idUsuarioAsignado === usuario.id
-            }
-            return false
-          })
+        } else if (usuario.rol === 2) {
+          // Profesor SOLO ve las que ÉL ha creado (reportado)
+          filtered = incids.filter(i => i.idUsuarioReporta === usuario.id)
+        } else if (usuario.rol === 3) {
+          // Técnico SOLO ve las asignadas a ÉL
+          filtered = incids.filter(i => i.idUsuarioAsignado === usuario.id)
         }
 
         setIncidencias(filtered)

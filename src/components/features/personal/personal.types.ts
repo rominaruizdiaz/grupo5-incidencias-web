@@ -33,5 +33,5 @@ export interface PersonalModalProps {
   isOpen: boolean
   loading?: boolean
   onClose: () => void
-  onSave: (usuario: UsuarioWithDepartamentos) => Promise<void>
+  onSave: (usuario: UsuarioWithDepartamentos, departamentos: number[], etiquetas?: number[]) => Promise<void>
 }

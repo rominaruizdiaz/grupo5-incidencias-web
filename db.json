@@ -326,5 +326,27 @@
       "mensaje": "La conexión WiFi sigue lenta",
       "fecha": "2024-04-14T11:00:00Z"
     }
+  ],
+  "usuarioEtiqueta": [
+    {
+      "id": 1,
+      "usuarioId": 3,
+      "etiquetaId": 1
+    },
+    {
+      "id": 2,
+      "usuarioId": 3,
+      "etiquetaId": 2
+    },
+    {
+      "id": 3,
+      "usuarioId": 5,
+      "etiquetaId": 1
+    },
+    {
+      "id": 4,
+      "usuarioId": 5,
+      "etiquetaId": 3
+    }
   ]
 }

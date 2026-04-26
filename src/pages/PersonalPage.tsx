@@ -63,8 +63,8 @@ export function PersonalPage() {
     }
   }
 
-  const handleSave = async (u: Usuario, deps: number[]) => {
-    await editarUsuario(u, deps)
+  const handleSave = async (u: Usuario, deps: number[], etiquetas: number[] = []) => {
+    await editarUsuario(u, deps, etiquetas)
 
     await refresh()
     await refreshMapa()

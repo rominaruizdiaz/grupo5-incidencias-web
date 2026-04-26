@@ -6,6 +6,7 @@ import {
   createUsuarioDepartamento,
   deleteUsuarioDepartamento,
 } from '@/services/usuarioDepartamentos'
+import { getEtiquetasPorUsuario, actualizarEtiquetasUsuario } from '@/services/usuarioEtiquetas'
 import toast from 'react-hot-toast'
 
 export const usePersonal = () => {
@@ -27,7 +28,7 @@ export const usePersonal = () => {
   }, [])
 
   const editarUsuario = useCallback(
-    async (usuario: Usuario, departamentos: number[]) => {
+    async (usuario: Usuario, departamentos: number[], etiquetas: number[] = []) => {
       try {
         setLoading(true)
         setError(null)
@@ -55,6 +56,11 @@ export const usePersonal = () => {
               departamentoId: deptId,
             })
           }
+        }
+
+        // Actualizar etiquetas (especialidades) si es técnico
+        if (usuario.rol === 3 && etiquetas.length > 0) {
+          await actualizarEtiquetasUsuario(usuario.id, etiquetas)
         }
 
         await fetchUsuarios()

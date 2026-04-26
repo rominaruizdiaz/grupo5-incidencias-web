@@ -55,9 +55,17 @@ export function AreasPage() {
       const perteneceAlArea = inc.ubicacion === nombreDepartamento
       if (!perteneceAlArea) return false
 
-      if (usuario.rol === 1) return true
-      if (usuario.rol === 2) return inc.idUsuarioReporta === usuario.id
-      if (usuario.rol === 3) return inc.idUsuarioAsignado === usuario.id
+      // Filtrar según rol
+      if (usuario.rol === 1) {
+        // Admin ve todas del departamento
+        return true
+      } else if (usuario.rol === 2) {
+        // Profesor SOLO ve las que ÉL creó
+        return inc.idUsuarioReporta === usuario.id
+      } else if (usuario.rol === 3) {
+        // Técnico SOLO ve las asignadas a ÉL
+        return inc.idUsuarioAsignado === usuario.id
+      }
       return false
     })
   }

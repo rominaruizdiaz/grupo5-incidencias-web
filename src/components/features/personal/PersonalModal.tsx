@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { PersonalModalProps } from './personal.types'
 import { ROLE_OPTIONS } from '@/utils/personal.constants'
-import type { UsuarioWithDepartamentos } from '@/types'
+import type { UsuarioWithDepartamentos, Etiqueta } from '@/types'
+import { getEtiquetas } from '@/services/etiquetas'
+import { getEtiquetasPorUsuario } from '@/services/usuarioEtiquetas'
 
 export function PersonalModal({
   usuario,
@@ -17,12 +19,40 @@ export function PersonalModal({
   const [selectedDepartamentos, setSelectedDepartamentos] = useState<number[]>(
     []
   )
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([])
+  const [selectedEtiquetas, setSelectedEtiquetas] = useState<number[]>([])
 
   useEffect(() => {
-    if (usuario) {
-      setFormData({ ...usuario })
-      setSelectedDepartamentos(usuario.departamentos)
+    const fetchEtiquetas = async () => {
+      try {
+        const data = await getEtiquetas()
+        setEtiquetas(data)
+      } catch (err) {
+        console.error('Error cargando etiquetas:', err)
+      }
     }
+
+    fetchEtiquetas()
+  }, [])
+
+  useEffect(() => {
+    const fetchUsuarioData = async () => {
+      if (usuario) {
+        setFormData({ ...usuario })
+        setSelectedDepartamentos(usuario.departamentos)
+
+        if (usuario.rol === 3) {
+          try {
+            const etiquetasUsuario = await getEtiquetasPorUsuario(usuario.id)
+            setSelectedEtiquetas(etiquetasUsuario)
+          } catch (err) {
+            console.error('Error cargando etiquetas del usuario:', err)
+          }
+        }
+      }
+    }
+
+    fetchUsuarioData()
   }, [usuario])
 
   if (!isOpen || !formData) return null
@@ -31,7 +61,7 @@ export function PersonalModal({
     e.preventDefault()
 
     try {
-      await onSave(formData, selectedDepartamentos)
+      await onSave(formData, selectedDepartamentos, selectedEtiquetas)
       onClose()
     } catch {}
   }
@@ -41,6 +71,14 @@ export function PersonalModal({
       prev.includes(idDepartamento)
         ? prev.filter(id => id !== idDepartamento)
         : [...prev, idDepartamento]
+    )
+  }
+
+  const handleEtiquetaChange = (idEtiqueta: number) => {
+    setSelectedEtiquetas(prev =>
+      prev.includes(idEtiqueta)
+        ? prev.filter(id => id !== idEtiqueta)
+        : [...prev, idEtiqueta]
     )
   }
 
@@ -137,6 +175,38 @@ export function PersonalModal({
                 ))}
               </div>
             </div>
+
+            {formData.rol === 3 && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Especialidades
+                </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Solo visible para técnicos
+                </p>
+                <div className="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                  {etiquetas.map(etiqueta => (
+                    <label
+                      key={etiqueta.id}
+                      className="flex items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedEtiquetas.includes(
+                          etiqueta.id!
+                        )}
+                        onChange={() =>
+                          handleEtiquetaChange(etiqueta.id!)
+                        }
+                        disabled={loading}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">{etiqueta.nombre}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="flex gap-2 pt-4 border-t">
               <button
