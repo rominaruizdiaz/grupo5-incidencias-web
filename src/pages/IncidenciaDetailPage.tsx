@@ -24,8 +24,8 @@ export const IncidenciaDetailPage = () => {
         setTitulo={form.setTitulo}
         descripcion={form.descripcion}
         setDescripcion={form.setDescripcion}
-        especialidad={form.especialidad}
-        setEspecialidad={form.setEspecialidad}
+        categoria={form.categoria}
+        setCategoria={form.setCategoria}
         ubicacion={form.ubicacion}
         setUbicacion={form.setUbicacion}
         urgencia={form.urgencia}
@@ -33,7 +33,7 @@ export const IncidenciaDetailPage = () => {
         estado={incidencia.estado}
         setEstado={form.setEstado}
         fecha={incidencia.fecha}
-        reportadoPor={getNombreUsuario(incidencia.idReporta)}
+        reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
         loading={form.loading}
       />
     </>

@@ -1,5 +1,5 @@
-import type { IncidenciaUrgencia, IncidenciaEstado } from '@/types'
-import { ESPECIALIDADES_DEFECTO } from '@/utils/constants'
+import type { IncidenciaUrgencia, IncidenciaEstado, Departamento } from '@/types'
+import { CATEGORIAS_DEFECTO } from '@/utils/constants'
 import { URGENCIA_OPTIONS, ESTADO_OPTIONS } from '@/utils/incidenciaOptions'
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
   setTitulo: (v: string) => void
   descripcion: string
   setDescripcion: (v: string) => void
-  especialidad: string
-  setEspecialidad: (v: string) => void
+  categoria: string
+  setCategoria: (v: string) => void
   ubicacion: string
   setUbicacion: (v: string) => void
   urgencia: IncidenciaUrgencia
@@ -20,6 +20,7 @@ type Props = {
   setEstado?: (v: IncidenciaEstado) => void
   fecha?: string
   reportadoPor?: string
+  departamentos?: Departamento[]
 }
 
 export const IncidenciaForm = (props: Props) => {
@@ -63,24 +64,26 @@ export const IncidenciaForm = (props: Props) => {
         </div>
       )}
 
+      <label className="block text-sm font-medium">Departamento/Área</label>
       <select
         value={props.ubicacion}
         onChange={e => props.setUbicacion(e.target.value)}
         className="border p-2 w-full"
       >
-        <option value="Informática">Informática</option>
-        <option value="Laboratorio">Laboratorio</option>
-        <option value="Aula 101">Aula 101</option>
-        <option value="Biblioteca">Biblioteca</option>
-        <option value="Secretaría">Secretaría</option>
+        <option value="">Seleccionar departamento...</option>
+        {props.departamentos?.map(dept => (
+          <option key={dept.id} value={dept.nombre}>
+            {dept.nombre}
+          </option>
+        ))}
       </select>
 
       <select
-        value={props.especialidad}
-        onChange={e => props.setEspecialidad(e.target.value)}
+        value={props.categoria}
+        onChange={e => props.setCategoria(e.target.value)}
         className="border p-2 w-full"
       >
-        {ESPECIALIDADES_DEFECTO.map(c => (
+        {CATEGORIAS_DEFECTO.map(c => (
           <option key={c} value={c}>
             {c}
           </option>

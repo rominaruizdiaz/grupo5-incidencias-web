@@ -7,19 +7,12 @@ export const ROLES = {
   [UserRole.TECNICO]: 'Técnico/Mantenimiento',
 }
 
-// ESPECIALIDADES
-export const ESPECIALIDADES_DEFECTO = [
+// CATEGORÍAS (basadas en etiquetas)
+export const CATEGORIAS_DEFECTO = [
   'Hardware',
   'Software',
-  'Mobiliario',
-  'Infraestructura',
-  'Limpieza',
-  'Electricidad',
-  'Fontanería',
-  'Audiovisuales',
-  'Climatización',
-  'Jardinería',
-  'Otros',
+  'Red',
+  'Otro',
 ]
 
 // URGENCIA

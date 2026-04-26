@@ -49,8 +49,8 @@ export const useIncidencias = () => {
             fecha: i.fecha ?? new Date().toISOString(),
             estado: i.estado ?? IncidenciaEstado.ACTIVO,
             urgencia: i.urgencia ?? IncidenciaUrgencia.MEDIA,
-            idReporta: i.idReporta ?? null,
-            idAsignado: i.idAsignado ?? null,
+            idUsuarioReporta: i.idUsuarioReporta ?? null,
+            idUsuarioAsignado: i.idUsuarioAsignado ?? null,
             fechaResolucion: i.fechaResolucion ?? null,
           }))
         )
@@ -74,9 +74,9 @@ export const useIncidencias = () => {
       case 1:
         return incidencias
       case 2:
-        return incidencias.filter(i => i.idReporta === usuario.id)
+        return incidencias.filter(i => i.idUsuarioReporta === usuario.id)
       case 3:
-        return incidencias.filter(i => i.idAsignado === usuario.id)
+        return incidencias.filter(i => i.idUsuarioAsignado === usuario.id)
       default:
         return []
     }

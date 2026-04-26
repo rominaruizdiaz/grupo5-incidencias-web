@@ -29,7 +29,7 @@ export function PersonalCard({
             <strong>Departamentos:</strong>{' '}
             {departamentos
               .filter(d =>
-                (usuario as any).departamentos?.includes(d.idDepartamento)
+                (usuario as any).departamentos?.includes(d.id)
               )
               .map(d => d.nombre)
               .join(', ') || '-'}

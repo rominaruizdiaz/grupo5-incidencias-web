@@ -17,6 +17,7 @@ import { AuthLayout } from '@/components/layout/AuthLayout'
 import { IncidenciaDetailPage } from './pages/IncidenciaDetailPage'
 import { DepartamentosPage } from './pages/DepartamentosPage'
 import { AreasPage } from './pages/AreasPage'
+import { AreaDetailPage } from './pages/AreaDetailPage'
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
       >
         <Route path="/panel" element={<PanelPage />} />
         <Route path="/areas" element={<AreasPage />} />
+        <Route path="/areas/:areaId" element={<AreaDetailPage />} />
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
         <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />

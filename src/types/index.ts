@@ -33,30 +33,37 @@ export interface UsuarioWithDepartamentos extends Usuario {
   departamentos: number[]
 }
 
+// ================= ETIQUETAS =================
+
+export interface Etiqueta {
+  id?: number
+  nombre: string
+}
+
 // ================= INCIDENCIAS =================
 
 export interface Incidencia {
   id: number
   titulo: string
   descripcion: string
-  especialidad: string
+  categoria: string
   ubicacion: string
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
   fecha: string
-  idReporta?: number | null
-  idAsignado?: number | null
+  idUsuarioReporta?: number | null
+  idUsuarioAsignado?: number | null
   fechaResolucion?: string | null
 }
 
 export interface CreateIncidenciaRequest {
   titulo: string
   descripcion: string
-  especialidad: string
+  categoria: string
   ubicacion: string
   estado: IncidenciaEstado
   urgencia: IncidenciaUrgencia
-  idReporta: number
+  idUsuarioReporta: number
 }
 
 // ================= DEPARTAMENTOS =================
@@ -64,12 +71,35 @@ export interface CreateIncidenciaRequest {
 export interface Departamento {
   id?: number
   nombre: string
+  fechaCreacion?: string
 }
 
 export interface UsuarioDepartamento {
   id?: number
   usuarioId: number
   departamentoId: number
+}
+
+// ================= NOTIFICACIONES =================
+
+export interface Notificacion {
+  id?: number
+  idUsuarioDestino: number
+  titulo: string
+  mensaje: string
+  leida: boolean
+  fechaCreacion: string
+  idIncidenciaVinculada?: number | null
+}
+
+// ================= MENSAJES =================
+
+export interface MensajeIncidencia {
+  id?: number
+  idIncidencia: number
+  idUsuario: number
+  mensaje: string
+  fecha: string
 }
 
 // ================= FILTROS =================
