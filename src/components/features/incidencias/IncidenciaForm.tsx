@@ -1,6 +1,7 @@
 import type { IncidenciaUrgencia, IncidenciaEstado, Departamento } from '@/types'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
 import { URGENCIA_OPTIONS, ESTADO_OPTIONS } from '@/utils/incidenciaOptions'
+import { IncidenciaEstado as EstadoEnum } from '@/types'
 
 type Props = {
   mode: 'create' | 'edit'
@@ -98,17 +99,44 @@ export const IncidenciaForm = (props: Props) => {
       />
 
       {isEdit && props.setEstado && (
-        <select
-          value={props.estado}
-          onChange={e => props.setEstado!(e.target.value as IncidenciaEstado)}
-          className="border p-2 w-full"
-        >
-          {ESTADO_OPTIONS.map(s => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label className="block text-sm font-medium mb-2">Estado</label>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => props.setEstado!(EstadoEnum.ACTIVO)}
+              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+                props.estado === EstadoEnum.ACTIVO
+                  ? 'bg-red-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Activo
+            </button>
+            <button
+              type="button"
+              onClick={() => props.setEstado!(EstadoEnum.EN_CURSO)}
+              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+                props.estado === EstadoEnum.EN_CURSO
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              En Curso
+            </button>
+            <button
+              type="button"
+              onClick={() => props.setEstado!(EstadoEnum.RESUELTO)}
+              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+                props.estado === EstadoEnum.RESUELTO
+                  ? 'bg-green-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Resuelto
+            </button>
+          </div>
+        </div>
       )}
 
       <button

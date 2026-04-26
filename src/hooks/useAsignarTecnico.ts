@@ -1,11 +1,13 @@
 import { useCallback, useState } from 'react'
 import { updateIncidencia } from '@/services/incidencias'
 import { createNotificacion } from '@/services/notificaciones'
-import { IncidenciaEstado, IncidenciaUrgencia } from '@/types'
+import { crearMensajeTracking, mensajesAsignacion } from '@/services/mensajesTracking'
+import { useAuthStore } from '@/store/auth.store'
 import toast from 'react-hot-toast'
 
 export const useAsignarTecnico = () => {
   const [loading, setLoading] = useState(false)
+  const usuario = useAuthStore(state => state.usuario)
 
   const asignarTecnico = useCallback(
     async (
@@ -33,6 +35,12 @@ export const useAsignarTecnico = () => {
           idIncidenciaVinculada: idIncidencia,
         })
 
+        // 3. Crear mensaje de tracking
+        if (usuario) {
+          const mensajeTracking = mensajesAsignacion.asignado(usuario.nombre, nombreTecnico)
+          await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
+        }
+
         toast.success(`Incidencia asignada a ${nombreTecnico}`)
         return true
       } catch (err) {
@@ -43,7 +51,7 @@ export const useAsignarTecnico = () => {
         setLoading(false)
       }
     },
-    []
+    [usuario]
   )
 
   return { asignarTecnico, loading }

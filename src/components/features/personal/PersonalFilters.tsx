@@ -58,7 +58,7 @@ export function PersonalFilters({
           >
             <option value="">Todos los departamentos</option>
             {departamentos.map(depto => (
-              <option key={depto.idDepartamento} value={depto.idDepartamento}>
+              <option key={depto.id} value={depto.id}>
                 {depto.nombre}
               </option>
             ))}

@@ -20,21 +20,23 @@
       "id": 2,
       "nombre": "Juan Profesor",
       "email": "juan@gmail.com",
-      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
+      "password": "$2a$10$RRH7kcWVZ/Xc6/9JFK4ZEeUgPfItGOzVJMH7.m3gg8doxG1oWP/au",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 2,
       "fechaRegistro": "2024-02-10T10:00:00Z",
       "departamentos": [
         1,
-        2
+        2,
+        3,
+        4
       ]
     },
     {
       "id": 3,
       "nombre": "María Técnica",
       "email": "maria@gmail.com",
-      "password": "$2a$10$h1ydHoZSwSVJa7PN0i.A8u0pxUe9oS0.bcoTKMhsDC948b7rgPu/2",
+      "password": "$2a$10$To6ToXUp0g/AJmyr.rPRU.NBLENHsTi7V5ohqO4jDR9SJSjpFurU6",
       "fotoPerfil": null,
       "modoOscuro": true,
       "rol": 3,
@@ -63,7 +65,7 @@
       "id": 5,
       "nombre": "Ana Técnica",
       "email": "ana@gmail.com",
-      "password": "$2a$10$t7XcXL1nLed5o0Q3EEyU6uEhsdImMz7fgxouR3Z11FQsqbpGFSpCm",
+      "password": "$2a$10$HPft43KFjjOXxVedJGQeZeOP57v.0welQy9gLikD6R7ISu1kwkEQm",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 3,
@@ -109,12 +111,12 @@
       "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
       "categoria": "Hardware",
       "ubicacion": "Aula 01",
-      "estado": "Resuelto",
+      "estado": "En curso",
       "urgencia": "Alta",
       "fecha": "2024-04-15T08:30:00Z",
       "idUsuarioReporta": 2,
-      "idUsuarioAsignado": 3,
-      "fechaResolucion": "2026-04-26T09:47:35.563Z"
+      "idUsuarioAsignado": 5,
+      "fechaResolucion": null
     },
     {
       "id": 3,
@@ -127,7 +129,7 @@
       "fecha": "2024-04-10T14:20:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 3,
-      "fechaResolucion": "2024-04-12T16:45:00Z"
+      "fechaResolucion": null
     },
     {
       "id": 4,
@@ -135,7 +137,7 @@
       "descripcion": "No puedo instalar el software de análisis de datos",
       "categoria": "Software",
       "ubicacion": "Aula 03",
-      "estado": "Activo",
+      "estado": "Resuelto",
       "urgencia": "Media",
       "fecha": "2024-04-16T09:00:00Z",
       "idUsuarioReporta": 4,
@@ -148,12 +150,12 @@
       "descripcion": "Monitor de la aula tiene la pantalla agrietada",
       "categoria": "Hardware",
       "ubicacion": "Aula 01",
-      "estado": "En curso",
+      "estado": "Resuelto",
       "urgencia": "Alta",
       "fecha": "2024-04-13T11:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 3,
-      "fechaResolucion": null
+      "fechaResolucion": "2026-04-26T10:02:51.233Z"
     },
     {
       "titulo": "sadasd",
@@ -164,6 +166,37 @@
       "estado": "Activo",
       "idUsuarioReporta": 4,
       "id": 6
+    },
+    {
+      "titulo": "sad",
+      "descripcion": "sadasd",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 02",
+      "urgencia": "Media",
+      "estado": "En curso",
+      "idUsuarioReporta": 6,
+      "id": 7
+    },
+    {
+      "titulo": "sdsad",
+      "descripcion": "sdad",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 02",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idUsuarioReporta": 6,
+      "id": 8
+    },
+    {
+      "titulo": "dsad",
+      "descripcion": "sdasd",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 01",
+      "urgencia": "Media",
+      "estado": "Activo",
+      "idUsuarioReporta": 6,
+      "id": 9,
+      "idUsuarioAsignado": 3
     }
   ],
   "departamentos": [
@@ -190,6 +223,48 @@
       "id": 5,
       "nombre": "Biblioteca",
       "fechaCreacion": "2024-01-10"
+    }
+  ],
+  "usuarioEtiqueta": [
+    {
+      "id": 1,
+      "usuarioId": 3,
+      "etiquetaId": 1
+    },
+    {
+      "id": 2,
+      "usuarioId": 3,
+      "etiquetaId": 2
+    },
+    {
+      "id": 3,
+      "usuarioId": 5,
+      "etiquetaId": 1
+    },
+    {
+      "id": 4,
+      "usuarioId": 5,
+      "etiquetaId": 3
+    },
+    {
+      "usuarioId": 3,
+      "etiquetaId": 3,
+      "id": 5
+    },
+    {
+      "usuarioId": 3,
+      "etiquetaId": 4,
+      "id": 6
+    },
+    {
+      "usuarioId": 5,
+      "etiquetaId": 2,
+      "id": 7
+    },
+    {
+      "usuarioId": 5,
+      "etiquetaId": 4,
+      "id": 8
     }
   ],
   "usuarioDepartamento": [
@@ -262,6 +337,11 @@
       "usuarioId": 1,
       "departamentoId": 2,
       "id": 15
+    },
+    {
+      "usuarioId": 2,
+      "departamentoId": 4,
+      "id": 17
     }
   ],
   "notificaciones": [
@@ -300,6 +380,96 @@
       "fechaCreacion": "2026-04-26T09:47:35.563Z",
       "idIncidenciaVinculada": 1,
       "id": 4
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: En curso",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:02:11.546Z",
+      "idIncidenciaVinculada": 1,
+      "id": 5
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Teclado del laboratorio dañado\" ha sido reabierta. Estado: En curso",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:02:45.569Z",
+      "idIncidenciaVinculada": 3,
+      "id": 6
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta: sdas",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:02:51.233Z",
+      "idIncidenciaVinculada": 5,
+      "id": 7
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: Activo",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:34:25.776Z",
+      "idIncidenciaVinculada": 1,
+      "id": 8
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:34:44.560Z",
+      "idIncidenciaVinculada": 1,
+      "id": 9
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Problema con el proyector del aula 01",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:37:57.080Z",
+      "idIncidenciaVinculada": 1,
+      "id": 10
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Problema con el proyector del aula 01",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:38:03.558Z",
+      "idIncidenciaVinculada": 1,
+      "id": 11
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: Activo",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:38:10.936Z",
+      "idIncidenciaVinculada": 1,
+      "id": 12
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: En curso",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:38:39.256Z",
+      "idIncidenciaVinculada": 1,
+      "id": 13
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: dsad",
+      "leida": false,
+      "fechaCreacion": "2026-04-26T10:40:01.367Z",
+      "idIncidenciaVinculada": 9,
+      "id": 14
     }
   ],
   "mensajesIncidencia": [
@@ -323,6 +493,83 @@
       "idUsuario": 4,
       "mensaje": "La conexión WiFi sigue lenta",
       "fecha": "2024-04-14T11:00:00Z"
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "dsad",
+      "fecha": "2026-04-26T10:02:55.602Z",
+      "id": 4
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "asd",
+      "fecha": "2026-04-26T10:02:57.281Z",
+      "id": 5
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "sadasd",
+      "fecha": "2026-04-26T10:14:01.632Z",
+      "id": 6
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a María Técnica",
+      "fecha": "2026-04-26T10:37:57.116Z",
+      "id": 7
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a Ana Técnica",
+      "fecha": "2026-04-26T10:38:03.589Z",
+      "id": 8
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi reabrió la incidencia con estado: Activo",
+      "fecha": "2026-04-26T10:38:10.998Z",
+      "id": 9
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi cambió el estado a: En curso",
+      "fecha": "2026-04-26T10:38:18.137Z",
+      "id": 10
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi cambió el estado a: Activo",
+      "fecha": "2026-04-26T10:38:29.667Z",
+      "id": 11
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi cambió el estado a: Resuelto",
+      "fecha": "2026-04-26T10:38:33.249Z",
+      "id": 12
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi reabrió la incidencia con estado: En curso",
+      "fecha": "2026-04-26T10:38:39.327Z",
+      "id": 13
+    },
+    {
+      "idIncidencia": 9,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a María Técnica",
+      "fecha": "2026-04-26T10:40:01.398Z",
+      "id": 14
     }
   ]
 }

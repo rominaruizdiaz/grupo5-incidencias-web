@@ -1,11 +1,14 @@
 import { useCallback, useState } from 'react'
 import { updateIncidencia } from '@/services/incidencias'
 import { createNotificacion } from '@/services/notificaciones'
+import { crearMensajeTracking, mensajesResolucion } from '@/services/mensajesTracking'
+import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado } from '@/types'
 import toast from 'react-hot-toast'
 
 export const useReabrirIncidencia = () => {
   const [loading, setLoading] = useState(false)
+  const usuario = useAuthStore(state => state.usuario)
 
   const reabrirIncidencia = useCallback(
     async (
@@ -37,6 +40,12 @@ export const useReabrirIncidencia = () => {
           })
         }
 
+        // Crear mensaje de tracking
+        if (usuario) {
+          const mensajeTracking = mensajesResolucion.reabierto(usuario.nombre, nuevoEstado)
+          await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
+        }
+
         toast.success(`Incidencia reabierta como ${nuevoEstado}`)
         return true
       } catch (err) {
@@ -47,7 +56,7 @@ export const useReabrirIncidencia = () => {
         setLoading(false)
       }
     },
-    []
+    [usuario]
   )
 
   return { reabrirIncidencia, loading }

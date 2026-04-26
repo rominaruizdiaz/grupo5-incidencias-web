@@ -99,21 +99,21 @@ export const CambiarEstadoModal = ({
                 const isCurrent = estado.valor === estadoActual
 
                 return (
-                  <label
+                  <div
                     key={estado.valor}
-                    className="flex items-center p-3 border-2 rounded-lg cursor-pointer transition"
+                    onClick={() => !isCurrent && setEstadoSeleccionado(estado.valor)}
+                    className={`flex items-center p-3 border-2 rounded-lg transition ${
+                      isCurrent ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:border-gray-400'
+                    }`}
                     style={{
                       borderColor: isSelected ? estado.color : '#e5e7eb',
                       backgroundColor: isSelected ? estado.bgColor : 'white',
-                      opacity: isCurrent && !isSelected ? 0.5 : 1,
                     }}
                   >
                     <input
-                      type="radio"
-                      name="estado"
-                      value={estado.valor}
+                      type="checkbox"
                       checked={isSelected}
-                      onChange={() => setEstadoSeleccionado(estado.valor)}
+                      onChange={() => !isCurrent && setEstadoSeleccionado(estado.valor)}
                       disabled={isCurrent}
                       className="mr-3"
                     />
@@ -122,7 +122,7 @@ export const CambiarEstadoModal = ({
                       <p className="font-medium text-gray-900">{estado.label}</p>
                       <p className="text-xs text-gray-600">{estado.descripcion}</p>
                     </div>
-                  </label>
+                  </div>
                 )
               })}
             </div>

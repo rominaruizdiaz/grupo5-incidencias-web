@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, type Incidencia } from '@/types'
+import { crearMensajeTracking, mensajesCambioEstado } from '@/services/mensajesTracking'
 
 import { useIncidenciaFormState } from './useIncidenciaFormState'
 import { useIncidenciaFormActions } from './useIncidenciaActions'
@@ -42,7 +43,24 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
           categoria: form.categoria,
           ubicacion: form.ubicacion,
           urgencia: form.urgencia,
+          estado: form.estado,
         })
+
+        // Si el estado cambió, crear mensaje automático de tracking
+        if (initial.estado !== form.estado) {
+          let mensajeTracking = ''
+          if (form.estado === IncidenciaEstado.ACTIVO) {
+            mensajeTracking = mensajesCambioEstado.aActivo(usuario.nombre)
+          } else if (form.estado === IncidenciaEstado.EN_CURSO) {
+            mensajeTracking = mensajesCambioEstado.aEnCurso(usuario.nombre)
+          } else if (form.estado === IncidenciaEstado.RESUELTO) {
+            mensajeTracking = mensajesCambioEstado.aResuelto(usuario.nombre)
+          }
+
+          if (mensajeTracking) {
+            await crearMensajeTracking(initial.id, usuario, mensajeTracking)
+          }
+        }
       } else {
         await create({
           titulo: form.titulo.trim(),

@@ -12,8 +12,16 @@ export const getUsuarioEtiquetas = async (): Promise<UsuarioEtiqueta[]> => {
 }
 
 export const getEtiquetasPorUsuario = async (usuarioId: number): Promise<number[]> => {
-  const { data } = await api.get(`/usuarioEtiqueta?usuarioId=${usuarioId}`)
-  return data.map((ue: UsuarioEtiqueta) => ue.etiquetaId)
+  try {
+    // Obtener todos los registros y filtrar en el cliente
+    const { data } = await api.get('/usuarioEtiqueta')
+    const registros = data.filter((ue: UsuarioEtiqueta) => ue.usuarioId === usuarioId)
+    return registros.map((ue: UsuarioEtiqueta) => ue.etiquetaId)
+  } catch (err) {
+    // Si hay error, retornar array vacío
+    console.error('Error obteniendo etiquetas:', err)
+    return []
+  }
 }
 
 export const actualizarEtiquetasUsuario = async (
