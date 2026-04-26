@@ -2,18 +2,21 @@ import { useState } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
+import { ReabrirIncidenciaModal } from '@/components/features/incidencias/ReabrirIncidenciaModal'
 import { MensajesList } from '@/components/features/incidencias/MensajesList'
 import { NuevoMensajeInput } from '@/components/features/incidencias/NuevoMensajeInput'
 import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 import { useIncidencias } from '@/hooks/useIncidencias'
 import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
 import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
+import { useReabrirIncidencia } from '@/hooks/useReabrirIncidencia'
 import { useMensajes } from '@/hooks/useMensajes'
 import { useEnviarMensaje } from '@/hooks/useEnviarMensaje'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
 import { getEtiquetas } from '@/services/etiquetas'
+import { IncidenciaEstado } from '@/types'
 
 export const IncidenciaDetailPage = () => {
   const { id } = useParams()
@@ -21,11 +24,13 @@ export const IncidenciaDetailPage = () => {
   const { incidencias, getNombreUsuario } = useIncidencias()
   const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
   const { resolverIncidencia, loading: loadingResolver } = useResolverIncidencia()
+  const { reabrirIncidencia, loading: loadingReabrir } = useReabrirIncidencia()
   const { mensajes, loading: loadingMensajes, refresh: refreshMensajes } = useMensajes(Number(id) || 0)
   const { enviarMensaje, loading: loadingEnviar } = useEnviarMensaje()
 
   const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
   const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
+  const [isModalReabrirOpen, setIsModalReabrirOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
 
   const incidencia = incidencias.find(i => i.id === Number(id))
@@ -92,6 +97,25 @@ export const IncidenciaDetailPage = () => {
     }
   }
 
+  const handleAbrirReabrir = () => {
+    setIsModalReabrirOpen(true)
+  }
+
+  const handleReabrirIncidencia = async (nuevoEstado: IncidenciaEstado) => {
+    if (!incidencia) return
+    const exito = await reabrirIncidencia(
+      incidencia.id,
+      incidencia.idUsuarioAsignado ?? undefined,
+      incidencia.titulo,
+      nuevoEstado
+    )
+    if (exito) {
+      setIsModalReabrirOpen(false)
+      // Refresh incidencias
+      setTimeout(() => window.location.reload(), 1000)
+    }
+  }
+
   if (!incidencia) return <p>No encontrada</p>
 
   // Calcular permisos
@@ -140,6 +164,16 @@ export const IncidenciaDetailPage = () => {
             disabled={loadingResolver}
           >
             Marcar como Resuelto
+          </button>
+        )}
+
+        {incidencia.estado === 'Resuelto' && (esCreador || esAsignado || esAdmin) && (
+          <button
+            onClick={handleAbrirReabrir}
+            className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 disabled:bg-gray-400"
+            disabled={loadingReabrir}
+          >
+            Reabrir Incidencia
           </button>
         )}
       </div>
@@ -242,6 +276,15 @@ export const IncidenciaDetailPage = () => {
         onClose={() => setIsModalResolverOpen(false)}
         onResolver={handleResolverIncidencia}
         loading={loadingResolver}
+        tituloIncidencia={incidencia?.titulo}
+      />
+
+      {/* Modal para reabrir incidencia */}
+      <ReabrirIncidenciaModal
+        isOpen={isModalReabrirOpen}
+        onClose={() => setIsModalReabrirOpen(false)}
+        onReabrir={handleReabrirIncidencia}
+        loading={loadingReabrir}
         tituloIncidencia={incidencia?.titulo}
       />
     </div>
