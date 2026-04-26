@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
+import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
 import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 import { useIncidencias } from '@/hooks/useIncidencias'
 import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
+import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
@@ -14,8 +16,10 @@ export const IncidenciaDetailPage = () => {
   const usuario = useAuthStore(state => state.usuario)
   const { incidencias, getNombreUsuario } = useIncidencias()
   const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
+  const { resolverIncidencia, loading: loadingResolver } = useResolverIncidencia()
 
   const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
+  const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
 
   const incidencia = incidencias.find(i => i.id === Number(id))
@@ -50,6 +54,25 @@ export const IncidenciaDetailPage = () => {
     )
     if (exito) {
       setIsModalAsignarOpen(false)
+      // Refresh incidencias
+      setTimeout(() => window.location.reload(), 1000)
+    }
+  }
+
+  const handleAbrirResolver = () => {
+    setIsModalResolverOpen(true)
+  }
+
+  const handleResolverIncidencia = async (descripcionResolucion?: string) => {
+    if (!incidencia || !incidencia.idUsuarioReporta) return
+    const exito = await resolverIncidencia(
+      incidencia.id,
+      incidencia.idUsuarioReporta,
+      incidencia.titulo,
+      descripcionResolucion
+    )
+    if (exito) {
+      setIsModalResolverOpen(false)
       // Refresh incidencias
       setTimeout(() => window.location.reload(), 1000)
     }
@@ -97,7 +120,11 @@ export const IncidenciaDetailPage = () => {
         )}
 
         {puedeResolverEnumerations && incidencia.estado !== 'Resuelto' && (
-          <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+          <button
+            onClick={handleAbrirResolver}
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+            disabled={loadingResolver}
+          >
             Marcar como Resuelto
           </button>
         )}
@@ -170,6 +197,15 @@ export const IncidenciaDetailPage = () => {
         categoria={incidencia?.categoria}
         etiquetaActual={etiquetaActual}
         loading={loadingAsignar}
+      />
+
+      {/* Modal para resolver incidencia */}
+      <ResolverIncidenciaModal
+        isOpen={isModalResolverOpen}
+        onClose={() => setIsModalResolverOpen(false)}
+        onResolver={handleResolverIncidencia}
+        loading={loadingResolver}
+        tituloIncidencia={incidencia?.titulo}
       />
     </div>
   )
