@@ -7,6 +7,8 @@ import { PanelPage } from '@/pages/PanelPage'
 import { CreateIncidenciaPage } from '@/pages/CreateIncidenciasPage'
 import { UserProfilePage } from '@/pages/UserProfilePage'
 import { PersonalPage } from '@/pages/PersonalPage'
+import { StatisticsPage } from '@/pages/StatisticsPage'
+import { NotificationsPage } from '@/pages/NotificationsPage'
 
 import { PrivateRoute } from '@/components/routes/PrivateRoute'
 import { PublicRoute } from '@/components/routes/PublicRoute'
@@ -48,6 +50,8 @@ function App() {
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
         <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />
+        <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
 
         <Route
           path="/personal"
