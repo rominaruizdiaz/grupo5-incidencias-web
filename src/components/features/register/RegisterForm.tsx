@@ -22,12 +22,15 @@ export const RegisterForm = () => {
         value={nombre}
         onChange={e => setNombre(e.target.value)}
         placeholder="Nombre"
+        className="login-input"
       />
 
       <input
         value={email}
         onChange={e => setEmail(e.target.value)}
+        type="email"
         placeholder="Email"
+        className="login-input"
       />
 
       <input
@@ -35,11 +38,12 @@ export const RegisterForm = () => {
         onChange={e => setPassword(e.target.value)}
         type="password"
         placeholder="Password"
+        className="login-input"
       />
 
-      {error && <p>{error}</p>}
+      {error && <p className="login-error">{error}</p>}
 
-      <button disabled={loading}>
+      <button disabled={loading} className="login-button">
         {loading ? 'Cargando...' : 'Registrarse'}
       </button>
     </form>

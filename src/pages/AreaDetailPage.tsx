@@ -1,3 +1,4 @@
+import '../styles/AreaDetailPage.css'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
@@ -59,9 +60,11 @@ export function AreaDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p>Cargando...</p>
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-card text-center text-slate-400">
+            <p>Cargando...</p>
+          </div>
         </div>
       </div>
     )
@@ -69,28 +72,30 @@ export function AreaDetailPage() {
 
   if (!area) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p>Área no encontrada</p>
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-card text-center text-slate-400">
+            <p>Área no encontrada</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="page-wrapper">
+      <div className="page-content space-y-6">
         {/* HEADER */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <button
             onClick={() => navigate('/areas')}
-            className="p-2 hover:bg-gray-200 rounded-lg transition"
+            className="p-2 bg-slate-900 rounded-xl hover:bg-slate-800 transition"
           >
             <ChevronLeft size={24} />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{area.nombre}</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-3xl font-bold text-white">{area.nombre}</h1>
+            <p className="text-slate-400 mt-1">
               {incidencias.length}{' '}
               {incidencias.length === 1 ? 'incidencia' : 'incidencias'}
             </p>
@@ -98,7 +103,7 @@ export function AreaDetailPage() {
         </div>
 
         {/* INCIDENCIAS */}
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="page-card">
           {incidencias.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <p>No hay incidencias en este área</p>
@@ -109,7 +114,7 @@ export function AreaDetailPage() {
                 <div
                   key={inc.id}
                   onClick={() => navigate(`/incidencia/${inc.id}`)}
-                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:shadow transition cursor-pointer"
+                  className="p-4 border border-slate-800 rounded-3xl hover:bg-slate-900 transition cursor-pointer"
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex-1">

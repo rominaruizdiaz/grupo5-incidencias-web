@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/NotificationsPage.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { getNotificacionesPorUsuario, marcarComoLeida, marcarTodasComoLeidas } from '@/services/notificaciones'
@@ -68,16 +69,18 @@ export const NotificationsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-        <p className="text-gray-500">Cargando notificaciones...</p>
+      <div className="page-wrapper flex items-center justify-center">
+        <div className="page-content">
+          <p className="text-slate-400">Cargando notificaciones...</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-wrapper">
       {/* HEADER */}
-      <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-10">
+      <div className="page-header">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
@@ -110,16 +113,16 @@ export const NotificationsPage = () => {
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="page-content">
+        <div>
           {notificaciones.length === 0 ? (
-            <div className="bg-white rounded-lg shadow p-12 text-center">
+            <div className="page-card text-center">
               <div className="flex justify-center mb-4">
-                <div className="p-4 bg-gray-100 rounded-full">
-                  <Bell size={32} className="text-gray-400" />
+                <div className="p-4 bg-slate-950 rounded-full">
+                  <Bell size={32} className="text-slate-400" />
                 </div>
               </div>
-              <p className="text-gray-500 text-lg">No tienes notificaciones recientes</p>
+              <p className="text-slate-400 text-lg">No tienes notificaciones recientes</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -127,25 +130,25 @@ export const NotificationsPage = () => {
                 <div
                   key={notificacion.id}
                   onClick={() => handleClickNotificacion(notificacion)}
-                  className={`rounded-lg border transition cursor-pointer ${
+                  className={`rounded-3xl border transition cursor-pointer ${
                     notificacion.leida
-                      ? 'bg-white border-gray-200 hover:border-gray-300'
-                      : 'bg-blue-50 border-blue-200 hover:border-blue-300'
+                      ? 'bg-slate-950 border-slate-800 hover:border-slate-700'
+                      : 'bg-slate-900 border-slate-700 hover:border-slate-600'
                   }`}
                 >
                   <div className="p-4 flex items-start gap-4">
                     {/* ICONO */}
                     <div
-                      className={`p-3 rounded-lg flex-shrink-0 ${
+                      className={`p-3 rounded-2xl flex-shrink-0 ${
                         notificacion.leida
-                          ? 'bg-gray-100'
-                          : 'bg-blue-100'
+                          ? 'bg-slate-950'
+                          : 'bg-blue-800/20'
                       }`}
                     >
                       <Bell
                         size={20}
                         className={
-                          notificacion.leida ? 'text-gray-400' : 'text-blue-600'
+                          notificacion.leida ? 'text-slate-400' : 'text-blue-400'
                         }
                       />
                     </div>
@@ -155,7 +158,7 @@ export const NotificationsPage = () => {
                       <div className="flex items-start justify-between gap-2">
                         <h3
                           className={`font-semibold ${
-                            notificacion.leida ? 'text-gray-700' : 'text-gray-900'
+                            notificacion.leida ? 'text-slate-200' : 'text-white'
                           }`}
                         >
                           {notificacion.titulo}
@@ -167,13 +170,13 @@ export const NotificationsPage = () => {
 
                       <p
                         className={`text-sm mt-1 ${
-                          notificacion.leida ? 'text-gray-600' : 'text-gray-700'
+                          notificacion.leida ? 'text-slate-400' : 'text-slate-200'
                         }`}
                       >
                         {notificacion.mensaje}
                       </p>
 
-                      <p className="text-xs text-gray-500 mt-2">
+                      <p className="text-xs text-slate-500 mt-2">
                         {new Date(notificacion.fechaCreacion).toLocaleDateString('es-ES', {
                           day: '2-digit',
                           month: '2-digit',

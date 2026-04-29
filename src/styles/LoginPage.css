@@ -1,0 +1,122 @@
+/* Estilos específicos para la página de login usando Tailwind CSS */
+
+.login-container {
+  @apply min-h-screen flex items-center justify-center bg-slate-950;
+}
+
+.login-form {
+  @apply w-full max-w-md px-6 py-8 rounded-[32px] shadow-2xl bg-slate-900/95 border border-slate-800;
+}
+
+.login-title {
+  @apply text-3xl font-bold text-center text-white mb-4;
+}
+
+.login-subtitle {
+  @apply text-center text-slate-400 mb-6;
+}
+
+.login-input {
+  @apply w-full px-4 py-3 mb-4 border border-slate-700 rounded-2xl bg-slate-950 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.login-button {
+  @apply w-full bg-blue-600 text-white py-3 rounded-2xl font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.login-secondary-button {
+  @apply mt-4 block w-full text-center text-sm text-slate-200 bg-slate-800 border border-slate-700 rounded-2xl py-3 hover:bg-slate-700 transition-colors;
+}
+
+.login-error {
+  @apply text-red-400 text-sm mb-4;
+}
+/* Estilos compartidos para la p�gina de estad�sticas */
+
+.stats-page {
+  @apply min-h-screen bg-slate-950 text-slate-100;
+}
+
+.stats-content {
+  @apply max-w-4xl mx-auto space-y-6 px-4 py-6;
+}
+
+.stats-header {
+  @apply space-y-3;
+}
+
+.stats-header-title {
+  @apply text-3xl font-bold tracking-tight;
+}
+
+.stats-header-subtitle {
+  @apply text-slate-400;
+}
+
+.stats-card {
+  @apply bg-slate-900/90 border border-slate-800 rounded-3xl shadow-xl p-6;
+}
+
+.stats-chart-card {
+  @apply bg-slate-900/90 border border-slate-800 rounded-[32px] shadow-xl p-6;
+}
+
+.stats-chart-wrapper {
+  @apply relative w-full h-72 flex items-center justify-center;
+}
+
+.stats-chart-center {
+  @apply absolute inset-0 flex flex-col items-center justify-center;
+}
+
+.stats-result {
+  @apply text-5xl font-bold tracking-tight text-white;
+}
+
+.stats-result-label {
+  @apply text-slate-400 text-sm mt-2;
+}
+
+.stats-summary-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+.stats-summary-item {
+  @apply bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-lg;
+}
+
+.stats-summary-label {
+  @apply text-slate-400 text-sm font-medium;
+}
+
+.stats-summary-value {
+  @apply text-3xl font-bold mt-3 text-white;
+}
+
+.stats-banner {
+  @apply bg-slate-800 border border-slate-700 rounded-3xl p-5 text-slate-100;
+}
+
+.stats-badge {
+  @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium;
+}
+
+.stats-badge-blue {
+  @apply bg-slate-700/80 text-slate-100;
+}
+
+.stats-badge-purple {
+  @apply bg-violet-700/80 text-slate-100;
+}
+
+.stats-badge-green {
+  @apply bg-emerald-700/80 text-slate-100;
+}
+
+.stats-bar-bg {
+  @apply bg-slate-800 rounded-full overflow-hidden h-2;
+}
+
+.stats-bar-fill {
+  @apply h-full rounded-full;
+}

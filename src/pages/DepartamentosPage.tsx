@@ -1,3 +1,4 @@
+import '../styles/DepartamentosPage.css'
 import { useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 import { useAdminDepartamentos } from '@/hooks/useAdminDepartamentos'
@@ -15,9 +16,11 @@ export function DepartamentosPage() {
 
   if (!isAdmin) {
     return (
-      <div className="p-6">
-        <div className="bg-red-50 text-red-700 p-4 rounded">
-          No tienes permiso para acceder a esta página
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-alert">
+            No tienes permiso para acceder a esta página
+          </div>
         </div>
       </div>
     )
@@ -64,29 +67,29 @@ export function DepartamentosPage() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="page-wrapper">
+      <div className="page-content space-y-8">
         {/* HEADER */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestión de Departamentos</h1>
-          <p className="text-gray-600 mt-2">Administra departamentos y asignaciones de usuarios</p>
+          <h1 className="text-3xl font-bold text-white">Gestión de Departamentos</h1>
+          <p className="text-slate-400 mt-2">Administra departamentos y asignaciones de usuarios</p>
         </div>
 
         {/* CREATE DEPARTAMENTO */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Crear Departamento</h2>
-          <div className="flex gap-3">
+        <div className="page-card">
+          <h2 className="text-xl font-semibold mb-4 text-white">Crear Departamento</h2>
+          <div className="flex flex-col gap-3 md:flex-row">
             <input
               type="text"
               value={nombre}
               onChange={e => setNombre(e.target.value)}
               placeholder="Nombre del departamento"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="page-input"
               onKeyDown={e => e.key === 'Enter' && handleCrearDepartamento()}
             />
             <button
               onClick={handleCrearDepartamento}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition"
+              className="page-button flex items-center justify-center gap-2"
             >
               <Plus size={20} />
               Crear
@@ -95,40 +98,40 @@ export function DepartamentosPage() {
         </div>
 
         {/* LIST DEPARTAMENTOS */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Departamentos</h2>
+        <div className="page-card">
+          <h2 className="text-xl font-semibold mb-4 text-white">Departamentos</h2>
           <div className="space-y-2">
             {departamentos.length === 0 ? (
-              <p className="text-gray-500">No hay departamentos creados</p>
+              <p className="text-slate-400">No hay departamentos creados</p>
             ) : (
               departamentos.map(d => (
                 <div
                   key={d.id}
-                  className="flex items-center justify-between bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition"
+                  className="page-row"
                 >
                   {editId === d.id ? (
                     <input
                       type="text"
                       defaultValue={d.nombre}
                       onChange={e => setEditNombre(e.target.value)}
-                      className="flex-1 px-3 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="page-input"
                       autoFocus
                     />
                   ) : (
-                    <span className="text-gray-900 font-medium">{d.nombre}</span>
+                    <span className="text-slate-100 font-medium">{d.nombre}</span>
                   )}
                   <div className="flex gap-2">
                     {editId === d.id ? (
                       <>
                         <button
                           onClick={() => handleEditarDepartamento(d.id!)}
-                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition"
+                          className="page-button-save"
                         >
                           Guardar
                         </button>
                         <button
                           onClick={() => setEditId(null)}
-                          className="bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded text-sm transition"
+                          className="page-button-cancel"
                         >
                           Cancelar
                         </button>
@@ -140,14 +143,14 @@ export function DepartamentosPage() {
                             setEditId(d.id!)
                             setEditNombre(d.nombre)
                           }}
-                          className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm flex items-center gap-1 transition"
+                          className="page-button-edit"
                         >
                           <Edit2 size={16} />
                           Editar
                         </button>
                         <button
                           onClick={() => handleEliminarDepartamento(d.id!)}
-                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm flex items-center gap-1 transition"
+                          className="page-button-delete"
                         >
                           <Trash2 size={16} />
                           Eliminar

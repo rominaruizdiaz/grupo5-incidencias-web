@@ -1,3 +1,4 @@
+import '../styles/IncidenciaDetailPage.css'
 import { useState, useEffect } from 'react'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
@@ -157,7 +158,17 @@ export const IncidenciaDetailPage = () => {
     }
   }
 
-  if (!incidencia) return <p>No encontrada</p>
+  if (!incidencia) {
+    return (
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-card text-center text-slate-400">
+            No encontrada
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Calcular permisos
   const esCreador = usuario?.id === incidencia.idUsuarioReporta
@@ -182,14 +193,16 @@ export const IncidenciaDetailPage = () => {
   const tieneAccesoAlChat = puedeEditarTextos || puedeCambiarEstado || puedeAsignar
 
   return (
-    <div className="space-y-4">
-      <div className="flex gap-2">
+    <div className="page-wrapper">
+      <div className="page-content">
+        <div className="page-card space-y-4">
+          <div className="page-header-actions">
         {puedeEliminar && <DeleteIncidenciaButton id={incidencia.id} />}
 
         {puedeAsignar && incidencia.estado !== 'Resuelto' && (
           <button
             onClick={handleAbrirAsignar}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+            className="page-button-primary"
             disabled={loadingAsignar}
           >
             Asignar Técnico
@@ -199,7 +212,7 @@ export const IncidenciaDetailPage = () => {
         {puedeResolver && (
           <button
             onClick={handleAbrirResolver}
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+            className="page-button-success"
             disabled={loadingResolver}
           >
             Marcar como Resuelto
@@ -209,7 +222,7 @@ export const IncidenciaDetailPage = () => {
         {incidencia.estado === 'Resuelto' && (esCreador || esAsignado || esAdmin) && (
           <button
             onClick={handleAbrirReabrir}
-            className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700 disabled:bg-gray-400"
+            className="page-button-warning"
             disabled={loadingReabrir}
           >
             Reabrir Incidencia
@@ -239,44 +252,44 @@ export const IncidenciaDetailPage = () => {
         />
       ) : puedeCambiarEstado && !puedeEditarTextos ? (
         <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow p-6 space-y-4">
+          <div className="page-card space-y-4">
             {incidencia.idUsuarioAsignado && (
-              <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+              <div className="page-message-success">
                 <p className="text-sm text-green-900">
                   <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
                 </p>
               </div>
             )}
             <div>
-              <p className="text-sm font-medium text-gray-600">Título</p>
-              <p className="text-lg font-semibold text-gray-900">{incidencia.titulo}</p>
+              <p className="text-sm font-medium text-slate-400">Título</p>
+              <p className="text-lg font-semibold text-white">{incidencia.titulo}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600">Descripción</p>
-              <p className="text-gray-700">{incidencia.descripcion}</p>
+              <p className="text-sm font-medium text-slate-400">Descripción</p>
+              <p className="text-slate-200">{incidencia.descripcion}</p>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-600">Estado</p>
-                <p className="text-gray-900">{incidencia.estado}</p>
+                <p className="text-sm font-medium text-slate-400">Estado</p>
+                <p className="text-slate-200">{incidencia.estado}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Urgencia</p>
-                <p className="text-gray-900">{incidencia.urgencia}</p>
+                <p className="text-sm font-medium text-slate-400">Urgencia</p>
+                <p className="text-slate-200">{incidencia.urgencia}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Categoría</p>
-                <p className="text-gray-900">{incidencia.categoria}</p>
+                <p className="text-sm font-medium text-slate-400">Categoría</p>
+                <p className="text-slate-200">{incidencia.categoria}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-600">Ubicación</p>
-                <p className="text-gray-900">{incidencia.ubicacion}</p>
+                <p className="text-sm font-medium text-slate-400">Ubicación</p>
+                <p className="text-slate-200">{incidencia.ubicacion}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Cambiar Estado</h3>
+          <div className="page-card space-y-4">
+            <h3 className="text-lg font-semibold text-white">Cambiar Estado</h3>
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => {
@@ -327,41 +340,41 @@ export const IncidenciaDetailPage = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow p-6 space-y-4">
+        <div className="page-card space-y-4">
           {incidencia.idUsuarioAsignado && (
-            <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-              <p className="text-sm text-green-900">
+            <div className="page-message-resolved">
+              <p className="text-sm text-emerald-200">
                 <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
               </p>
             </div>
           )}
           <div>
-            <p className="text-sm font-medium text-gray-600">Título</p>
-            <p className="text-lg font-semibold text-gray-900">{incidencia.titulo}</p>
+            <p className="text-sm font-medium text-slate-400">Título</p>
+            <p className="text-lg font-semibold text-white">{incidencia.titulo}</p>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-600">Descripción</p>
-            <p className="text-gray-700">{incidencia.descripcion}</p>
+            <p className="text-sm font-medium text-slate-400">Descripción</p>
+            <p className="text-slate-200">{incidencia.descripcion}</p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <p className="text-sm font-medium text-gray-600">Estado</p>
-              <p className="text-gray-900">{incidencia.estado}</p>
+              <p className="text-sm font-medium text-slate-400">Estado</p>
+              <p className="text-slate-200">{incidencia.estado}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600">Urgencia</p>
-              <p className="text-gray-900">{incidencia.urgencia}</p>
+              <p className="text-sm font-medium text-slate-400">Urgencia</p>
+              <p className="text-slate-200">{incidencia.urgencia}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600">Categoría</p>
-              <p className="text-gray-900">{incidencia.categoria}</p>
+              <p className="text-sm font-medium text-slate-400">Categoría</p>
+              <p className="text-slate-200">{incidencia.categoria}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-600">Ubicación</p>
-              <p className="text-gray-900">{incidencia.ubicacion}</p>
+              <p className="text-sm font-medium text-slate-400">Ubicación</p>
+              <p className="text-slate-200">{incidencia.ubicacion}</p>
             </div>
           </div>
-          <p className="text-xs text-gray-500">Solo el creador o administrador puede editar</p>
+          <p className="text-xs text-slate-500">Solo el creador o administrador puede editar</p>
         </div>
       )}
 
@@ -372,7 +385,7 @@ export const IncidenciaDetailPage = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
               Registro de Seguimiento
             </h3>
-            <div className="bg-white rounded-lg border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
+            <div className="page-card border border-slate-800 p-6 max-h-96 overflow-y-auto mb-4">
               <MensajesList
                 mensajes={mensajes}
                 getNombreUsuario={getNombreUsuario}
@@ -417,7 +430,7 @@ export const IncidenciaDetailPage = () => {
         loading={loadingReabrir}
         tituloIncidencia={incidencia?.titulo}
       />
-
-    </div>
+        </div>
+      </div>    </div>
   )
 }

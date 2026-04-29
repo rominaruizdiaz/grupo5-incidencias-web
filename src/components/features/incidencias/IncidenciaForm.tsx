@@ -1,4 +1,5 @@
 import type { IncidenciaUrgencia, IncidenciaEstado, Departamento } from '@/types'
+import '@/styles/IncidenciaForm.css'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
 import { URGENCIA_OPTIONS, ESTADO_OPTIONS } from '@/utils/incidenciaOptions'
 import { IncidenciaEstado as EstadoEnum } from '@/types'
@@ -28,32 +29,38 @@ export const IncidenciaForm = (props: Props) => {
   const isEdit = props.mode === 'edit'
 
   return (
-    <form onSubmit={props.onSubmit} className="space-y-4">
-      <h2 className="text-xl font-bold">
+    <form onSubmit={props.onSubmit} className="space-y-6">
+      <h2 className="page-form-title">
         {isEdit ? 'Gestión de incidencia' : 'Nueva incidencia'}
       </h2>
 
-      <input
-        value={props.titulo}
-        onChange={e => props.setTitulo(e.target.value)}
-        className="border p-2 w-full"
-        placeholder="Título"
-      />
+      <div>
+        <label className="page-form-label">Título</label>
+        <input
+          value={props.titulo}
+          onChange={e => props.setTitulo(e.target.value)}
+          className="page-input"
+          placeholder="Título"
+        />
+      </div>
 
-      <select
-        value={props.urgencia}
-        onChange={e => props.setUrgencia(e.target.value as IncidenciaUrgencia)}
-        className="border p-2 w-full"
-      >
-        {URGENCIA_OPTIONS.map(u => (
-          <option key={u} value={u}>
-            {u}
-          </option>
-        ))}
-      </select>
+      <div>
+        <label className="page-form-label">Urgencia</label>
+        <select
+          value={props.urgencia}
+          onChange={e => props.setUrgencia(e.target.value as IncidenciaUrgencia)}
+          className="page-select"
+        >
+          {URGENCIA_OPTIONS.map(u => (
+            <option key={u} value={u}>
+              {u}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {isEdit && (
-        <div className="p-3 bg-gray-50 border rounded text-sm space-y-1">
+        <div className="page-form-section">
           <p>
             <strong>Fecha:</strong> {props.fecha}
           </p>
@@ -65,50 +72,58 @@ export const IncidenciaForm = (props: Props) => {
         </div>
       )}
 
-      <label className="block text-sm font-medium">Departamento/Área</label>
-      <select
-        value={props.ubicacion}
-        onChange={e => props.setUbicacion(e.target.value)}
-        className="border p-2 w-full"
-      >
-        <option value="">Seleccionar departamento...</option>
-        {props.departamentos?.map(dept => (
-          <option key={dept.id} value={dept.nombre}>
-            {dept.nombre}
-          </option>
-        ))}
-      </select>
+      <div>
+        <label className="page-form-label">Departamento/Área</label>
+        <select
+          value={props.ubicacion}
+          onChange={e => props.setUbicacion(e.target.value)}
+          className="page-select"
+        >
+          <option value="">Seleccionar departamento...</option>
+          {props.departamentos?.map(dept => (
+            <option key={dept.id} value={dept.nombre}>
+              {dept.nombre}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <select
-        value={props.categoria}
-        onChange={e => props.setCategoria(e.target.value)}
-        className="border p-2 w-full"
-      >
-        {CATEGORIAS_DEFECTO.map(c => (
-          <option key={c} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
+      <div>
+        <label className="page-form-label">Categoría</label>
+        <select
+          value={props.categoria}
+          onChange={e => props.setCategoria(e.target.value)}
+          className="page-select"
+        >
+          {CATEGORIAS_DEFECTO.map(c => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </div>
 
-      <textarea
-        value={props.descripcion}
-        onChange={e => props.setDescripcion(e.target.value)}
-        className="border p-2 w-full"
-        placeholder="Detalles"
-      />
+      <div>
+        <label className="page-form-label">Detalles</label>
+        <textarea
+          value={props.descripcion}
+          onChange={e => props.setDescripcion(e.target.value)}
+          className="page-textarea"
+          placeholder="Detalles"
+        />
+      </div>
 
       {isEdit && props.setEstado && (
         <div>
-          <label className="block text-sm font-medium mb-2">Estado</label>
+          <label className="block text-sm font-medium mb-2 text-slate-200">Estado</label>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => props.setEstado!(EstadoEnum.ACTIVO)}
-              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+              className={`flex-1 py-2 px-3 rounded-2xl font-medium transition ${
                 props.estado === EstadoEnum.ACTIVO
-                  ? 'bg-red-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-sky-600 text-white'
+                  : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
               }`}
             >
               Activo
@@ -116,10 +131,10 @@ export const IncidenciaForm = (props: Props) => {
             <button
               type="button"
               onClick={() => props.setEstado!(EstadoEnum.EN_CURSO)}
-              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+              className={`flex-1 py-2 px-3 rounded-2xl font-medium transition ${
                 props.estado === EstadoEnum.EN_CURSO
-                  ? 'bg-orange-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
               }`}
             >
               En Curso
@@ -127,10 +142,10 @@ export const IncidenciaForm = (props: Props) => {
             <button
               type="button"
               onClick={() => props.setEstado!(EstadoEnum.RESUELTO)}
-              className={`flex-1 py-2 px-3 rounded font-medium transition ${
+              className={`flex-1 py-2 px-3 rounded-2xl font-medium transition ${
                 props.estado === EstadoEnum.RESUELTO
-                  ? 'bg-green-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
               }`}
             >
               Resuelto
@@ -141,7 +156,7 @@ export const IncidenciaForm = (props: Props) => {
 
       <button
         disabled={props.loading}
-        className="bg-blue-600 text-white p-2 w-full"
+        className="page-button"
       >
         {isEdit ? 'Guardar cambios' : 'Crear'}
       </button>

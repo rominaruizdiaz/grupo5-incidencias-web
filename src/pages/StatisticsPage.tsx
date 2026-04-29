@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/auth.store'
 import { type Incidencia, IncidenciaEstado } from '@/types'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { Check, AlertCircle, Clock } from 'lucide-react'
+import '../styles/StatisticsPage.css'
 
 export const StatisticsPage = () => {
   const usuario = useAuthStore(state => state.usuario)
@@ -41,8 +42,10 @@ export const StatisticsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-        <p className="text-gray-500">Cargando estadísticas...</p>
+      <div className="page-wrapper flex items-center justify-center">
+        <div className="page-content">
+          <p className="text-slate-400">Cargando estadísticas...</p>
+        </div>
       </div>
     )
   }
@@ -78,16 +81,16 @@ export const StatisticsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="page-wrapper">
+      <div className="page-content">
         {/* HEADER */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Estadísticas</h1>
-          <p className="text-gray-600 mt-2">
-            Rendimiento en la resolución de incidencias
+        <div className="stats-header">
+          <h1 className="stats-header-title">Métricas del Centro</h1>
+          <p className="stats-header-subtitle">
+            Rendimiento en resolución de incidencias
           </p>
           {usuario && (
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-slate-400 mt-2">
               {usuario.rol === 1 && '📊 Mostrando estadísticas globales (Admin)'}
               {usuario.rol === 2 && '📋 Mostrando solo tus incidencias reportadas (Profesor)'}
               {usuario.rol === 3 && '🔧 Mostrando solo tus incidencias asignadas (Técnico)'}
@@ -96,10 +99,10 @@ export const StatisticsPage = () => {
         </div>
 
         {/* GRÁFICO CIRCULAR */}
-        <div className="bg-white rounded-lg shadow p-8">
+        <div className="stats-card stats-chart-card">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             {/* GRÁFICO */}
-            <div className="flex flex-col items-center">
+            <div className="stats-chart-wrapper">
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
@@ -120,11 +123,11 @@ export const StatisticsPage = () => {
               </ResponsiveContainer>
 
               {/* PORCENTAJE EN EL CENTRO */}
-              <div className="text-center -mt-12 mb-4">
-                <div className="text-5xl font-bold text-green-600">
+              <div className="stats-chart-center">
+                <div className="stats-result">
                   {Math.round(porcentajeResuelto)}%
                 </div>
-                <p className="text-gray-600 text-sm mt-2">Resuelto</p>
+                <p className="stats-result-label">Resuelto</p>
               </div>
             </div>
 
@@ -137,8 +140,8 @@ export const StatisticsPage = () => {
                     style={{ backgroundColor: item.color }}
                   ></div>
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">{item.name}</p>
-                    <p className="text-sm text-gray-600">{item.value} incidencias</p>
+                    <p className="font-medium text-slate-100">{item.name}</p>
+                    <p className="text-sm text-slate-400">{item.value} incidencias</p>
                   </div>
                 </div>
               ))}
@@ -147,79 +150,63 @@ export const StatisticsPage = () => {
         </div>
 
         {/* TARJETAS DE RESUMEN */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Total */}
-          <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-gray-600 text-sm font-medium">Total</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  {totalIncidencias}
-                </p>
-              </div>
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <AlertCircle className="text-blue-600" size={24} />
-              </div>
-            </div>
-          </div>
-
+        <div className="stats-summary-grid">
           {/* Resueltas */}
-          <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
-            <div className="flex items-start justify-between">
+          <div className="stats-summary-item border-l-4 border-emerald-500">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-gray-600 text-sm font-medium">Resueltas</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  {incidenciasResueltas}
-                </p>
+                <p className="stats-summary-label">Resueltas</p>
+                <p className="stats-summary-value">{incidenciasResueltas}</p>
               </div>
-              <div className="p-3 bg-green-100 rounded-lg">
-                <Check className="text-green-600" size={24} />
+              <div className="stats-icon-bg-emerald">
+                <Check className="text-emerald-300" size={24} />
               </div>
             </div>
           </div>
 
-          {/* En Proceso */}
-          <div className="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
-            <div className="flex items-start justify-between">
+          {/* En Cola */}
+          <div className="stats-summary-item border-l-4 border-sky-500">
+            <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-gray-600 text-sm font-medium">En Proceso</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">
-                  {incidenciasEnCurso}
-                </p>
+                <p className="stats-summary-label">En Cola</p>
+                <p className="stats-summary-value">{incidenciasPendientes}</p>
               </div>
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <Clock className="text-orange-600" size={24} />
+              <div className="stats-icon-bg-sky">
+                <Clock className="text-sky-300" size={24} />
               </div>
             </div>
           </div>
         </div>
 
         {/* MENSAJE DE ESTADO */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <p className="text-blue-900 font-medium">{getMensajeEstado()}</p>
+        <div className="stats-banner">
+          <p className="font-medium">{getMensajeEstado()}</p>
         </div>
 
         {/* ESTADÍSTICAS POR ESTADO */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="stats-card">
+          <h2 className="text-lg font-bold text-slate-100 mb-4">
             Desglose por Estado
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
               {
                 estado: IncidenciaEstado.ACTIVO,
                 label: 'Activas',
-                color: 'bg-blue-100 text-blue-800',
+                badgeClass: 'stats-badge-blue',
+                barColor: 'bg-sky-400',
               },
               {
                 estado: IncidenciaEstado.EN_CURSO,
                 label: 'En Curso',
-                color: 'bg-purple-100 text-purple-800',
+                badgeClass: 'stats-badge-purple',
+                barColor: 'bg-violet-400',
               },
               {
                 estado: IncidenciaEstado.RESUELTO,
                 label: 'Resueltas',
-                color: 'bg-green-100 text-green-800',
+                badgeClass: 'stats-badge-green',
+                barColor: 'bg-emerald-400',
               },
             ].map(item => {
               const count = incidencias.filter(
@@ -228,21 +215,21 @@ export const StatisticsPage = () => {
               const percentage =
                 totalIncidencias > 0 ? ((count / totalIncidencias) * 100).toFixed(1) : 0
               return (
-                <div key={item.estado} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className={`px-3 py-1 rounded font-medium ${item.color}`}>
+                <div key={item.estado} className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className={`stats-badge ${item.badgeClass}`}>
                       {item.label}
                     </span>
-                    <span className="text-gray-600">{count} incidencias</span>
+                    <span className="text-slate-400 text-sm">{count} incidencias</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="flex items-center gap-3">
+                    <div className="stats-bar-bg flex-1">
                       <div
-                        className={`h-full ${item.color.split(' ')[0]}`}
+                        className={`stats-bar-fill ${item.barColor}`}
                         style={{ width: `${percentage}%` }}
-                      ></div>
+                      />
                     </div>
-                    <span className="text-gray-600 text-sm w-12 text-right">
+                    <span className="text-slate-400 text-sm w-12 text-right">
                       {percentage}%
                     </span>
                   </div>

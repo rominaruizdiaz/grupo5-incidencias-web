@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/PanelPage.css'
 import { useAuthStore } from '@/store/auth.store'
 import { getIncidencias } from '@/services/incidencias'
 import { getUsuarioDepartamentos } from '@/services/usuarioDepartamentos'
@@ -64,38 +65,46 @@ export const PanelPage = () => {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <p className="text-gray-500">Cargando...</p>
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-card text-center">
+            <p className="text-slate-400">Cargando...</p>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Panel</h1>
-        <p className="text-gray-600 text-sm mt-1">
-          {misDepartamentos.length > 0
-            ? `Mis áreas: ${misDepartamentos.join(', ')}`
-            : 'Sin departamentos asignados'}
-        </p>
-      </div>
+    <div className="page-wrapper">
+      <div className="page-content">
+        <div className="page-card space-y-6">
+          <div>
+            <h1 className="page-header-title">Panel</h1>
+            <p className="page-header-subtitle">
+              {misDepartamentos.length > 0
+                ? `Mis áreas: ${misDepartamentos.join(', ')}`
+                : 'Sin departamentos asignados'}
+            </p>
+          </div>
+        </div>
 
-      {incidencias.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-6 text-center">
-          <p className="text-gray-500">No hay incidencias</p>
-        </div>
-      ) : (
-        <div className="grid gap-4">
-          {incidencias.map(inc => (
-            <IncidenciaCard
-              key={inc.id}
-              incidencia={inc}
-              onClick={() => navigate(`/incidencia/${inc.id}`)}
-            />
-          ))}
-        </div>
-      )}
+        {incidencias.length === 0 ? (
+          <div className="page-card text-center">
+            <p className="text-slate-400">No hay incidencias</p>
+          </div>
+        ) : (
+          <div className="page-list">
+            {incidencias.map(inc => (
+              <IncidenciaCard
+                key={inc.id}
+                incidencia={inc}
+                onClick={() => navigate(`/incidencia/${inc.id}`)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

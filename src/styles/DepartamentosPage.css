@@ -1,0 +1,49 @@
+/* Estilos para DepartamentosPage */
+
+.page-wrapper {
+  @apply min-h-screen bg-slate-950 text-slate-100;
+}
+
+.page-content {
+  @apply max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8;
+}
+
+.page-header-title {
+  @apply text-3xl font-bold text-white;
+}
+
+.page-header-subtitle {
+  @apply text-slate-400 mt-2;
+}
+
+.page-card {
+  @apply bg-slate-900/95 border border-slate-800 rounded-[32px] shadow-xl p-6;
+}
+
+.page-input {
+  @apply flex-1 px-4 py-3 border border-slate-700 rounded-xl bg-slate-950 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.page-button {
+  @apply bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition font-semibold;
+}
+
+.page-row {
+  @apply flex items-center justify-between gap-3 bg-slate-950 border border-slate-800 rounded-3xl p-4 hover:bg-slate-900 transition;
+}
+
+.page-button-save {
+  @apply bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition;
+}
+
+.page-button-cancel {
+  @apply bg-gray-400 hover:bg-gray-500 text-white px-3 py-1 rounded text-sm transition;
+}
+
+.page-button-edit {
+  @apply bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-sm flex items-center gap-1 transition;
+}
+
+.page-button-delete {
+  @apply bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm flex items-center gap-1 transition;
+}

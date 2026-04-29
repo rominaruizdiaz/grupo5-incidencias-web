@@ -3,11 +3,11 @@ import { useAuthStore } from '@/store/auth.store'
 import { getNotificacionesPorUsuario } from '@/services/notificaciones'
 import { useEffect, useState } from 'react'
 import { Bell, BarChart3 } from 'lucide-react'
+import '@/styles/TopNav.css'
 
 export const TopNav = () => {
   const usuario = useAuthStore(state => state.usuario)
   const isAdmin = usuario?.rol === 1
-  const location = useLocation()
   const [notificacionesSinLeer, setNotificacionesSinLeer] = useState(0)
 
   useEffect(() => {
@@ -29,14 +29,14 @@ export const TopNav = () => {
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? 'text-blue-600 font-semibold'
-      : 'text-gray-600 hover:text-gray-900'
+      ? 'text-blue-400 font-semibold'
+      : 'text-slate-400 hover:text-slate-100'
 
   return (
-    <nav className="hidden md:flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-900 shadow">
+    <nav className="nav-container">
       <div className="font-bold text-lg">Incidencias App</div>
 
-      <div className="flex gap-6 items-center">
+      <div className="flex flex-wrap gap-4 items-center">
         <NavLink to="/panel" className={linkClass}>
           Panel
         </NavLink>
@@ -61,14 +61,13 @@ export const TopNav = () => {
           </>
         )}
 
-        {/* ESTADÍSTICAS */}
         <NavLink
           to="/statistics"
           className={({ isActive }) =>
             `flex items-center gap-2 ${
               isActive
-                ? 'text-blue-600 font-semibold'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-blue-400 font-semibold'
+                : 'text-slate-400 hover:text-slate-100'
             }`
           }
         >
@@ -76,20 +75,19 @@ export const TopNav = () => {
           <span>Estadísticas</span>
         </NavLink>
 
-        {/* NOTIFICACIONES */}
         <NavLink
           to="/notifications"
           className={({ isActive }) =>
             `flex items-center gap-2 relative ${
               isActive
-                ? 'text-blue-600 font-semibold'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-blue-400 font-semibold'
+                : 'text-slate-400 hover:text-slate-100'
             }`
           }
         >
           <Bell size={20} />
           {notificacionesSinLeer > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <span className="nav-notification-badge">
               {notificacionesSinLeer}
             </span>
           )}

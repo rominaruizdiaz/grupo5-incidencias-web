@@ -1,0 +1,97 @@
+/* Estilos para StatisticsPage */
+
+.page-wrapper {
+  @apply min-h-screen bg-slate-950 text-slate-100;
+}
+
+.page-content {
+  @apply max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6;
+}
+
+.page-card {
+  @apply bg-slate-900/95 border border-slate-800 rounded-[32px] shadow-xl p-6;
+}
+
+.page-chart-card {
+  @apply bg-slate-900/95 border border-slate-800 rounded-[32px] shadow-xl p-6;
+}
+
+.stats-header {
+  @apply space-y-3;
+}
+
+.stats-header-title {
+  @apply text-3xl font-bold text-white tracking-tight;
+}
+
+.stats-header-subtitle {
+  @apply text-slate-400;
+}
+
+.stats-chart-wrapper {
+  @apply relative w-full h-72 flex items-center justify-center;
+}
+
+.stats-chart-center {
+  @apply absolute inset-0 flex flex-col items-center justify-center;
+}
+
+.stats-result {
+  @apply text-5xl font-bold tracking-tight text-white;
+}
+
+.stats-result-label {
+  @apply text-slate-400 text-sm mt-2;
+}
+
+.stats-summary-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+.stats-icon-bg-emerald {
+  @apply p-3 bg-emerald-700/20 rounded-2xl;
+}
+
+.stats-icon-bg-sky {
+  @apply p-3 bg-sky-700/20 rounded-2xl;
+}
+
+.stats-summary-item {
+  @apply bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-lg;
+}
+
+.stats-summary-label {
+  @apply text-slate-400 text-sm font-medium;
+}
+
+.stats-summary-value {
+  @apply text-3xl font-bold mt-3 text-white;
+}
+
+.stats-banner {
+  @apply bg-slate-800 border border-slate-700 rounded-3xl p-5 text-slate-100;
+}
+
+.stats-badge {
+  @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium;
+}
+
+.stats-badge-blue {
+  @apply bg-slate-700/80 text-slate-100;
+}
+
+.stats-badge-purple {
+  @apply bg-violet-700/80 text-slate-100;
+}
+
+.stats-badge-green {
+  @apply bg-emerald-700/80 text-slate-100;
+}
+
+.stats-bar-bg {
+  @apply bg-slate-800 rounded-full overflow-hidden h-2;
+}
+
+.stats-bar-fill {
+  @apply h-full rounded-full;
+}
