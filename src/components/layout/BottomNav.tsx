@@ -31,7 +31,7 @@ export const BottomNav = () => {
   const inactive = 'text-gray-500'
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 border-t flex md:hidden">
+    <nav className="fixed bottom-0 left-0 w-full bg-slate-950 border-t border-slate-800 flex md:hidden">
       <NavLink
         to="/panel"
         className={({ isActive }) => `${base} ${isActive ? active : inactive}`}

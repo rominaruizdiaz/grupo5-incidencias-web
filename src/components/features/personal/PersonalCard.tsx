@@ -8,12 +8,12 @@ export function PersonalCard({
   onDelete,
 }: PersonalCardProps) {
   return (
-    <div className="md:hidden bg-white rounded-lg shadow p-4 mb-4">
+    <div className="md:hidden bg-slate-950 border border-slate-800 rounded-3xl shadow-sm p-4 mb-4">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
+        <h3 className="text-lg font-semibold text-white">
           {usuario.nombre}
         </h3>
-        <p className="text-sm text-gray-600">{usuario.email}</p>
+        <p className="text-sm text-slate-400">{usuario.email}</p>
       </div>
 
       <div className="mb-4 space-y-2">
@@ -25,7 +25,7 @@ export function PersonalCard({
           </span>
         </div>
         <div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-400">
             <strong>Departamentos:</strong>{' '}
             {departamentos
               .filter(d =>
@@ -37,7 +37,7 @@ export function PersonalCard({
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <button
           onClick={() => onEdit(usuario)}
           className="flex-1 px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

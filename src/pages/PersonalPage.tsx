@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import '../styles/PersonalPage.css'
 import { useAuthStore } from '@/store/auth.store'
 
 import { usePersonal } from '@/hooks/usePersonal'
@@ -45,7 +46,14 @@ export function PersonalPage() {
   const { filters, setFilters, usuariosFiltrados } =
     usePersonalFilters(usuariosConDeptos)
 
-  if (!isAdmin) return <div className="p-6 text-red-600">No autorizado</div>
+  if (!isAdmin)
+    return (
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-alert">No autorizado</div>
+        </div>
+      </div>
+    )
 
   const handleEdit = (u: Usuario) => {
     const usuarioCompleto: UsuarioWithDepartamentos = {
@@ -73,22 +81,19 @@ export function PersonalPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded">{error}</div>
-      )}
+    <div className="page-wrapper">
+      <div className="page-content">
+        {error && (
+          <div className="page-alert">{error}</div>
+        )}
 
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">
-          Gestión de Personal
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Administra usuarios y sus departamentos
-        </p>
-      </div>
+        <div>
+          <h1 className="page-title">Gestión de Personal</h1>
+          <p className="page-subtitle">Administra usuarios y sus departamentos</p>
+        </div>
 
-      <PersonalFilters
-        filters={filters}
+        <PersonalFilters
+          filters={filters}
         departamentos={departamentos}
         onFilterChange={setFilters}
         loading={loading || loadingMapa}
@@ -122,6 +127,7 @@ export function PersonalPage() {
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
       />
+      </div>
     </div>
   )
 }

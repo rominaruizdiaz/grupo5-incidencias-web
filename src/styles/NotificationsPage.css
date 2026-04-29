@@ -1,0 +1,33 @@
+/* Estilos para NotificationsPage */
+
+.page-wrapper {
+  @apply min-h-screen bg-slate-950 text-slate-100;
+}
+
+.page-header {
+  @apply sticky top-0 bg-slate-950 border-b border-slate-800 p-6 z-10;
+}
+
+.page-content {
+  @apply px-4 py-8 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-6;
+}
+
+.page-card {
+  @apply bg-slate-900/95 border border-slate-800 rounded-[32px] shadow-xl;
+}
+
+.page-notification {
+  @apply rounded-3xl border transition cursor-pointer;
+}
+
+.page-notification-read {
+  @apply bg-slate-950 border-slate-800 hover:border-slate-700;
+}
+
+.page-notification-unread {
+  @apply bg-slate-800/80 border-blue-500 hover:border-blue-400;
+}
+
+.page-empty {
+  @apply bg-slate-900/90 rounded-3xl p-12 text-center text-slate-400;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/AreasPage.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { getDepartamentos } from '@/services/departamentos'
@@ -58,23 +59,23 @@ export function AreasPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="page-wrapper">
+      <div className="page-content space-y-6">
         {/* HEADER */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Mis Áreas</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-3xl font-bold text-white">Mis Áreas</h1>
+          <p className="text-slate-400 mt-2">
             Departamentos a los que perteneces e incidencias asociadas
           </p>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-gray-500">
+          <div className="text-center py-12 text-slate-400">
             <p>Cargando áreas...</p>
           </div>
         ) : departamentosInfo.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-500">
+          <div className="page-card text-center">
+            <p className="text-slate-400">
               No estás asignado a ningún departamento
             </p>
           </div>
@@ -87,37 +88,37 @@ export function AreasPage() {
               return (
                 <div
                   key={area.id}
-                  className="bg-white rounded-lg shadow overflow-hidden"
+                  className="page-card overflow-hidden"
                 >
                   {/* HEADER ÁREA */}
                   <div
-                    className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition"
+                    className="page-area-header"
                     onClick={() =>
                       setExpandedDepartamento(isExpanded ? null : area.id!)
                     }
                   >
                     <div className="flex items-center gap-4 flex-1">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                      <div className="page-dot-blue"></div>
                       <div className="text-left">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                        <h2 className="text-lg font-semibold text-white">
                           {area.nombre}
                         </h2>
-                        <p className="text-sm text-gray-600 mt-1">
+                        <p className="text-sm text-slate-400 mt-1">
                           {incidenciasArea.length}{' '}
                           {incidenciasArea.length === 1 ? 'incidencia' : 'incidencias'}
                         </p>
                       </div>
                     </div>
                     {isExpanded ? (
-                      <ChevronUp className="text-gray-600" />
+                      <ChevronUp className="text-slate-400" />
                     ) : (
-                      <ChevronDown className="text-gray-600" />
+                      <ChevronDown className="text-slate-400" />
                     )}
                   </div>
 
                   {/* INCIDENCIAS */}
                   {isExpanded && incidenciasArea.length > 0 && (
-                    <div className="border-t px-6 py-4 space-y-3 bg-gray-50">
+                    <div className="page-area-body space-y-3">
                       {incidenciasArea.map(incidencia => (
                         <IncidenciaCard
                           key={incidencia.id}
@@ -129,7 +130,7 @@ export function AreasPage() {
                   )}
 
                   {isExpanded && incidenciasArea.length === 0 && (
-                    <div className="border-t px-6 py-4 bg-gray-50 text-center text-gray-500">
+                    <div className="page-area-body text-center text-slate-400">
                       No hay incidencias en esta área
                     </div>
                   )}

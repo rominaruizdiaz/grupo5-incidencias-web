@@ -10,41 +10,41 @@ export function PersonalSection({
 }: PersonalTableProps) {
   if (usuarios.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow p-6 text-center">
-        <p className="text-gray-500">No hay usuarios para mostrar</p>
+      <div className="page-card text-center">
+        <p className="text-slate-400">No hay usuarios para mostrar</p>
       </div>
     )
   }
 
   return (
-    <div className="hidden md:block bg-white rounded-lg shadow overflow-hidden">
+    <div className="hidden md:block page-card overflow-hidden">
       <table className="w-full">
-        <thead className="bg-gray-50 border-b">
+        <thead className="bg-slate-950 border-b border-slate-800">
           <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
               Nombre
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
               Email
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
               Rol
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
               Departamentos
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
               Acciones
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y">
+        <tbody className="divide-y divide-slate-800">
           {usuarios.map(usuario => (
-            <tr key={usuario.id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 text-sm text-gray-900">
+            <tr key={usuario.id} className="hover:bg-slate-900">
+              <td className="px-6 py-4 text-sm text-slate-100">
                 {usuario.nombre}
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
+              <td className="px-6 py-4 text-sm text-slate-400">
                 {usuario.email}
               </td>
               <td className="px-6 py-4">
@@ -54,7 +54,7 @@ export function PersonalSection({
                   {ROLE_LABELS[usuario.rol]}
                 </span>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">
+              <td className="px-6 py-4 text-sm text-slate-400">
                 {departamentos
                   .filter(d =>
                     (usuario as any).departamentos?.includes(d.id)

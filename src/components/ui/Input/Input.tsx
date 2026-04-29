@@ -1,5 +1,6 @@
 import React from 'react'
 import type { InputProps } from './Input.types'
+import '@/styles/Input.css'
 
 export const Input: React.FC<InputProps> = ({
   type = 'text',
@@ -10,11 +11,11 @@ export const Input: React.FC<InputProps> = ({
   icon,
 }) => {
   return (
-    <div className="flex items-center w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus-within:ring-2 focus-within:ring-blue-500 transition">
-      {icon && <div className="mr-2 text-gray-500">{icon}</div>}
+    <div className="input-container">
+      {icon && <div className="input-icon">{icon}</div>}
 
       <input
-        className="w-full outline-none text-sm text-gray-800 placeholder-gray-400"
+        className="input-field"
         type={type}
         name={name}
         value={value}
