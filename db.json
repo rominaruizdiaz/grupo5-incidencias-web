@@ -4,12 +4,12 @@
       "id": 1,
       "nombre": "Admin User",
       "email": "admin@gmail.com",
-      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
+      "password": "$2a$10$l7Qrg.MrTS04NBHnYtSBXe6KjlISGhth2VfI8EUrAphIn.Zr2nR62",
       "fotoPerfil": null,
       "modoOscuro": false,
       "rol": 1,
       "fechaRegistro": "2024-01-15T10:00:00Z",
-      "departamentos": [1, 4, 5, 3]
+      "departamentos": [1, 4, 5, 3, 2]
     },
     {
       "id": 2,
