@@ -28,12 +28,12 @@ export const NavItem = ({
         `${baseClass} ${isActive ? activeClass : inactiveClass}`
       }
     >
-      <div className="relative">
+      <div className="relative flex flex-col items-center justify-center">
         <Icon size={20} />
         {badgeCount !== undefined && <NotificationBadge count={badgeCount} />}
       </div>
 
-      <span>{label}</span>
+      <span className="hidden md:block">{label}</span>
     </NavLink>
   )
 }
