@@ -1,6 +1,6 @@
 import { LogoutButton } from '@/components/features/logout/LogoutButton'
 import { useAuthStore } from '@/store/auth.store'
-import { User, Mail, Shield, LogOut } from 'lucide-react'
+import { User, Mail, Shield } from 'lucide-react'
 
 export const UserProfilePage = () => {
   const usuario = useAuthStore(state => state.usuario)
@@ -34,43 +34,53 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+    <div className="min-h-[100dvh] bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
       {/* HEADER */}
-      <div className="bg-white border-b border-gray-200 px-6 py-6">
-        <h1 className="text-2xl font-bold text-gray-900">Mi Perfil</h1>
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4 sm:py-6">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          Mi Perfil
+        </h1>
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6 max-w-2xl mx-auto">
-        {/* FOTO DE PERFIL */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 space-y-6">
-          {/* AVATAR */}
-          <div className="flex justify-center">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-              <User size={48} className="text-white" />
-            </div>
-          </div>
+      <div className="flex-1 w-full p-0 sm:p-6 max-w-3xl mx-auto">
+        <div
+          className="
+            bg-white 
+            w-full h-full 
+            flex flex-col
+            p-6 space-y-6
 
-          {/* NOMBRE */}
-          <div className="text-center">
-            <h2 className="text-2xl font-black text-gray-900">
+            sm:rounded-2xl 
+            sm:shadow-sm 
+            sm:border sm:border-gray-200 
+            sm:p-8
+          "
+        >
+          {/* AVATAR + NOMBRE */}
+          <div className="flex flex-col items-center text-center gap-4">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+              <User size={36} className="text-white sm:w-12 sm:h-12" />
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-black text-gray-900">
               {usuario.nombre}
             </h2>
           </div>
 
           {/* INFO */}
-          <div className="space-y-4">
+          <div className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
             {/* EMAIL */}
             <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-100 rounded-lg">
-                  <Mail size={20} className="text-blue-600" />
+                  <Mail size={18} className="text-blue-600" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
                     Correo
                   </p>
-                  <p className="text-sm font-medium text-gray-900 mt-1">
+                  <p className="text-sm font-medium text-gray-900 mt-1 truncate">
                     {usuario.email}
                   </p>
                 </div>
@@ -81,7 +91,7 @@ export const UserProfilePage = () => {
             <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-purple-100 rounded-lg">
-                  <Shield size={20} className="text-purple-600" />
+                  <Shield size={18} className="text-purple-600" />
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
@@ -89,7 +99,7 @@ export const UserProfilePage = () => {
                   </p>
                   <div className="mt-1">
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${getRolColor(usuario.rol)}`}
+                      className={`inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-semibold ${getRolColor(usuario.rol)}`}
                     >
                       {getRolLabel(usuario.rol)}
                     </span>
@@ -98,30 +108,25 @@ export const UserProfilePage = () => {
               </div>
             </div>
 
-            {/* FECHA DE REGISTRO */}
+            {/* FECHA */}
             {usuario.fechaRegistro && (
-              <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
-                <div>
-                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                    Miembro desde
-                  </p>
-                  <p className="text-sm font-medium text-gray-900 mt-2">
-                    {new Date(usuario.fechaRegistro).toLocaleDateString(
-                      'es-ES',
-                      {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }
-                    )}
-                  </p>
-                </div>
+              <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 sm:col-span-2">
+                <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  Miembro desde
+                </p>
+                <p className="text-sm font-medium text-gray-900 mt-2">
+                  {new Date(usuario.fechaRegistro).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
               </div>
             )}
           </div>
 
           {/* LOGOUT */}
-          <div className="pt-4 border-t border-gray-200">
+          <div className="pt-4 border-t border-gray-200 mt-auto">
             <LogoutButton />
           </div>
         </div>

@@ -4,7 +4,8 @@ import { useAuthStore } from '@/store/auth.store'
 import { getDepartamentos } from '@/services/departamentos'
 import { getIncidencias } from '@/services/incidencias'
 import { type Departamento, type Incidencia } from '@/types'
-import { ChevronLeft } from 'lucide-react'
+import { ArrowLeft, MapPin } from 'lucide-react'
+import { IncidenciaCardNew } from '@/components/features/incidencias/IncidenciaCardNew'
 
 export function AreaDetailPage() {
   const { areaId } = useParams<{ areaId: string }>()
@@ -59,9 +60,11 @@ export function AreaDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p>Cargando...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="space-y-3">
+          <div className="h-20 w-64 bg-gray-100 rounded-2xl animate-pulse" />
+          <div className="h-20 w-64 bg-gray-100 rounded-2xl animate-pulse" />
+          <div className="h-20 w-64 bg-gray-100 rounded-2xl animate-pulse" />
         </div>
       </div>
     )
@@ -69,89 +72,65 @@ export function AreaDetailPage() {
 
   if (!area) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6">
-        <div className="text-center py-12 text-gray-500">
-          <p>Área no encontrada</p>
+      <div className="min-h-screen bg-white flex items-center justify-center p-6">
+        <div className="text-center">
+          <p className="text-gray-500 text-lg">Área no encontrada</p>
+          <button
+            onClick={() => navigate('/areas')}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Volver a Mis Áreas
+          </button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* HEADER */}
-        <div className="flex items-center gap-4">
+    <div className="min-h-screen bg-white">
+      {/* HEADER */}
+      <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 z-10">
+        <div className="max-w-6xl mx-auto flex items-center gap-4">
           <button
             onClick={() => navigate('/areas')}
-            className="p-2 hover:bg-gray-200 rounded-lg transition"
+            className="p-2 hover:bg-gray-100 rounded-lg transition text-gray-600 hover:text-gray-900"
           >
-            <ChevronLeft size={24} />
+            <ArrowLeft size={24} />
           </button>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">{area.nombre}</h1>
-            <p className="text-gray-600 mt-1">
-              {incidencias.length}{' '}
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+              <MapPin size={28} className="text-blue-600" />
+              {area.nombre}
+            </h1>
+          </div>
+          <div className="text-right">
+            <p className="text-sm font-semibold text-gray-600">
+              {incidencias.length}
+            </p>
+            <p className="text-xs text-gray-500">
               {incidencias.length === 1 ? 'incidencia' : 'incidencias'}
             </p>
           </div>
         </div>
+      </div>
 
-        {/* INCIDENCIAS */}
-        <div className="bg-white rounded-lg shadow p-6">
+      {/* CONTENIDO */}
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto">
           {incidencias.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
-              <p>No hay incidencias en este área</p>
+            <div className="rounded-2xl bg-gray-50 border border-gray-200 p-12 text-center">
+              <p className="text-gray-500 text-lg">
+                No hay incidencias en esta área
+              </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {incidencias.map(inc => (
-                <div
+                <IncidenciaCardNew
                   key={inc.id}
+                  incidencia={inc}
                   onClick={() => navigate(`/incidencia/${inc.id}`)}
-                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:shadow transition cursor-pointer"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">
-                        {inc.titulo}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {inc.descripcion}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                          {inc.categoria}
-                        </span>
-                        <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
-                          {inc.ubicacion}
-                        </span>
-                        <span
-                          className={`px-2 py-1 text-xs rounded font-medium ${
-                            inc.urgencia === 'Alta'
-                              ? 'bg-red-100 text-red-800'
-                              : inc.urgencia === 'Media'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-green-100 text-green-800'
-                          }`}
-                        >
-                          {inc.urgencia}
-                        </span>
-                        <span
-                          className={`px-2 py-1 text-xs rounded font-medium ${
-                            inc.estado === 'Activo'
-                              ? 'bg-blue-100 text-blue-800'
-                              : inc.estado === 'En curso'
-                                ? 'bg-purple-100 text-purple-800'
-                                : 'bg-green-100 text-green-800'
-                          }`}
-                        >
-                          {inc.estado}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
             </div>
           )}

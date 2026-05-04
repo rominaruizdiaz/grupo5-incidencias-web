@@ -15,6 +15,7 @@ import {
   PersonalModal,
   PersonalSection,
 } from '@/components/features/personal'
+import { Users } from 'lucide-react'
 
 export function PersonalPage() {
   const isAdmin = useAuthStore(state => state.isAdmin())
@@ -63,7 +64,11 @@ export function PersonalPage() {
     }
   }
 
-  const handleSave = async (u: Usuario, deps: number[], etiquetas: number[] = []) => {
+  const handleSave = async (
+    u: Usuario,
+    deps: number[],
+    etiquetas: number[] = []
+  ) => {
     await editarUsuario(u, deps, etiquetas)
 
     await refresh()
@@ -73,55 +78,66 @@ export function PersonalPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded">{error}</div>
-      )}
-
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">
-          Gestión de Personal
-        </h1>
-        <p className="text-gray-600 mt-2">
-          Administra usuarios y sus departamentos
-        </p>
+    <div className="min-h-screen bg-white">
+      {/* HEADER */}
+      <div className="border-b border-gray-200 px-6 py-6">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+            <Users size={32} className="text-blue-600" />
+            Gestión de Personal
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Administra usuarios y sus departamentos
+          </p>
+        </div>
       </div>
 
-      <PersonalFilters
-        filters={filters}
-        departamentos={departamentos}
-        onFilterChange={setFilters}
-        loading={loading || loadingMapa}
-      />
+      {/* CONTENIDO */}
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {error && (
+            <div className="bg-red-50 border border-gray-200 text-red-700 p-4 rounded-lg">
+              {error}
+            </div>
+          )}
 
-      <PersonalSection
-        usuarios={usuariosFiltrados}
-        departamentos={departamentos}
-        onEditUsuario={handleEdit}
-        onDeleteUsuario={handleDelete}
-        loading={loading}
-      />
-
-      <div className="md:hidden space-y-4">
-        {usuariosFiltrados.map(u => (
-          <PersonalCard
-            key={u.id}
-            usuario={u}
+          <PersonalFilters
+            filters={filters}
             departamentos={departamentos}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onFilterChange={setFilters}
+            loading={loading || loadingMapa}
           />
-        ))}
-      </div>
 
-      <PersonalModal
-        usuario={selectedUsuario}
-        departamentos={departamentos}
-        isOpen={isModalOpen}
-        loading={loading}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSave}
-      />
+          <PersonalSection
+            usuarios={usuariosFiltrados}
+            departamentos={departamentos}
+            onEditUsuario={handleEdit}
+            onDeleteUsuario={handleDelete}
+            loading={loading}
+          />
+
+          <div className="md:hidden space-y-4">
+            {usuariosFiltrados.map(u => (
+              <PersonalCard
+                key={u.id}
+                usuario={u}
+                departamentos={departamentos}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+
+          <PersonalModal
+            usuario={selectedUsuario}
+            departamentos={departamentos}
+            isOpen={isModalOpen}
+            loading={loading}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSave}
+          />
+        </div>
+      </div>
     </div>
   )
 }

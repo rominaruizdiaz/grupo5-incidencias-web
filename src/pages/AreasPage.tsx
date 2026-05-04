@@ -5,8 +5,8 @@ import { getDepartamentos } from '@/services/departamentos'
 import { getIncidencias } from '@/services/incidencias'
 import { getUsuarioDepartamentos } from '@/services/usuarioDepartamentos'
 import { type Departamento, type Incidencia } from '@/types'
-import { IncidenciaCard } from '@/components/features/incidencias/IncidenciaCard'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { IncidenciaCardNew } from '@/components/features/incidencias/IncidenciaCardNew'
+import { ChevronDown, ChevronUp, MapPin } from 'lucide-react'
 
 export function AreasPage() {
   const navigate = useNavigate()
@@ -16,7 +16,9 @@ export function AreasPage() {
   const [incidencias, setIncidencias] = useState<Incidencia[]>([])
   const [usuarioDepartamentos, setUsuarioDepartamentos] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [expandedDepartamento, setExpandedDepartamento] = useState<number | null>(null)
+  const [expandedDepartamento, setExpandedDepartamento] = useState<
+    number | null
+  >(null)
 
   useEffect(() => {
     const fetch = async () => {
@@ -48,33 +50,43 @@ export function AreasPage() {
     .filter(ud => ud.usuarioId === usuario.id)
     .map(ud => ud.departamentoId)
 
-  const departamentosInfo = departamentos.filter(d => misDepartamentos.includes(d.id!))
+  const departamentosInfo = departamentos.filter(d =>
+    misDepartamentos.includes(d.id!)
+  )
 
   const getIncidenciasDelDepartamento = (departamentoId: number) => {
-    const nombreDepartamento = departamentos.find(d => d.id === departamentoId)?.nombre
-
-    // Mostrar TODAS las incidencias de este departamento, sin filtrar por rol
+    const nombreDepartamento = departamentos.find(
+      d => d.id === departamentoId
+    )?.nombre
     return incidencias.filter(inc => inc.ubicacion === nombreDepartamento)
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
-        {/* HEADER */}
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Mis Áreas</h1>
-          <p className="text-gray-600 mt-2">
-            Departamentos a los que perteneces e incidencias asociadas
-          </p>
-        </div>
+    <div className="min-h-screen bg-white">
+      {/* HEADER */}
+      <div className="border-b border-gray-200 px-6 py-6">
+        <h1 className="text-3xl font-bold text-gray-900">Mis Áreas</h1>
+        <p className="text-gray-600 text-sm mt-2">
+          Departamentos asignados e incidencias asociadas
+        </p>
+      </div>
 
+      {/* CONTENIDO */}
+      <div className="p-6 max-w-4xl mx-auto">
         {loading ? (
-          <div className="text-center py-12 text-gray-500">
-            <p>Cargando áreas...</p>
+          <div className="space-y-3">
+            {[1, 2, 3].map(i => (
+              <div
+                key={i}
+                className="h-20 bg-gray-100 rounded-2xl animate-pulse"
+              />
+            ))}
           </div>
         ) : departamentosInfo.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center">
-            <p className="text-gray-500">
+          <div className="text-center py-12">
+            {/* SVG bandera de españa */}
+            <div className="text-4xl mb-3"></div>
+            <p className="text-gray-500 text-sm">
               No estás asignado a ningún departamento
             </p>
           </div>
@@ -87,50 +99,58 @@ export function AreasPage() {
               return (
                 <div
                   key={area.id}
-                  className="bg-white rounded-lg shadow overflow-hidden"
+                  className="rounded-2xl bg-gray-50 border border-gray-200 overflow-hidden"
                 >
-                  {/* HEADER ÁREA */}
-                  <div
-                    className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition"
+                  {/* HEADER DE AREA */}
+                  <button
                     onClick={() =>
                       setExpandedDepartamento(isExpanded ? null : area.id!)
                     }
+                    className="w-full px-4 py-4 flex items-center justify-between hover:bg-gray-100 transition text-left"
                   >
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                      <div className="text-left">
-                        <h2 className="text-lg font-semibold text-gray-900">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="p-2 bg-blue-100 rounded-lg">
+                        <MapPin size={20} className="text-blue-600" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-gray-900">
                           {area.nombre}
-                        </h2>
-                        <p className="text-sm text-gray-600 mt-1">
+                        </h3>
+                        <p className="text-xs text-gray-600 mt-1">
                           {incidenciasArea.length}{' '}
-                          {incidenciasArea.length === 1 ? 'incidencia' : 'incidencias'}
+                          {incidenciasArea.length === 1
+                            ? 'incidencia'
+                            : 'incidencias'}
                         </p>
                       </div>
                     </div>
-                    {isExpanded ? (
-                      <ChevronUp className="text-gray-600" />
-                    ) : (
-                      <ChevronDown className="text-gray-600" />
-                    )}
-                  </div>
-
-                  {/* INCIDENCIAS */}
-                  {isExpanded && incidenciasArea.length > 0 && (
-                    <div className="border-t px-6 py-4 space-y-3 bg-gray-50">
-                      {incidenciasArea.map(incidencia => (
-                        <IncidenciaCard
-                          key={incidencia.id}
-                          incidencia={incidencia}
-                          onClick={() => navigate(`/incidencia/${incidencia.id}`)}
-                        />
-                      ))}
+                    <div className="flex-shrink-0 text-gray-600 transition">
+                      {isExpanded ? (
+                        <ChevronUp size={20} />
+                      ) : (
+                        <ChevronDown size={20} />
+                      )}
                     </div>
-                  )}
+                  </button>
 
-                  {isExpanded && incidenciasArea.length === 0 && (
-                    <div className="border-t px-6 py-4 bg-gray-50 text-center text-gray-500">
-                      No hay incidencias en esta área
+                  {/* LISTA DE INCIDENCIAS */}
+                  {isExpanded && (
+                    <div className="border-t border-gray-200 px-4 py-4 bg-white space-y-3">
+                      {incidenciasArea.length === 0 ? (
+                        <div className="text-center py-6 text-gray-500 text-sm">
+                          No hay incidencias en esta área
+                        </div>
+                      ) : (
+                        incidenciasArea.map(incidencia => (
+                          <IncidenciaCardNew
+                            key={incidencia.id}
+                            incidencia={incidencia}
+                            onClick={() =>
+                              navigate(`/incidencia/${incidencia.id}`)
+                            }
+                          />
+                        ))
+                      )}
                     </div>
                   )}
                 </div>
