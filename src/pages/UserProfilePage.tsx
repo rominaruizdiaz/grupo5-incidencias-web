@@ -1,6 +1,6 @@
 import { LogoutButton } from '@/components/features/logout/LogoutButton'
 import { useAuthStore } from '@/store/auth.store'
-import { User, Mail, Shield } from 'lucide-react'
+import { Mail, Shield, User } from 'lucide-react'
 
 export const UserProfilePage = () => {
   const usuario = useAuthStore(state => state.usuario)
@@ -34,29 +34,16 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-blue-50 to-indigo-50 flex flex-col">
+    <div className="from-blue-50 to-indigo-50 flex flex-col">
       {/* HEADER */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4 sm:py-6">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4 sm:py-6 shrink-0">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
           Mi Perfil
         </h1>
       </div>
 
-      {/* CONTENIDO */}
-      <div className="flex-1 w-full p-0 sm:p-6 max-w-3xl mx-auto">
-        <div
-          className="
-            bg-white 
-            w-full h-full 
-            flex flex-col
-            p-6 space-y-6
-
-            sm:rounded-2xl 
-            sm:shadow-sm 
-            sm:border sm:border-gray-200 
-            sm:p-8
-          "
-        >
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-6 pb-16 overflow-hidden">
+        <div className="bg-white w-full h-full max-w-3xl p-6 space-y-6 sm:rounded-2xl sm:shadow-sm sm:border sm:border-gray-200 sm:p-8 flex flex-col">
           {/* AVATAR + NOMBRE */}
           <div className="flex flex-col items-center text-center gap-4">
             <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
@@ -126,8 +113,10 @@ export const UserProfilePage = () => {
           </div>
 
           {/* LOGOUT */}
-          <div className="pt-4 border-t border-gray-200 mt-auto">
-            <LogoutButton />
+          <div className="mt-auto pt-4 border-t border-gray-200 flex justify-end">
+            <div className="w-full flex justify-end">
+              <LogoutButton />
+            </div>
           </div>
         </div>
       </div>

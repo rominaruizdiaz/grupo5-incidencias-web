@@ -11,7 +11,8 @@ export const MainLayout = () => {
 
       {/* CONTENIDO */}
       <div className="flex-1 flex flex-col">
-        <main className="flex-1 pb-16 md:pb-0">
+        <main className="flex-1 pb-16 md:pb-0 overflow-hidden">
+          {' '}
           <Outlet />
         </main>
       </div>
