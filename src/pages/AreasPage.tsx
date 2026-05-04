@@ -62,7 +62,7 @@ export function AreasPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       {/* HEADER */}
       <div className="border-b border-gray-200 px-6 py-6">
         <h1 className="text-3xl font-bold text-gray-900">Mis Áreas</h1>

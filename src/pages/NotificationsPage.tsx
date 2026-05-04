@@ -27,16 +27,26 @@ export const NotificationsPage = () => {
   const handleClick = async (n: Notificacion) => {
     if (!n.id) return
 
-    await markAsRead(n.id)
-
-    if (n.idIncidenciaVinculada) {
-      navigate(`/incidencia/${n.idIncidenciaVinculada}`)
+    try {
+      await markAsRead(n.id)
+      if (n.idIncidenciaVinculada) {
+        navigate(`/incidencia/${n.idIncidenciaVinculada}`)
+      }
+    } catch (error) {
+      console.error('Error al marcar la notificación como leída:', error)
     }
   }
 
   const handleMarkAll = async () => {
     if (!usuario?.id) return
-    await markAllAsRead(usuario.id)
+    try {
+      await markAllAsRead(usuario.id)
+    } catch (error) {
+      console.error(
+        'Error al marcar todas las notificaciones como leídas:',
+        error
+      )
+    }
   }
 
   if (loading) {
@@ -48,7 +58,7 @@ export const NotificationsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       {/* HEADER */}
       <div className="bg-white border-b px-6 py-4 flex justify-between">
         <h1 className="text-xl font-bold">Centro de Avisos</h1>
@@ -81,13 +91,42 @@ export const NotificationsPage = () => {
             >
               <div className="flex justify-between">
                 <span className="font-semibold">{n.titulo}</span>
-
                 {!n.leida && (
                   <span className="w-2 h-2 bg-blue-600 rounded-full" />
                 )}
               </div>
 
               <p className="text-sm text-gray-600">{n.mensaje}</p>
+
+              <p className="text-xs text-gray-500 mt-1 text-right">
+                {n.fechaCreacion ? (
+                  (() => {
+                    const fecha = new Date(n.fechaCreacion)
+                    const fechaValida = !isNaN(fecha.getTime())
+
+                    return fechaValida ? (
+                      fecha
+                        .toLocaleString('es-ES', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: false,
+                        })
+                        .replace(',', '')
+                    ) : (
+                      <span className="italic text-gray-400">
+                        Fecha no disponible
+                      </span>
+                    )
+                  })()
+                ) : (
+                  <span className="italic text-gray-400">
+                    Fecha no disponible
+                  </span>
+                )}
+              </p>
             </div>
           ))
         )}

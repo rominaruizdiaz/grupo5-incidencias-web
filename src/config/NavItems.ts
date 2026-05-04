@@ -1,6 +1,5 @@
 import {
   Home,
-  Plus,
   FolderOpen,
   Users,
   Building2,
@@ -15,13 +14,6 @@ export const NAV_ITEMS = [
     to: '/panel',
     label: 'Inicio',
     icon: Home,
-    showOn: ['mobile', 'desktop'],
-  },
-
-  {
-    to: '/createIncidencia',
-    label: 'Crear',
-    icon: Plus,
     showOn: ['mobile', 'desktop'],
   },
 

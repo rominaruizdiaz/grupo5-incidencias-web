@@ -55,18 +55,6 @@ export const SideNav = () => {
           />
         ))}
       </nav>
-
-      {/* PERFIL */}
-      <div className="border-t border-gray-200 p-2 mt-auto">
-        <NavItem
-          to="/userProfile"
-          label={collapsed ? '' : 'Perfil'}
-          icon={User}
-          baseClass={base}
-          activeClass={active}
-          inactiveClass={inactive}
-        />
-      </div>
     </aside>
   )
 }
