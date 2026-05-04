@@ -1,104 +1,142 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, type NavLinkProps } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
-import { getNotificacionesPorUsuario } from '@/services/notificaciones'
 import { useEffect, useState } from 'react'
-import { Bell, BarChart3 } from 'lucide-react'
+import {
+  Home,
+  Plus,
+  FolderOpen,
+  Users,
+  Building2,
+  BarChart3,
+  Bell,
+  User,
+  Menu,
+  ChevronLeft,
+} from 'lucide-react'
+import { useNotificacionesStore } from '@/store/notification.store'
 
-export const TopNav = () => {
+export const SideNav = () => {
   const usuario = useAuthStore(state => state.usuario)
   const isAdmin = usuario?.rol === 1
-  const location = useLocation()
-  const [notificacionesSinLeer, setNotificacionesSinLeer] = useState(0)
+
+  const [collapsed, setCollapsed] = useState(false)
+
+  const sinLeer = useNotificacionesStore(state => state.sinLeer)
+  const refresh = useNotificacionesStore(state => state.refresh)
 
   useEffect(() => {
-    const fetchNotificaciones = async () => {
-      if (!usuario) return
-      try {
-        const data = await getNotificacionesPorUsuario(usuario.id)
-        const sinLeer = data.filter(n => !n.leida).length
-        setNotificacionesSinLeer(sinLeer)
-      } catch (err) {
-        console.error('Error cargando notificaciones:', err)
-      }
-    }
+    if (!usuario) return
 
-    fetchNotificaciones()
-    const interval = setInterval(fetchNotificaciones, 30000)
+    // carga inicial
+    refresh(usuario.id)
+
+    const interval = setInterval(() => {
+      refresh(usuario.id)
+    }, 30000)
+
     return () => clearInterval(interval)
-  }, [usuario])
+  }, [usuario, refresh])
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    isActive
-      ? 'text-blue-600 font-semibold'
-      : 'text-gray-600 hover:text-gray-900'
+  const linkClass: NavLinkProps['className'] = ({ isActive }) =>
+    `flex items-center gap-3 rounded-xl transition
+     mx-2 px-3 py-2
+     ${collapsed ? 'justify-center px-0' : ''}
+     ${
+       isActive
+         ? 'bg-blue-100 text-blue-700 shadow-sm'
+         : 'text-gray-600 hover:bg-gray-100'
+     }`
 
   return (
-    <nav className="hidden md:flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-900 shadow">
-      <div className="font-bold text-lg">Incidencias App</div>
+    <aside
+      className={`
+        hidden md:flex flex-col
+        bg-white border-r border-gray-200
+        transition-all duration-300
+        ${collapsed ? 'w-20' : 'w-64'}
+      `}
+    >
+      {/* HEADER */}
+      <div className="flex items-center justify-between p-4">
+        {!collapsed && <span className="font-bold text-lg">Incidencias</span>}
 
-      <div className="flex gap-6 items-center">
+        <button onClick={() => setCollapsed(v => !v)}>
+          {collapsed ? <Menu /> : <ChevronLeft />}
+        </button>
+      </div>
+
+      {/* LINKS */}
+      <nav className="flex-1 flex flex-col gap-1">
         <NavLink to="/panel" className={linkClass}>
-          Panel
+          <Home size={20} />
+          {!collapsed && <span>Panel</span>}
         </NavLink>
+
         <NavLink to="/createIncidencia" className={linkClass}>
-          Crear
+          <Plus size={20} />
+          {!collapsed && <span>Crear</span>}
         </NavLink>
 
         {!isAdmin && (
           <NavLink to="/areas" className={linkClass}>
-            Mis Áreas
+            <FolderOpen size={20} />
+            {!collapsed && <span>Mis Áreas</span>}
           </NavLink>
         )}
 
         {isAdmin && (
           <>
             <NavLink to="/personal" className={linkClass}>
-              Personal
+              <Users size={20} />
+              {!collapsed && <span>Personal</span>}
             </NavLink>
+
             <NavLink to="/departamentos" className={linkClass}>
-              Departamentos
+              <Building2 size={20} />
+              {!collapsed && <span>Departamentos</span>}
             </NavLink>
           </>
         )}
 
-        {/* ESTADÍSTICAS */}
-        <NavLink
-          to="/statistics"
-          className={({ isActive }) =>
-            `flex items-center gap-2 ${
-              isActive
-                ? 'text-blue-600 font-semibold'
-                : 'text-gray-600 hover:text-gray-900'
-            }`
-          }
-        >
+        <NavLink to="/statistics" className={linkClass}>
           <BarChart3 size={20} />
-          <span>Estadísticas</span>
+          {!collapsed && <span>Estadísticas</span>}
         </NavLink>
 
         {/* NOTIFICACIONES */}
+        <NavLink to="/notifications" className={linkClass}>
+          <div className="relative">
+            <Bell size={20} />
+
+            {sinLeer > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                {sinLeer > 9 ? '9+' : sinLeer}
+              </span>
+            )}
+          </div>
+
+          {!collapsed && <span>Notificaciones</span>}
+        </NavLink>
+      </nav>
+
+      {/* PERFIL */}
+      <div className="border-t border-gray-200 p-2 mt-auto">
         <NavLink
-          to="/notifications"
+          to="/userProfile"
           className={({ isActive }) =>
-            `flex items-center gap-2 relative ${
-              isActive
-                ? 'text-blue-600 font-semibold'
-                : 'text-gray-600 hover:text-gray-900'
-            }`
+            `flex items-center gap-3 rounded-xl transition mx-2 px-3 py-2
+             ${collapsed ? 'justify-center px-0' : ''}
+             ${
+               isActive
+                 ? 'bg-blue-100 text-blue-700'
+                 : 'text-gray-600 hover:bg-gray-100'
+             }`
           }
         >
-          <Bell size={20} />
-          {notificacionesSinLeer > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              {notificacionesSinLeer}
-            </span>
-          )}
-        </NavLink>
-
-        <NavLink to="/userProfile" className={linkClass}>
-          Perfil
+          <User size={20} />
+          {!collapsed && <span>Perfil</span>}
         </NavLink>
       </div>
-    </nav>
+    </aside>
   )
 }

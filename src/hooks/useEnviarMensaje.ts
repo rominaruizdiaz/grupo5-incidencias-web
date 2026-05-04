@@ -1,16 +1,15 @@
 import { useCallback, useState } from 'react'
 import { createMensaje } from '@/services/mensajes'
-import type { MensajeIncidencia, Incidencia } from '@/types'
+import type { MensajeIncidencia } from '@/types'
 import toast from 'react-hot-toast'
-import { getIncidenciaById } from '@/services/incidencias'
-import { useNotificarInvolucrados } from './useNotificarInvolucrados'
+import { useNotifications } from './useNotifications'
 
 export const useEnviarMensaje = () => {
   const [loading, setLoading] = useState(false)
-  const { notificarCambio } = useNotificarInvolucrados()
+  const { notificarCambio } = useNotifications()
 
   const enviarMensaje = useCallback(
-    async (idIncidencia: number, idUsuario: number, mensaje: string) => {
+    async (incidencia: any, idUsuario: number, mensaje: string) => {
       if (!mensaje.trim()) {
         toast.error('El mensaje no puede estar vacío')
         return false
@@ -19,23 +18,19 @@ export const useEnviarMensaje = () => {
       try {
         setLoading(true)
 
-        const ahora = new Date().toISOString()
+        const now = new Date().toISOString()
+
         const nuevoMensaje: MensajeIncidencia = {
-          idIncidencia,
+          idIncidencia: incidencia.id,
           idUsuario,
           mensaje: mensaje.trim(),
-          fecha: ahora,
+          fecha: now,
         }
 
         await createMensaje(nuevoMensaje)
 
-        // Notify involved parties that a comment was added
-        try {
-          const incidencia = await getIncidenciaById(idIncidencia)
-          await notificarCambio(incidencia, 'Nuevo comentario en la incidencia')
-        } catch (err) {
-          console.error('Error notificando sobre comentario:', err)
-        }
+        // 🔥 SOLO EVENTO, NO LOGICA EXTRA
+        await notificarCambio(incidencia, 'Nuevo comentario en la incidencia')
 
         toast.success('Mensaje enviado')
         return true
