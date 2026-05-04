@@ -7,13 +7,11 @@ import { ResolverIncidenciaModal } from '@/components/features/incidencias/Resol
 import { ReabrirIncidenciaModal } from '@/components/features/incidencias/ReabrirIncidenciaModal'
 import { MensajesList } from '@/components/features/incidencias/MensajesList'
 import { NuevoMensajeInput } from '@/components/features/incidencias/NuevoMensajeInput'
-import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
-import { useIncidencias } from '@/hooks/useIncidencias'
-import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
-import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
-import { useReabrirIncidencia } from '@/hooks/useReabrirIncidencia'
-import { useMensajes } from '@/hooks/useMensajes'
-import { useEnviarMensaje } from '@/hooks/useEnviarMensaje'
+import { useIncidencias } from '@/hooks/incidencias/useIncidencias'
+import { useAsignarTecnico } from '@/hooks/incidencias/useAsignarTecnico'
+import { useResolverIncidencia } from '@/hooks/incidencias/useResolverIncidencia'
+import { useReabrirIncidencia } from '@/hooks/incidencias/useReabrirIncidencia'
+import { useMensajes } from '@/hooks/notificaciones/useMensajes'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
@@ -28,6 +26,8 @@ import {
   CheckCircle,
   RefreshCw,
 } from 'lucide-react'
+import { useEnviarMensaje } from '@/hooks/incidencias/useEnviarMensaje'
+import { useIncidenciaForm } from '@/hooks/incidencias/useIncidenciaForm'
 
 export const IncidenciaDetailPage = () => {
   const { id } = useParams()

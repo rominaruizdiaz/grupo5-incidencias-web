@@ -1,5 +1,4 @@
 import type {
-  Usuario,
   Departamento,
   PersonalFiltersState,
   UsuarioWithDepartamentos,
@@ -33,5 +32,9 @@ export interface PersonalModalProps {
   isOpen: boolean
   loading?: boolean
   onClose: () => void
-  onSave: (usuario: UsuarioWithDepartamentos, departamentos: number[], etiquetas?: number[]) => Promise<void>
+  onSave: (
+    usuario: UsuarioWithDepartamentos,
+    departamentos: number[],
+    etiquetas?: number[]
+  ) => Promise<void>
 }

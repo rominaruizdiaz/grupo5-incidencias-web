@@ -1,5 +1,6 @@
 import type { Incidencia } from '@/types'
-import { UrgencyBadge } from '../ui/UrgencyBadge'
+import { UrgencyBadge } from '../../ui/UrgencyBadge'
+import { COLOR_ESTADO } from '@/utils/constants'
 
 type Props = {
   incidencia: Incidencia
@@ -7,18 +8,7 @@ type Props = {
 }
 
 export const IncidenciaCardNew = ({ incidencia, onClick }: Props) => {
-  const getStatusDot = () => {
-    switch (incidencia.estado) {
-      case 'Activo':
-        return 'bg-red-500'
-      case 'En curso':
-        return 'bg-orange-500'
-      case 'Resuelto':
-        return 'bg-gray-300'
-      default:
-        return 'bg-gray-300'
-    }
-  }
+  const statusColor = COLOR_ESTADO[incidencia.estado] || 'bg-gray-300'
 
   return (
     <div
@@ -27,13 +17,14 @@ export const IncidenciaCardNew = ({ incidencia, onClick }: Props) => {
     >
       <div className="flex gap-3">
         <div
-          className={`w-3 h-3 rounded-full mt-1 flex-shrink-0 ${getStatusDot()}`}
+          className={`w-3 h-3 rounded-full mt-1 flex-shrink-0 ${statusColor}`}
         />
 
         <div className="flex-1 min-w-0">
           <h3 className="font-bold text-gray-900 text-sm leading-tight truncate">
             {incidencia.titulo}
           </h3>
+
           <p className="text-xs text-gray-600 mt-1">
             Aula: {incidencia.ubicacion || 'Sin ubicación'}
           </p>

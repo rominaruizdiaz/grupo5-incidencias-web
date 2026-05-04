@@ -1,7 +1,7 @@
-import { useLogin } from '@/hooks/useLogin'
+import { useLogin } from '@/hooks/autentificacion/useLogin'
 import { useNavigate } from 'react-router-dom'
-import { Input } from '../ui/Input'
-import { Button } from '../ui/Button'
+import { Input } from '../../ui/Input'
+import { Button } from '../../ui/Button'
 import { Mail, Lock } from 'lucide-react'
 
 export const LoginForm = () => {

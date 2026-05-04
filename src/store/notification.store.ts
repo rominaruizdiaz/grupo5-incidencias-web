@@ -4,24 +4,15 @@ import {
   marcarComoLeida,
   marcarTodasComoLeidas,
 } from '@/services/notificaciones'
-import type { Notificacion } from '@/types'
 
-type NotifStore = {
-  notificaciones: Notificacion[]
-  sinLeer: number
-  loading: boolean
-
-  refresh: (userId: number) => Promise<void>
-  markAsRead: (id: number, userId?: number) => Promise<void>
-  markAllAsRead: (userId: number) => Promise<void>
-}
+import type { NotifStore } from './notification.types'
 
 export const useNotificacionesStore = create<NotifStore>((set, get) => ({
   notificaciones: [],
   sinLeer: 0,
   loading: false,
 
-  refresh: async (userId: number) => {
+  refresh: async userId => {
     set({ loading: true })
 
     try {
@@ -42,7 +33,7 @@ export const useNotificacionesStore = create<NotifStore>((set, get) => ({
     }
   },
 
-  markAsRead: async (id: number, userId?: number) => {
+  markAsRead: async id => {
     await marcarComoLeida(id)
 
     const updated = get().notificaciones.map(n =>
@@ -55,7 +46,7 @@ export const useNotificacionesStore = create<NotifStore>((set, get) => ({
     })
   },
 
-  markAllAsRead: async (userId: number) => {
+  markAllAsRead: async userId => {
     if (!userId) return
 
     await marcarTodasComoLeidas(userId)

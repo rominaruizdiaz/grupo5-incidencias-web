@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
-import { useAdminDepartamentos } from '@/hooks/useAdminDepartamentos'
+import { useAdminDepartamentos } from '@/hooks/departamentos/useAdminDepartamentos'
 import toast from 'react-hot-toast'
 import { Plus, Trash2, Edit2, Building } from 'lucide-react'
-import { Input, Button } from '@/components/features/ui'
+import { Input, Button } from '@/components/ui'
 
 export function DepartamentosPage() {
   const isAdmin = useAuthStore(state => state.isAdmin())

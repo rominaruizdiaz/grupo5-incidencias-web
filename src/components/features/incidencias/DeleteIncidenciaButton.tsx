@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useDeleteIncidencia } from '@/hooks/useDeleteIncidencia'
+import { useDeleteIncidencia } from '@/hooks/incidencias/useDeleteIncidencia'
 
 type Props = {
   id: number

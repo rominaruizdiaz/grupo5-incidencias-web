@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 
-import { usePersonal } from '@/hooks/usePersonal'
-import { usePersonalFilters } from '@/hooks/usePersonalFilters'
-import { useUsuarioDepartamentosMap } from '@/hooks/useUsuarioDepartamentosMap'
+import { usePersonal } from '@/hooks/personal/usePersonal'
+import { usePersonalFilters } from '@/hooks/personal/usePersonalFilters'
+import { useUsuarioDepartamentosMap } from '@/hooks/personal/useUsuarioDepartamentosMap'
 
 import { getDepartamentos } from '@/services/departamentos'
 

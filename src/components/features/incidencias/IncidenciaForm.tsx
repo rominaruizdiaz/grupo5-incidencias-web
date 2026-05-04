@@ -5,7 +5,7 @@ import type {
 } from '@/types'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
 import { IncidenciaEstado as EstadoEnum } from '@/types'
-import { Input, Textarea, Button, PriorityButtons, SelectCard } from '../ui'
+import { Input, Textarea, Button, PriorityButtons, SelectCard } from '../../ui'
 import { X, CheckCircle, AlertCircle, Wrench } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 

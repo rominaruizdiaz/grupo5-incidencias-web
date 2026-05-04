@@ -1,6 +1,6 @@
 import type { Incidencia } from '@/types'
-import { StatusBadge } from '../ui/StatusBadge'
-import { UrgencyBadge } from '../ui/UrgencyBadge'
+import { StatusBadge } from '../../ui/StatusBadge'
+import { UrgencyBadge } from '../../ui/UrgencyBadge'
 
 type Props = {
   incidencia: Incidencia

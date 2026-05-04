@@ -6,7 +6,7 @@ export const useUsuario = () => useAuthStore(state => state.usuario)
 
 export const useIsLoading = () => useAuthStore(state => state.isLoading)
 
-// ================= ROLES (OPTIMIZADO) =================
+// ================= ROLES =================
 export const useIsAdmin = () => useAuthStore(state => state.usuario?.rol === 1)
 
 export const useIsProfesor = () =>

@@ -8,23 +8,25 @@ export const ROLES = {
 }
 
 // CATEGORÍAS (basadas en etiquetas)
-export const CATEGORIAS_DEFECTO = [
-  'Hardware',
-  'Software',
-  'Red',
-  'Otro',
-]
+export const CATEGORIAS_DEFECTO = ['Hardware', 'Software', 'Red', 'Otro']
 
-// URGENCIA
+// COLORES PRIORIDAD (ALTO, MEDIO, BAJO)
 export const COLOR_URGENCIA = {
-  [IncidenciaUrgencia.BAJA]: 'bg-yellow-100 text-yellow-800',
-  [IncidenciaUrgencia.MEDIA]: 'bg-orange-100 text-orange-800',
-  [IncidenciaUrgencia.ALTA]: 'bg-red-100 text-red-800',
+  [IncidenciaUrgencia.ALTA]:
+    'bg-fuchsia-500/10 border-fuchsia-500 text-fuchsia-500',
+
+  [IncidenciaUrgencia.MEDIA]: 'bg-amber-500/10 border-amber-500 text-amber-500',
+
+  [IncidenciaUrgencia.BAJA]: 'bg-cyan-500/10 border-cyan-500 text-cyan-500',
 }
 
-// ESTADO
+// COLORES ESTADO (ACTIVO, EN CURSO, RESUELTO)
 export const COLOR_ESTADO = {
-  [IncidenciaEstado.ACTIVO]: 'bg-blue-100 text-blue-800',
-  [IncidenciaEstado.EN_CURSO]: 'bg-purple-100 text-purple-800',
-  [IncidenciaEstado.RESUELTO]: 'bg-green-100 text-green-800',
+  [IncidenciaEstado.ACTIVO]: 'bg-sky-500/10 border-sky-500 text-sky-500',
+
+  [IncidenciaEstado.EN_CURSO]:
+    'bg-amber-500/10 border-amber-500 text-amber-500',
+
+  [IncidenciaEstado.RESUELTO]:
+    'bg-emerald-500/10 border-emerald-500 text-emerald-500',
 }

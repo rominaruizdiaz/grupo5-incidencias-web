@@ -1,8 +1,8 @@
-import { useRegister } from '@/hooks/useRegister'
+import { useRegister } from '@/hooks/autentificacion/useRegister'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { Input } from '../ui/Input'
-import { Button } from '../ui/Button'
+import { Input } from '../../ui/Input'
+import { Button } from '../../ui/Button'
 import { User, Mail, Lock } from 'lucide-react'
 
 export const RegisterForm = () => {

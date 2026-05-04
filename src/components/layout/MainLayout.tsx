@@ -1,7 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import { BottomNav } from './BottomNav'
-import { SideNav } from './TopNav'
+import { BottomNav } from '../features/navegation/BottomNav'
+import { SideNav } from '../features/navegation/SideNav'
 
+// distribución base de las páginas públicas con la navegación
 export const MainLayout = () => {
   return (
     <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
