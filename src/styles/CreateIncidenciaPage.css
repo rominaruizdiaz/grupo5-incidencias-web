@@ -1,0 +1,25 @@
+/* Estilos para CreateIncidenciaPage */
+
+.page-wrapper {
+  @apply min-h-screen bg-slate-950 text-slate-100;
+}
+
+.page-content {
+  @apply max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-6;
+}
+
+.page-card {
+  @apply bg-slate-900/95 border border-slate-800 rounded-[32px] shadow-xl p-6;
+}
+
+.page-warning {
+  @apply bg-amber-950/70 border border-amber-800 rounded-3xl p-6 inline-block text-center;
+}
+
+.page-warning-title {
+  @apply text-amber-200 font-semibold;
+}
+
+.page-warning-text {
+  @apply text-amber-100 text-sm mt-2;
+}

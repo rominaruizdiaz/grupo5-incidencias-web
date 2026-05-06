@@ -1,3 +1,4 @@
+import '../styles/AreaDetailPage.css'
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/PanelPage.css'
 import { useAuthStore } from '@/store/auth.store'
 import { getIncidencias } from '@/services/incidencias'
 import { getUsuarioDepartamentos } from '@/services/usuarioDepartamentos'

@@ -41,8 +41,10 @@ export const StatisticsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-        <p className="text-gray-500">Cargando estadísticas...</p>
+      <div className="page-wrapper flex items-center justify-center">
+        <div className="page-content">
+          <p className="text-slate-400">Cargando estadísticas...</p>
+        </div>
       </div>
     )
   }

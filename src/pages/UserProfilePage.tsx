@@ -1,3 +1,4 @@
+import '../styles/UserProfilePage.css'
 import { LogoutButton } from '@/components/features/logout/LogoutButton'
 import { useAuthStore } from '@/store/auth.store'
 import { Mail, Shield, User } from 'lucide-react'

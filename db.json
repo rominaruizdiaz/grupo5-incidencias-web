@@ -20,7 +20,11 @@
       "modoOscuro": false,
       "rol": 2,
       "fechaRegistro": "2024-02-10T10:00:00Z",
-      "departamentos": [1, 2, 4]
+      "departamentos": [
+        1,
+        2,
+        4
+      ]
     },
     {
       "id": 3,
@@ -31,7 +35,11 @@
       "modoOscuro": true,
       "rol": 3,
       "fechaRegistro": "2024-02-15T10:00:00Z",
-      "departamentos": [1, 3, 2]
+      "departamentos": [
+        1,
+        3,
+        2
+      ]
     },
     {
       "id": 4,
@@ -42,7 +50,10 @@
       "modoOscuro": false,
       "rol": 2,
       "fechaRegistro": "2024-03-01T10:00:00Z",
-      "departamentos": [2, 3]
+      "departamentos": [
+        2,
+        3
+      ]
     },
     {
       "id": 5,
@@ -53,7 +64,10 @@
       "modoOscuro": false,
       "rol": 3,
       "fechaRegistro": "2024-03-05T10:00:00Z",
-      "departamentos": [1, 4]
+      "departamentos": [
+        1,
+        4
+      ]
     },
     {
       "email": "romi@romi.romi",
@@ -64,6 +78,16 @@
       "fotoPerfil": null,
       "fechaRegistro": "2026-04-25T18:25:50.060Z",
       "id": 6
+    },
+    {
+      "email": "Aya@ya.com",
+      "password": "$2a$10$UVJQUA4QR82geqACeOysGOk4AW1rA5OnXoLgb5UVLh2pizGVJn2qO",
+      "nombre": "Ayaya",
+      "rol": 2,
+      "modoOscuro": false,
+      "fotoPerfil": null,
+      "fechaRegistro": "2026-04-27T21:23:28.285Z",
+      "id": 7
     }
   ],
   "etiquetas": [
@@ -178,6 +202,27 @@
       "id": 9,
       "idUsuarioAsignado": 3,
       "fechaResolucion": null
+    },
+    {
+      "titulo": "AYAYA",
+      "descripcion": "No lo se la vd",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 02",
+      "urgencia": "Media",
+      "estado": "Resuelto",
+      "idUsuarioReporta": 7,
+      "id": 10,
+      "fechaResolucion": null
+    },
+    {
+      "titulo": "2Aya",
+      "descripcion": "2222",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 01",
+      "urgencia": "Media",
+      "estado": "En curso",
+      "idUsuarioReporta": 7,
+      "id": 11
     }
   ],
   "departamentos": [
@@ -509,6 +554,87 @@
       "fechaCreacion": "2026-04-26T10:45:21.462Z",
       "idIncidenciaVinculada": 9,
       "id": 16
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-27T23:24:15.333Z",
+      "idIncidenciaVinculada": 10,
+      "id": 17
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-27T23:24:15.333Z",
+      "idIncidenciaVinculada": 10,
+      "id": 18
+    },
+    {
+      "idUsuarioDestino": 1,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-27T23:24:15.333Z",
+      "idIncidenciaVinculada": 10,
+      "id": 19
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:30.960Z",
+      "idIncidenciaVinculada": 10,
+      "id": 20
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:30.960Z",
+      "idIncidenciaVinculada": 10,
+      "id": 21
+    },
+    {
+      "idUsuarioDestino": 1,
+      "titulo": "Cambio de estado a Resuelto",
+      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:30.960Z",
+      "idIncidenciaVinculada": 10,
+      "id": 22
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Cambio de estado a En Curso",
+      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:41.148Z",
+      "idIncidenciaVinculada": 11,
+      "id": 23
+    },
+    {
+      "idUsuarioDestino": 5,
+      "titulo": "Cambio de estado a En Curso",
+      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:41.148Z",
+      "idIncidenciaVinculada": 11,
+      "id": 24
+    },
+    {
+      "idUsuarioDestino": 1,
+      "titulo": "Cambio de estado a En Curso",
+      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
+      "leida": false,
+      "fechaCreacion": "2026-04-28T02:18:41.148Z",
+      "idIncidenciaVinculada": 11,
+      "id": 25
     }
   ],
   "mensajesIncidencia": [
@@ -623,6 +749,34 @@
       "mensaje": "María Técnica reabrió la incidencia con estado: En curso",
       "fecha": "2026-04-26T10:45:21.526Z",
       "id": 16
+    },
+    {
+      "idIncidencia": 10,
+      "idUsuario": 7,
+      "mensaje": "Ayaya cambió el estado a: Resuelto",
+      "fecha": "2026-04-27T23:24:15.275Z",
+      "id": 17
+    },
+    {
+      "idIncidencia": 10,
+      "idUsuario": 7,
+      "mensaje": "Ayaya reabrió la incidencia con estado: Activo",
+      "fecha": "2026-04-28T02:18:17.040Z",
+      "id": 18
+    },
+    {
+      "idIncidencia": 10,
+      "idUsuario": 7,
+      "mensaje": "Ayaya cambió el estado a: Resuelto",
+      "fecha": "2026-04-28T02:18:30.899Z",
+      "id": 19
+    },
+    {
+      "idIncidencia": 11,
+      "idUsuario": 7,
+      "mensaje": "Ayaya cambió el estado a: En curso",
+      "fecha": "2026-04-28T02:18:41.085Z",
+      "id": 20
     }
   ]
 }

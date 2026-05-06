@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/AreasPage.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { getDepartamentos } from '@/services/departamentos'

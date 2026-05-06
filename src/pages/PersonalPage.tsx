@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import '../styles/PersonalPage.css'
 import { useAuthStore } from '@/store/auth.store'
 
 import { usePersonal } from '@/hooks/personal/usePersonal'
@@ -46,7 +47,14 @@ export function PersonalPage() {
   const { filters, setFilters, usuariosFiltrados } =
     usePersonalFilters(usuariosConDeptos)
 
-  if (!isAdmin) return <div className="p-6 text-red-600">No autorizado</div>
+  if (!isAdmin)
+    return (
+      <div className="page-wrapper">
+        <div className="page-content">
+          <div className="page-alert">No autorizado</div>
+        </div>
+      </div>
+    )
 
   const handleEdit = (u: Usuario) => {
     const usuarioCompleto: UsuarioWithDepartamentos = {

@@ -1,3 +1,4 @@
+import '../styles/DepartamentosPage.css'
 import { useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 import { useAdminDepartamentos } from '@/hooks/departamentos/useAdminDepartamentos'
