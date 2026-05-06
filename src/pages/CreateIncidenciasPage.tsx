@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
-import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
 import { getDepartamentos } from '@/services/departamentos'
 import type { Departamento } from '@/types'
-import '../styles/CreateIncidenciaPage.css'
+import { useIncidenciaForm } from '@/hooks/incidencias/useIncidenciaForm'
 
 export const CreateIncidenciaPage = () => {
   const usuario = useAuthStore(state => state.usuario)

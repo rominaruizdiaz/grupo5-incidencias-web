@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useObtenerTecnicos } from '@/hooks/useObtenerTecnicos'
+import { useObtenerTecnicos } from '@/hooks/personal/useObtenerTecnicos'
 import { X, User, Badge } from 'lucide-react'
 import type { Etiqueta } from '@/types'
 
@@ -21,7 +21,9 @@ export const AsignarTecnicoModal = ({
   loading,
 }: AsignarTecnicoModalProps) => {
   const { tecnicos, loading: loadingTecnicos } = useObtenerTecnicos()
-  const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<number | null>(null)
+  const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<number | null>(
+    null
+  )
 
   if (!isOpen) return null
 
@@ -58,10 +60,7 @@ export const AsignarTecnicoModal = ({
             <h2 className="text-xl font-semibold text-gray-900">
               Asignar Técnico
             </h2>
-            <button
-              onClick={onClose}
-              className="p-1 hover:bg-gray-100 rounded"
-            >
+            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded">
               <X size={20} />
             </button>
           </div>

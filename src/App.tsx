@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { LoginPage } from '@/pages/LoginPage'
 import { RegisterPage } from '@/pages/RegisterPage'
@@ -22,8 +22,21 @@ import { AreasPage } from './pages/AreasPage'
 import { AreaDetailPage } from './pages/AreaDetailPage'
 
 function App() {
+  const token = localStorage.getItem('token')
+
   return (
     <Routes>
+      <Route
+        path="/"
+        element={
+          token ? (
+            <Navigate to="/panel" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
       {/* AUTH */}
       <Route
         element={

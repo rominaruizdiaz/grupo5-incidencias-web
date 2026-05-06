@@ -1,204 +1,135 @@
-import { useEffect, useState } from 'react'
-import '../styles/NotificationsPage.css'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
-import { getNotificacionesPorUsuario, marcarComoLeida, marcarTodasComoLeidas } from '@/services/notificaciones'
-import { type Notificacion } from '@/types'
-import { Bell, Check, ChevronLeft } from 'lucide-react'
+import { useNotificacionesStore } from '@/store/notification.store'
+import { Check } from 'lucide-react'
+import type { Notificacion } from '@/types'
 
 export const NotificationsPage = () => {
   const navigate = useNavigate()
   const usuario = useAuthStore(state => state.usuario)
 
-  const [notificaciones, setNotificaciones] = useState<Notificacion[]>([])
-  const [loading, setLoading] = useState(true)
+  const {
+    notificaciones,
+    sinLeer,
+    loading,
+    refresh,
+    markAsRead,
+    markAllAsRead,
+  } = useNotificacionesStore()
 
   useEffect(() => {
-    const fetch = async () => {
-      if (!usuario) return
-
-      try {
-        const data = await getNotificacionesPorUsuario(usuario.id)
-        setNotificaciones(data.sort((a, b) =>
-          new Date(b.fechaCreacion).getTime() - new Date(a.fechaCreacion).getTime()
-        ))
-      } catch (err) {
-        console.error('Error cargando notificaciones:', err)
-      } finally {
-        setLoading(false)
-      }
+    if (usuario?.id) {
+      refresh(usuario.id)
     }
+  }, [usuario, refresh])
 
-    fetch()
-  }, [usuario])
-
-  const noLeidas = notificaciones.filter(n => !n.leida)
-  const hayNoLeidas = noLeidas.length > 0
-
-  const handleMarcarComoLeida = async (notificacion: Notificacion) => {
-    if (!notificacion.leida) {
-      try {
-        await marcarComoLeida(notificacion.id!)
-        setNotificaciones(prev =>
-          prev.map(n => (n.id === notificacion.id ? { ...n, leida: true } : n))
-        )
-      } catch (err) {
-        console.error('Error marcando como leída:', err)
-      }
-    }
-  }
-
-  const handleMarcarTodasLeidas = async () => {
-    if (!usuario) return
+  const handleClick = async (n: Notificacion) => {
+    if (!n.id) return
 
     try {
-      await marcarTodasComoLeidas(usuario.id)
-      setNotificaciones(prev => prev.map(n => ({ ...n, leida: true })))
-    } catch (err) {
-      console.error('Error marcando todas como leídas:', err)
+      await markAsRead(n.id)
+      if (n.idIncidenciaVinculada) {
+        navigate(`/incidencia/${n.idIncidenciaVinculada}`)
+      }
+    } catch (error) {
+      console.error('Error al marcar la notificación como leída:', error)
     }
   }
 
-  const handleClickNotificacion = async (notificacion: Notificacion) => {
-    await handleMarcarComoLeida(notificacion)
-
-    if (notificacion.idIncidenciaVinculada) {
-      navigate(`/incidencia/${notificacion.idIncidenciaVinculada}`)
+  const handleMarkAll = async () => {
+    if (!usuario?.id) return
+    try {
+      await markAllAsRead(usuario.id)
+    } catch (error) {
+      console.error(
+        'Error al marcar todas las notificaciones como leídas:',
+        error
+      )
     }
   }
 
   if (loading) {
     return (
-      <div className="page-wrapper flex items-center justify-center">
-        <div className="page-content">
-          <p className="text-slate-400">Cargando notificaciones...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        Cargando...
       </div>
     )
   }
 
   return (
-    <div className="page-wrapper">
+    <div>
       {/* HEADER */}
-      <div className="page-header">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate(-1)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition"
-            >
-              <ChevronLeft size={24} className="text-gray-700" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Centro de Avisos</h1>
-              {notificaciones.length > 0 && (
-                <p className="text-gray-600 text-sm mt-1">
-                  {notificaciones.length} notificación{notificaciones.length !== 1 ? 'es' : ''}
-                </p>
-              )}
-            </div>
-          </div>
+      <div className="bg-white border-b px-6 py-4 flex justify-between">
+        <h1 className="text-xl font-bold">Centro de Avisos</h1>
 
-          {/* BOTÓN MARCAR TODAS COMO LEÍDAS */}
-          {hayNoLeidas && (
-            <button
-              onClick={handleMarcarTodasLeidas}
-              className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition font-medium"
-            >
-              <Check size={18} />
-              Marcar todas leídas
-            </button>
-          )}
-        </div>
+        {sinLeer > 0 && (
+          <button
+            onClick={handleMarkAll}
+            className="text-blue-600 flex items-center gap-2"
+          >
+            <Check size={18} />
+            Marcar todas
+          </button>
+        )}
       </div>
 
-      {/* CONTENIDO */}
-      <div className="page-content">
-        <div>
-          {notificaciones.length === 0 ? (
-            <div className="page-card text-center">
-              <div className="flex justify-center mb-4">
-                <div className="p-4 bg-slate-950 rounded-full">
-                  <Bell size={32} className="text-slate-400" />
-                </div>
+      {/* LISTA */}
+      <div className="p-6 space-y-3">
+        {notificaciones.length === 0 ? (
+          <p className="text-gray-500">Sin notificaciones</p>
+        ) : (
+          notificaciones.map(n => (
+            <div
+              key={n.id}
+              onClick={() => handleClick(n)}
+              className={`p-4 rounded-lg border cursor-pointer transition ${
+                n.leida
+                  ? 'bg-white'
+                  : 'bg-blue-50 border-blue-200 hover:bg-blue-100'
+              }`}
+            >
+              <div className="flex justify-between">
+                <span className="font-semibold">{n.titulo}</span>
+                {!n.leida && (
+                  <span className="w-2 h-2 bg-blue-600 rounded-full" />
+                )}
               </div>
-              <p className="text-slate-400 text-lg">No tienes notificaciones recientes</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {notificaciones.map(notificacion => (
-                <div
-                  key={notificacion.id}
-                  onClick={() => handleClickNotificacion(notificacion)}
-                  className={`rounded-3xl border transition cursor-pointer ${
-                    notificacion.leida
-                      ? 'bg-slate-950 border-slate-800 hover:border-slate-700'
-                      : 'bg-slate-900 border-slate-700 hover:border-slate-600'
-                  }`}
-                >
-                  <div className="p-4 flex items-start gap-4">
-                    {/* ICONO */}
-                    <div
-                      className={`p-3 rounded-2xl flex-shrink-0 ${
-                        notificacion.leida
-                          ? 'bg-slate-950'
-                          : 'bg-blue-800/20'
-                      }`}
-                    >
-                      <Bell
-                        size={20}
-                        className={
-                          notificacion.leida ? 'text-slate-400' : 'text-blue-400'
-                        }
-                      />
-                    </div>
 
-                    {/* CONTENIDO */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <h3
-                          className={`font-semibold ${
-                            notificacion.leida ? 'text-slate-200' : 'text-white'
-                          }`}
-                        >
-                          {notificacion.titulo}
-                        </h3>
-                        {!notificacion.leida && (
-                          <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2"></div>
-                        )}
-                      </div>
+              <p className="text-sm text-gray-600">{n.mensaje}</p>
 
-                      <p
-                        className={`text-sm mt-1 ${
-                          notificacion.leida ? 'text-slate-400' : 'text-slate-200'
-                        }`}
-                      >
-                        {notificacion.mensaje}
-                      </p>
+              <p className="text-xs text-gray-500 mt-1 text-right">
+                {n.fechaCreacion ? (
+                  (() => {
+                    const fecha = new Date(n.fechaCreacion)
+                    const fechaValida = !isNaN(fecha.getTime())
 
-                      <p className="text-xs text-slate-500 mt-2">
-                        {new Date(notificacion.fechaCreacion).toLocaleDateString('es-ES', {
+                    return fechaValida ? (
+                      fecha
+                        .toLocaleString('es-ES', {
                           day: '2-digit',
                           month: '2-digit',
                           year: 'numeric',
                           hour: '2-digit',
                           minute: '2-digit',
-                        })}
-                      </p>
-                    </div>
-
-                    {/* ESTADO DE LECTURA */}
-                    {notificacion.leida && (
-                      <div className="flex-shrink-0 mt-1">
-                        <Check size={20} className="text-green-600" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+                          hour12: false,
+                        })
+                        .replace(',', '')
+                    ) : (
+                      <span className="italic text-gray-400">
+                        Fecha no disponible
+                      </span>
+                    )
+                  })()
+                ) : (
+                  <span className="italic text-gray-400">
+                    Fecha no disponible
+                  </span>
+                )}
+              </p>
             </div>
-          )}
-        </div>
+          ))
+        )}
       </div>
     </div>
   )

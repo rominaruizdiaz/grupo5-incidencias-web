@@ -82,6 +82,8 @@ export interface UsuarioDepartamento {
 
 // ================= NOTIFICACIONES =================
 
+// ================= NOTIFICACIONES =================
+
 export interface Notificacion {
   id?: number
   idUsuarioDestino: number
@@ -89,6 +91,7 @@ export interface Notificacion {
   mensaje: string
   leida: boolean
   fechaCreacion: string
+  fechaEnvio?: string
   idIncidenciaVinculada?: number | null
 }
 

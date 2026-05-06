@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useIncidencias } from '@/hooks/useIncidencias'
+import { useIncidencias } from '@/hooks/incidencias/useIncidencias'
 import { IncidenciaCard } from './IncidenciaCard'
 
 export const IncidenciasSection = () => {

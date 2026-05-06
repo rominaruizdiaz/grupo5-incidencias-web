@@ -1,18 +1,18 @@
 import '../styles/IncidenciaDetailPage.css'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
+import { IncidenciaDetailsCard } from '@/components/features/incidencias/IncidenciaDetailsCard'
 import { AsignarTecnicoModal } from '@/components/features/incidencias/AsignarTecnicoModal'
 import { ResolverIncidenciaModal } from '@/components/features/incidencias/ResolverIncidenciaModal'
 import { ReabrirIncidenciaModal } from '@/components/features/incidencias/ReabrirIncidenciaModal'
 import { MensajesList } from '@/components/features/incidencias/MensajesList'
 import { NuevoMensajeInput } from '@/components/features/incidencias/NuevoMensajeInput'
-import { useIncidenciaForm } from '@/hooks/useIncidenciaForm'
-import { useIncidencias } from '@/hooks/useIncidencias'
-import { useAsignarTecnico } from '@/hooks/useAsignarTecnico'
-import { useResolverIncidencia } from '@/hooks/useResolverIncidencia'
-import { useReabrirIncidencia } from '@/hooks/useReabrirIncidencia'
-import { useMensajes } from '@/hooks/useMensajes'
-import { useEnviarMensaje } from '@/hooks/useEnviarMensaje'
+import { useIncidencias } from '@/hooks/incidencias/useIncidencias'
+import { useAsignarTecnico } from '@/hooks/incidencias/useAsignarTecnico'
+import { useResolverIncidencia } from '@/hooks/incidencias/useResolverIncidencia'
+import { useReabrirIncidencia } from '@/hooks/incidencias/useReabrirIncidencia'
+import { useMensajes } from '@/hooks/notificaciones/useMensajes'
 import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
@@ -20,22 +20,38 @@ import { getEtiquetas } from '@/services/etiquetas'
 import { getIncidenciaById } from '@/services/incidencias'
 import { getEtiquetasPorUsuario } from '@/services/usuarioEtiquetas'
 import { type Incidencia, IncidenciaEstado } from '@/types'
+import {
+  ArrowLeft,
+  Trash2,
+  UserPlus,
+  CheckCircle,
+  RefreshCw,
+} from 'lucide-react'
+import { useEnviarMensaje } from '@/hooks/incidencias/useEnviarMensaje'
+import { useIncidenciaForm } from '@/hooks/incidencias/useIncidenciaForm'
 
 export const IncidenciaDetailPage = () => {
   const { id } = useParams()
   const usuario = useAuthStore(state => state.usuario)
   const { incidencias, getNombreUsuario } = useIncidencias()
   const { asignarTecnico, loading: loadingAsignar } = useAsignarTecnico()
-  const { resolverIncidencia, loading: loadingResolver } = useResolverIncidencia()
+  const { resolverIncidencia, loading: loadingResolver } =
+    useResolverIncidencia()
   const { reabrirIncidencia, loading: loadingReabrir } = useReabrirIncidencia()
-  const { mensajes, loading: loadingMensajes, refresh: refreshMensajes } = useMensajes(Number(id) || 0)
+  const {
+    mensajes,
+    loading: loadingMensajes,
+    refresh: refreshMensajes,
+  } = useMensajes(Number(id) || 0)
   const { enviarMensaje, loading: loadingEnviar } = useEnviarMensaje()
 
   const [isModalAsignarOpen, setIsModalAsignarOpen] = useState(false)
   const [isModalResolverOpen, setIsModalResolverOpen] = useState(false)
   const [isModalReabrirOpen, setIsModalReabrirOpen] = useState(false)
   const [etiquetaActual, setEtiquetaActual] = useState<any>(null)
-  const [incidenciaDirecta, setIncidenciaDirecta] = useState<Incidencia | null>(null)
+  const [incidenciaDirecta, setIncidenciaDirecta] = useState<Incidencia | null>(
+    null
+  )
   const [etiquetasUsuario, setEtiquetasUsuario] = useState<number[]>([])
   const [etiquetas, setEtiquetas] = useState<any[]>([])
 
@@ -45,18 +61,22 @@ export const IncidenciaDetailPage = () => {
   }
 
   useEffect(() => {
-    if (!incidencia && id) {
+    const incidenciaEnLista = incidencias.find(i => i.id === Number(id))
+
+    if (!incidenciaEnLista && id) {
       const fetchIncidencia = async () => {
         try {
           const data = await getIncidenciaById(Number(id))
-          setIncidenciaDirecta(data)
+          if (data) {
+            setIncidenciaDirecta(data)
+          }
         } catch (err) {
           console.error('Error cargando incidencia:', err)
         }
       }
       fetchIncidencia()
     }
-  }, [id, incidencia])
+  }, [id, incidencias])
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -84,7 +104,9 @@ export const IncidenciaDetailPage = () => {
     if (incidencia?.categoria) {
       try {
         const etiquetas = await getEtiquetas()
-        const encontrada = etiquetas.find(e => e.nombre === incidencia.categoria)
+        const encontrada = etiquetas.find(
+          e => e.nombre === incidencia.categoria
+        )
         setEtiquetaActual(encontrada || null)
       } catch (err) {
         console.error('Error cargando etiqueta:', err)
@@ -97,7 +119,10 @@ export const IncidenciaDetailPage = () => {
     setIsModalAsignarOpen(true)
   }
 
-  const handleAsignarTecnico = async (idTecnico: number, nombreTecnico: string) => {
+  const handleAsignarTecnico = async (
+    idTecnico: number,
+    nombreTecnico: string
+  ) => {
     if (!incidencia) return
     const exito = await asignarTecnico(
       incidencia.id,
@@ -159,16 +184,30 @@ export const IncidenciaDetailPage = () => {
   }
 
   if (!incidencia) {
+    const navigate = useNavigate()
     return (
-      <div className="page-wrapper">
-        <div className="page-content">
-          <div className="page-card text-center text-slate-400">
-            No encontrada
-          </div>
+      <div className="min-h-screen bg-white flex items-center justify-center p-6">
+        <div className="text-center">
+          {/* svg de listar */}
+          <div className="text-5xl mb-4"></div>
+          <p className="text-gray-900 text-lg font-semibold mb-2">
+            Incidencia no encontrada
+          </p>
+          <p className="text-gray-600 text-sm mb-6">
+            No pudimos encontrar la incidencia #{id}
+          </p>
+          <button
+            onClick={() => navigate('/panel')}
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+          >
+            Volver al Panel
+          </button>
         </div>
       </div>
     )
   }
+
+  const navigate = useNavigate()
 
   // Calcular permisos
   const esCreador = usuario?.id === incidencia.idUsuarioReporta
@@ -179,230 +218,246 @@ export const IncidenciaDetailPage = () => {
   // Calcular si el técnico tiene la especialización necesaria
   const tieneespecializacion = (() => {
     if (!esTecnico || !incidencia.categoria) return false
-    const etiquetaCategoria = etiquetas.find(e => e.nombre === incidencia.categoria)
-    return etiquetaCategoria ? etiquetasUsuario.includes(etiquetaCategoria.id) : false
+    const etiquetaCategoria = etiquetas.find(
+      e => e.nombre === incidencia.categoria
+    )
+    return etiquetaCategoria
+      ? etiquetasUsuario.includes(etiquetaCategoria.id)
+      : false
   })()
 
   // Permisos de edición
-  const puedeEditarTextos = (esCreador || esAdmin) && incidencia.estado !== 'Resuelto'
-  const puedeCambiarEstado = (esAdmin || (esTecnico && esAsignado)) && incidencia.estado !== 'Resuelto'
+  const puedeEditarTextos =
+    (esCreador || esAdmin) && incidencia.estado !== 'Resuelto'
+  const puedeCambiarEstado =
+    (esAdmin || (esTecnico && esAsignado)) && incidencia.estado !== 'Resuelto'
   const puedeAsignar = esAdmin
-  const puedeResolver = esAdmin || (esTecnico && (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion))) && incidencia.estado !== 'Resuelto'
-  const puedeEliminar = (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
+  const puedeResolver =
+    esAdmin ||
+    (esTecnico &&
+      (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion)) &&
+      incidencia.estado !== 'Resuelto')
+  const puedeEliminar =
+    (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
 
-  const tieneAccesoAlChat = puedeEditarTextos || puedeCambiarEstado || puedeAsignar
+  const tieneAccesoAlChat =
+    puedeEditarTextos || puedeCambiarEstado || puedeAsignar
 
   return (
-    <div className="page-wrapper">
-      <div className="page-content">
-        <div className="page-card space-y-4">
-          <div className="page-header-actions">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+        <button
+          onClick={() => navigate(-1)}
+          className="p-2 hover:bg-gray-100 rounded-lg transition text-gray-600 hover:text-gray-900"
+        >
+          <ArrowLeft size={24} />
+        </button>
+        <h1 className="text-lg font-bold text-gray-900">
+          Gestión de Incidencia
+        </h1>
         {puedeEliminar && <DeleteIncidenciaButton id={incidencia.id} />}
-
-        {puedeAsignar && incidencia.estado !== 'Resuelto' && (
-          <button
-            onClick={handleAbrirAsignar}
-            className="page-button-primary"
-            disabled={loadingAsignar}
-          >
-            Asignar Técnico
-          </button>
-        )}
-
-        {puedeResolver && (
-          <button
-            onClick={handleAbrirResolver}
-            className="page-button-success"
-            disabled={loadingResolver}
-          >
-            Marcar como Resuelto
-          </button>
-        )}
-
-        {incidencia.estado === 'Resuelto' && (esCreador || esAsignado || esAdmin) && (
-          <button
-            onClick={handleAbrirReabrir}
-            className="page-button-warning"
-            disabled={loadingReabrir}
-          >
-            Reabrir Incidencia
-          </button>
-        )}
       </div>
 
-      {puedeEditarTextos ? (
-        <IncidenciaForm
-          mode="edit"
-          onSubmit={form.submit}
-          titulo={form.titulo}
-          setTitulo={form.setTitulo}
-          descripcion={form.descripcion}
-          setDescripcion={form.setDescripcion}
-          categoria={form.categoria}
-          setCategoria={form.setCategoria}
-          ubicacion={form.ubicacion}
-          setUbicacion={form.setUbicacion}
-          urgencia={form.urgencia}
-          setUrgencia={form.setUrgencia}
-          estado={form.estado}
-          setEstado={form.setEstado}
-          fecha={incidencia.fecha}
-          reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
-          loading={form.loading}
-        />
-      ) : puedeCambiarEstado && !puedeEditarTextos ? (
-        <div className="space-y-6">
-          <div className="page-card space-y-4">
-            {incidencia.idUsuarioAsignado && (
-              <div className="page-message-success">
-                <p className="text-sm text-green-900">
-                  <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
+      <div className="px-6 py-6 max-w-4xl mx-auto space-y-6">
+        {/* BOTONES */}
+        {(puedeAsignar ||
+          puedeResolver ||
+          (incidencia.estado === 'Resuelto' &&
+            (esCreador || esAsignado || esAdmin))) && (
+          <div className="flex flex-wrap gap-3">
+            {puedeAsignar && incidencia.estado !== 'Resuelto' && (
+              <button
+                onClick={handleAbrirAsignar}
+                disabled={loadingAsignar}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 font-medium"
+              >
+                <UserPlus size={18} />
+                Asignar Técnico
+              </button>
+            )}
+
+            {puedeResolver && (
+              <button
+                onClick={handleAbrirResolver}
+                disabled={loadingResolver}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50 font-medium"
+              >
+                <CheckCircle size={18} />
+                Marcar Resuelto
+              </button>
+            )}
+
+            {incidencia.estado === 'Resuelto' &&
+              (esCreador || esAsignado || esAdmin) && (
+                <button
+                  onClick={handleAbrirReabrir}
+                  disabled={loadingReabrir}
+                  className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition disabled:opacity-50 font-medium"
+                >
+                  <RefreshCw size={18} />
+                  Reabrir
+                </button>
+              )}
+          </div>
+        )}
+
+        {puedeEditarTextos ? (
+          <IncidenciaForm
+            mode="edit"
+            onSubmit={form.submit}
+            titulo={form.titulo}
+            setTitulo={form.setTitulo}
+            descripcion={form.descripcion}
+            setDescripcion={form.setDescripcion}
+            categoria={form.categoria}
+            setCategoria={form.setCategoria}
+            ubicacion={form.ubicacion}
+            setUbicacion={form.setUbicacion}
+            urgencia={form.urgencia}
+            setUrgencia={form.setUrgencia}
+            estado={form.estado}
+            setEstado={form.setEstado}
+            fecha={incidencia.fecha}
+            reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
+            loading={form.loading}
+          />
+        ) : puedeCambiarEstado && !puedeEditarTextos ? (
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg shadow p-6 space-y-4">
+              {incidencia.idUsuarioAsignado && (
+                <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                  <p className="text-sm text-green-900">
+                    <strong>Asignado a:</strong>{' '}
+                    {getNombreUsuario(incidencia.idUsuarioAsignado)}
+                  </p>
+                </div>
+              )}
+              <div>
+                <p className="text-sm font-medium text-gray-600">Título</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {incidencia.titulo}
                 </p>
               </div>
-            )}
-            <div>
-              <p className="text-sm font-medium text-slate-400">Título</p>
-              <p className="text-lg font-semibold text-white">{incidencia.titulo}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-400">Descripción</p>
-              <p className="text-slate-200">{incidencia.descripcion}</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-slate-400">Estado</p>
-                <p className="text-slate-200">{incidencia.estado}</p>
+                <p className="text-sm font-medium text-gray-600">Descripción</p>
+                <p className="text-gray-700">{incidencia.descripcion}</p>
               </div>
-              <div>
-                <p className="text-sm font-medium text-slate-400">Urgencia</p>
-                <p className="text-slate-200">{incidencia.urgencia}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-400">Categoría</p>
-                <p className="text-slate-200">{incidencia.categoria}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-400">Ubicación</p>
-                <p className="text-slate-200">{incidencia.ubicacion}</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Estado</p>
+                  <p className="text-gray-900">{incidencia.estado}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Urgencia</p>
+                  <p className="text-gray-900">{incidencia.urgencia}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Categoría</p>
+                  <p className="text-gray-900">{incidencia.categoria}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-600">Ubicación</p>
+                  <p className="text-gray-900">{incidencia.ubicacion}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="page-card space-y-4">
-            <h3 className="text-lg font-semibold text-white">Cambiar Estado</h3>
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={() => {
-                  form.setEstado(IncidenciaEstado.ACTIVO)
-                  form.submit({
-                    preventDefault: () => {},
-                  } as React.FormEvent)
-                }}
-                className={`px-4 py-2 rounded text-white transition ${
-                  incidencia.estado === IncidenciaEstado.ACTIVO
-                    ? 'bg-blue-600 hover:bg-blue-700'
-                    : 'bg-gray-400 hover:bg-gray-500'
-                }`}
-              >
-                Activo
-              </button>
-              <button
-                onClick={() => {
-                  form.setEstado(IncidenciaEstado.EN_CURSO)
-                  form.submit({
-                    preventDefault: () => {},
-                  } as React.FormEvent)
-                }}
-                className={`px-4 py-2 rounded text-white transition ${
-                  incidencia.estado === IncidenciaEstado.EN_CURSO
-                    ? 'bg-yellow-600 hover:bg-yellow-700'
-                    : 'bg-gray-400 hover:bg-gray-500'
-                }`}
-              >
-                En Curso
-              </button>
-              <button
-                onClick={() => {
-                  form.setEstado(IncidenciaEstado.RESUELTO)
-                  form.submit({
-                    preventDefault: () => {},
-                  } as React.FormEvent)
-                }}
-                className={`px-4 py-2 rounded text-white transition ${
-                  incidencia.estado === IncidenciaEstado.RESUELTO
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-gray-400 hover:bg-gray-500'
-                }`}
-              >
-                Resuelto
-              </button>
+            <div className="bg-white rounded-lg shadow p-6 space-y-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Cambiar Estado
+              </h3>
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    form.setEstado(IncidenciaEstado.ACTIVO)
+                    form.submit({
+                      preventDefault: () => {},
+                    } as React.FormEvent)
+                  }}
+                  className={`px-4 py-2 rounded text-white transition ${
+                    incidencia.estado === IncidenciaEstado.ACTIVO
+                      ? 'bg-blue-600 hover:bg-blue-700'
+                      : 'bg-gray-400 hover:bg-gray-500'
+                  }`}
+                >
+                  Activo
+                </button>
+                <button
+                  onClick={() => {
+                    form.setEstado(IncidenciaEstado.EN_CURSO)
+                    form.submit({
+                      preventDefault: () => {},
+                    } as React.FormEvent)
+                  }}
+                  className={`px-4 py-2 rounded text-white transition ${
+                    incidencia.estado === IncidenciaEstado.EN_CURSO
+                      ? 'bg-yellow-600 hover:bg-yellow-700'
+                      : 'bg-gray-400 hover:bg-gray-500'
+                  }`}
+                >
+                  En Curso
+                </button>
+                <button
+                  onClick={() => {
+                    form.setEstado(IncidenciaEstado.RESUELTO)
+                    form.submit({
+                      preventDefault: () => {},
+                    } as React.FormEvent)
+                  }}
+                  className={`px-4 py-2 rounded text-white transition ${
+                    incidencia.estado === IncidenciaEstado.RESUELTO
+                      ? 'bg-green-600 hover:bg-green-700'
+                      : 'bg-gray-400 hover:bg-gray-500'
+                  }`}
+                >
+                  Resuelto
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="page-card space-y-4">
-          {incidencia.idUsuarioAsignado && (
-            <div className="page-message-resolved">
-              <p className="text-sm text-emerald-200">
-                <strong>Asignado a:</strong> {getNombreUsuario(incidencia.idUsuarioAsignado)}
-              </p>
-            </div>
-          )}
-          <div>
-            <p className="text-sm font-medium text-slate-400">Título</p>
-            <p className="text-lg font-semibold text-white">{incidencia.titulo}</p>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-slate-400">Descripción</p>
-            <p className="text-slate-200">{incidencia.descripcion}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm font-medium text-slate-400">Estado</p>
-              <p className="text-slate-200">{incidencia.estado}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-400">Urgencia</p>
-              <p className="text-slate-200">{incidencia.urgencia}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-400">Categoría</p>
-              <p className="text-slate-200">{incidencia.categoria}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-400">Ubicación</p>
-              <p className="text-slate-200">{incidencia.ubicacion}</p>
-            </div>
-          </div>
-          <p className="text-xs text-slate-500">Solo el creador o administrador puede editar</p>
-        </div>
-      )}
+        ) : (
+          <>
+            <IncidenciaDetailsCard
+              incidencia={incidencia}
+              reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
+              asignadoA={
+                incidencia.idUsuarioAsignado
+                  ? getNombreUsuario(incidencia.idUsuarioAsignado)
+                  : undefined
+              }
+            />
+            <p className="text-xs text-gray-500 text-center">
+              Solo el creador o administrador puede editar
+            </p>
+          </>
+        )}
 
-      {/* Sección de mensajes - solo visible si tiene acceso */}
-      {tieneAccesoAlChat && (
-        <div className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Registro de Seguimiento
-            </h3>
-            <div className="page-card border border-slate-800 p-6 max-h-96 overflow-y-auto mb-4">
-              <MensajesList
-                mensajes={mensajes}
-                getNombreUsuario={getNombreUsuario}
-                usuarioActualId={usuario?.id}
-                loading={loadingMensajes}
-              />
+        {/* Sección de mensajes, solo visible si tiene acceso */}
+        {tieneAccesoAlChat && (
+          <div className="space-y-4 mt-8">
+            <div className="border-t border-gray-200 pt-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                Registro de Seguimiento
+              </h3>
+              <div className="bg-white rounded-2xl border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
+                <MensajesList
+                  mensajes={mensajes}
+                  getNombreUsuario={getNombreUsuario}
+                  usuarioActualId={usuario?.id}
+                  loading={loadingMensajes}
+                />
+              </div>
             </div>
+
+            <NuevoMensajeInput
+              onEnviar={handleEnviarMensaje}
+              loading={loadingEnviar}
+              disabled={false}
+            />
           </div>
-
-          <NuevoMensajeInput
-            onEnviar={handleEnviarMensaje}
-            loading={loadingEnviar}
-            disabled={false}
-          />
-        </div>
-      )}
-
+        )}
+      </div>
       {/* Modal para asignar técnico */}
       <AsignarTecnicoModal
         isOpen={isModalAsignarOpen}
@@ -430,7 +485,6 @@ export const IncidenciaDetailPage = () => {
         loading={loadingReabrir}
         tituloIncidencia={incidencia?.titulo}
       />
-        </div>
-      </div>    </div>
+    </div>
   )
 }
