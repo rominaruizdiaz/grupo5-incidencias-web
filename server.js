@@ -22,10 +22,10 @@ server.post("/register", (req, res, next) => {
 });
 
 const rules = auth.rewriter({
-  users: 660,
-  incidencias: 660,
-  departamentos: 660,
-  usuarioDepartamento: 660,
+  users: 666,
+  incidencias: 666,
+  departamentos: 666,
+  usuarioDepartamento: 666,
 });
 
 server.use(rules);

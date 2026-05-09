@@ -54,12 +54,6 @@ export const LoginForm = () => {
               required
             />
 
-            {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3">
-                <p className="text-sm font-medium text-red-700">{error}</p>
-              </div>
-            )}
-
             <Button
               type="submit"
               loading={loading}
