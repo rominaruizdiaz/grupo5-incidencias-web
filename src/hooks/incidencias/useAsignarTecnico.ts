@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react'
-import { updateIncidencia } from '@/services/incidencias'
-import { createNotificacion } from '@/services/notificaciones'
-import { crearMensajeTracking, mensajesAsignacion } from '@/services/tracking'
-import { useAuthStore } from '@/store/auth.store'
+import { updateIncidencia, getIncidenciaById } from '@/services/incidencias'
 import toast from 'react-hot-toast'
 
 // asignar una incidencia a un técnico
+import { useAuthStore } from '@/store/auth.store'
+import { NotificationEvent } from '@/services/notification.events'
+import { emitNotification } from '@/services/notification.service'
+
 export const useAsignarTecnico = () => {
   const [loading, setLoading] = useState(false)
   const usuario = useAuthStore(state => state.usuario)
@@ -14,8 +15,7 @@ export const useAsignarTecnico = () => {
     async (
       idIncidencia: number,
       idUsuarioAsignado: number,
-      nombreTecnico: string,
-      tituloIncidencia: string
+      nombreTecnico: string
     ) => {
       try {
         setLoading(true)
@@ -25,30 +25,20 @@ export const useAsignarTecnico = () => {
           idUsuarioAsignado,
         })
 
-        // genera notificacion al tecnico
-        const ahora = new Date().toISOString()
-        await createNotificacion({
-          idUsuarioDestino: idUsuarioAsignado,
-          titulo: 'Incidencia Asignada',
-          mensaje: `Se te ha asignado: ${tituloIncidencia}`,
-          leida: false,
-          fechaCreacion: ahora,
-          idIncidenciaVinculada: idIncidencia,
-        })
+        const incidencia = await getIncidenciaById(idIncidencia)
 
-        // crea mensaje para trackear
-        if (usuario) {
-          const mensajeTracking = mensajesAsignacion.asignado(
-            usuario.nombre,
-            nombreTecnico
-          )
-          await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
-        }
+        await emitNotification({
+          event: NotificationEvent.ASIGNACION,
+          incidencia,
+          titulo: 'Asignación',
+          mensaje: `Se asignó técnico a "${incidencia.titulo}"`,
+          actorId: usuario?.id,
+        })
 
         toast.success(`Incidencia asignada a ${nombreTecnico}`)
         return true
       } catch (err) {
-        console.error('Error asignando técnico:', err)
+        console.error(err)
         toast.error('Error al asignar incidencia')
         return false
       } finally {

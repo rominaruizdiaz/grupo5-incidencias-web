@@ -1,10 +1,12 @@
 import { useCallback, useState } from 'react'
-import { updateIncidencia } from '@/services/incidencias'
-import { createNotificacion } from '@/services/notificaciones'
+import { updateIncidencia, getIncidenciaById } from '@/services/incidencias'
 import { crearMensajeTracking, mensajesResolucion } from '@/services/tracking'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado } from '@/types'
 import toast from 'react-hot-toast'
+
+import { emitNotification } from '@/services/notification.service'
+import { NotificationEvent } from '@/services/notification.events'
 
 // logica para reabrir una incidencia
 export const useReabrirIncidencia = () => {
@@ -21,32 +23,27 @@ export const useReabrirIncidencia = () => {
       try {
         setLoading(true)
 
-        const ahora = new Date().toISOString()
-
-        // actualizar incidencia
         await updateIncidencia(idIncidencia, {
           estado: nuevoEstado,
           fechaResolucion: null,
         })
 
-        // notificar al técnico asignado si existe
-        if (idUsuarioAsignado) {
-          await createNotificacion({
-            idUsuarioDestino: idUsuarioAsignado,
-            titulo: 'Incidencia Reabierta',
-            mensaje: `La incidencia "${tituloIncidencia}" ha sido reabierta. Estado: ${nuevoEstado}`,
-            leida: false,
-            fechaCreacion: ahora,
-            idIncidenciaVinculada: idIncidencia,
-          })
-        }
+        const incidencia = await getIncidenciaById(idIncidencia)
 
-        // crear mensaje de tracking
+        await emitNotification({
+          event: NotificationEvent.REABRIR,
+          incidencia,
+          titulo: 'reabrir',
+          mensaje: `Incidencia reabierta: "${incidencia.titulo}"`,
+          actorId: usuario?.id,
+        })
+
         if (usuario) {
           const mensajeTracking = mensajesResolucion.reabierto(
             usuario.nombre,
             nuevoEstado
           )
+
           await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
         }
 

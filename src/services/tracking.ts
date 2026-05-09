@@ -1,4 +1,5 @@
 import { createMensaje } from './mensajes'
+
 import type { Usuario } from '@/types'
 
 export const crearMensajeTracking = async (
@@ -19,17 +20,25 @@ export const crearMensajeTracking = async (
 }
 
 export const mensajesCambioEstado = {
-  aActivo: (nombreUsuario: string) => `${nombreUsuario} cambió el estado a: Activo`,
-  aEnCurso: (nombreUsuario: string) => `${nombreUsuario} cambió el estado a: En curso`,
-  aResuelto: (nombreUsuario: string) => `${nombreUsuario} cambió el estado a: Resuelto`,
+  aActivo: (nombreUsuario: string) =>
+    `${nombreUsuario} cambió el estado a: Activo`,
+  aEnCurso: (nombreUsuario: string) =>
+    `${nombreUsuario} cambió el estado a: En curso`,
+  aResuelto: (nombreUsuario: string) =>
+    `${nombreUsuario} cambió el estado a: Resuelto`,
 }
 
 export const mensajesAsignacion = {
   asignado: (nombreUsuario: string, nombreTecnico: string) =>
     `${nombreUsuario} asignó la incidencia a ${nombreTecnico}`,
-  cambiadoA: (nombreUsuario: string, nombreTecnicoAnterior: string, nombreTecnicoNuevo: string) =>
+  cambiadoA: (
+    nombreUsuario: string,
+    nombreTecnicoAnterior: string,
+    nombreTecnicoNuevo: string
+  ) =>
     `${nombreUsuario} cambió la asignación de ${nombreTecnicoAnterior} a ${nombreTecnicoNuevo}`,
-  desasignado: (nombreUsuario: string) => `${nombreUsuario} desasignó la incidencia`,
+  desasignado: (nombreUsuario: string) =>
+    `${nombreUsuario} desasignó la incidencia`,
 }
 
 export const mensajesResolucion = {

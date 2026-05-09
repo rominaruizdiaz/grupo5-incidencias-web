@@ -1,13 +1,17 @@
-import api from './api'
 import type { MensajeIncidencia } from '@/types'
+import api from './api'
 
 export const getMensajes = async (): Promise<MensajeIncidencia[]> => {
   const { data } = await api.get('/mensajesIncidencia')
   return data
 }
 
-export const getMensajesPorIncidencia = async (idIncidencia: number): Promise<MensajeIncidencia[]> => {
-  const { data } = await api.get(`/mensajesIncidencia?idIncidencia=${idIncidencia}`)
+export const getMensajesPorIncidencia = async (
+  idIncidencia: number
+): Promise<MensajeIncidencia[]> => {
+  const { data } = await api.get(
+    `/mensajesIncidencia?idIncidencia=${idIncidencia}`
+  )
   return data
 }
 

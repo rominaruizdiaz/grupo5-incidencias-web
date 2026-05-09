@@ -1,20 +1,36 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { deleteIncidencia } from '@/services/incidencias'
+import { deleteIncidencia, getIncidenciaById } from '@/services/incidencias'
 
-// borrar una incidencia
+import { useAuthStore } from '@/store/auth.store'
+import { NotificationEvent } from '@/services/notification.events'
+import { emitNotification } from '@/services/notification.service'
+
 export const useDeleteIncidencia = () => {
   const [loading, setLoading] = useState(false)
+  const usuario = useAuthStore(state => state.usuario)
 
   const remove = async (id: number) => {
     setLoading(true)
+
     try {
+      const incidencia = await getIncidenciaById(id)
+
       await deleteIncidencia(id)
+
+      await emitNotification({
+        event: NotificationEvent.BORRADO,
+        incidencia,
+        titulo: 'Incidencia eliminada',
+        mensaje: `Se eliminó "${incidencia.titulo}"`,
+        actorId: usuario?.id,
+      })
+
       toast.success('Incidencia borrada correctamente')
       return true
     } catch (err) {
-      console.error('Error borrando incidencia:', err)
-      toast.error('Error al borrar la incidencia')
+      console.error(err)
+      toast.error('Error al borrar incidencia')
       return false
     } finally {
       setLoading(false)
