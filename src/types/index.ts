@@ -79,9 +79,6 @@ export interface UsuarioDepartamento {
   usuarioId: number
   departamentoId: number
 }
-
-// ================= NOTIFICACIONES =================
-
 // ================= NOTIFICACIONES =================
 
 export interface Notificacion {

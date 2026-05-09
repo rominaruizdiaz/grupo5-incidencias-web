@@ -12,52 +12,73 @@ export const RegisterForm = () => {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [localError, setLocalError] = useState<string | null>(null)
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+  // VALIDACIONES
+  const nombreError = submitted
+    ? !nombre
+      ? 'El nombre es obligatorio'
+      : nombre.length < 3
+        ? 'Mínimo 3 caracteres'
+        : !nombreRegex.test(nombre)
+          ? 'Solo letras y espacios'
+          : ''
+    : ''
+
+  const emailError = submitted
+    ? !email
+      ? 'El email es obligatorio'
+      : !emailRegex.test(email)
+        ? 'Email inválido'
+        : ''
+    : ''
+
+  const passwordError = submitted
+    ? !password
+      ? 'La contraseña es obligatoria'
+      : !passwordRegex.test(password)
+        ? 'Mínimo 8 caracteres, mayúscula, minúscula y número'
+        : ''
+    : ''
+
+  const isValid =
+    nombreRegex.test(nombre) &&
+    emailRegex.test(email) &&
+    passwordRegex.test(password)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLocalError(null)
+    setSubmitted(true)
 
-    if (!nombre || !email || !password) return
+    if (!isValid) return
 
-    if (!emailPattern.test(email)) {
-      setLocalError('El correo debe tener formato *@*.* y no contener espacios')
-      return
-    }
-
-    if (password.length < 4) {
-      setLocalError('La contraseña debe ser mayor a 4 caracteres')
-      return
-    }
-
-    register({ nombre, email, password })
+    await register({
+      nombre,
+      email,
+      password,
+    })
   }
 
   return (
-    <div
-      className="
-      min-h-[100dvh]
-      flex
-      from-blue-50 to-indigo-50
-    "
-    >
-      {/* FORMULARIO*/}
+    <div className="min-h-[100dvh] flex from-blue-50 to-indigo-50">
       <div className="flex-1 flex items-center justify-center px-6 py-10">
-        <div className="w-full max-w-md lg:max-w-lg bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8">
           {/* HEADER */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">
-              Crear Cuenta
-            </h1>
-            <p className="text-gray-600 text-sm sm:text-base">
+            <h1 className="text-3xl font-black text-gray-900">Crear Cuenta</h1>
+            <p className="text-gray-600 text-sm">
               Regístrate en el sistema de incidencias
             </p>
           </div>
 
           {/* FORM */}
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* NOMBRE */}
             <Input
               type="text"
               label="Nombre completo"
@@ -65,9 +86,11 @@ export const RegisterForm = () => {
               icon={<User size={20} />}
               value={nombre}
               onChange={e => setNombre(e.target.value)}
+              error={submitted ? nombreError : ''}
               required
             />
 
+            {/* EMAIL */}
             <Input
               type="email"
               label="Correo electrónico"
@@ -75,11 +98,11 @@ export const RegisterForm = () => {
               icon={<Mail size={20} />}
               value={email}
               onChange={e => setEmail(e.target.value)}
+              error={submitted ? emailError : ''}
               required
-              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-              title="El correo debe tener formato usuario@dominio.ext y no puede contener espacios"
             />
 
+            {/* PASSWORD */}
             <Input
               type="password"
               label="Contraseña"
@@ -88,17 +111,30 @@ export const RegisterForm = () => {
               showPasswordToggle
               value={password}
               onChange={e => setPassword(e.target.value)}
+              error={submitted ? passwordError : ''}
               required
             />
 
-            {(localError || error) && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3">
+            {/* REGLAS DEL PASSWORD */}
+            <div className="text-xs text-gray-500 space-y-1 pl-1">
+              <p>• Mínimo 8 caracteres</p>
+              <p>• Al menos una mayúscula</p>
+              <p>• Al menos una minúscula</p>
+              <p>• Al menos un número</p>
+            </div>
+
+            {/* ERRORES */}
+            {error && (
+              <div className="mt-4 rounded-lg border p-3 bg-red-50 border-red-200">
                 <p className="text-sm font-medium text-red-700">
-                  {localError || error}
+                  {error === 'EMAIL_EXISTS'
+                    ? 'Email ya existente'
+                    : 'Error del servidor'}
                 </p>
               </div>
             )}
 
+            {/* BOTÓN */}
             <Button
               type="submit"
               loading={loading}
