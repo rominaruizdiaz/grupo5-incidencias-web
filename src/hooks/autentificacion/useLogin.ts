@@ -43,7 +43,14 @@ export const useLogin = () => {
 
       navigate('/panel')
     } catch (err: any) {
-      setError(err?.message || 'Error al iniciar sesión')
+      const status = err?.response?.status
+
+      if (status === 400 || status === 401) {
+        setError('credenciales inválidas')
+        return
+      }
+
+      setError('error de conexión con servidor')
     } finally {
       setLoading(false)
       setLoadingGlobal(false)
