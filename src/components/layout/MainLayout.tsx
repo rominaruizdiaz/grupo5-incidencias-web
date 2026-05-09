@@ -5,7 +5,7 @@ import { SideNav } from '../features/navegation/SideNav'
 // distribución base de las páginas públicas con la navegación
 export const MainLayout = () => {
   return (
-    <div className="flex min-h-screen  dark:bg-gray-900">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
       {/* SIDEBAR */}
       <SideNav />
 

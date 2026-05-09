@@ -10,6 +10,7 @@ export const useAuthStore = create<AuthStore>()(
     (set, get) => ({
       usuario: null,
       isLoading: false,
+      theme: 'light',
 
       setUsuario: (usuario: Usuario | null) => {
         set({ usuario, isLoading: false })
@@ -17,6 +18,15 @@ export const useAuthStore = create<AuthStore>()(
 
       setLoading: (value: boolean) => {
         set({ isLoading: value })
+      },
+
+      setTheme: (theme: 'light' | 'dark') => {
+        set({ theme })
+      },
+
+      toggleTheme: () => {
+        const nextTheme = get().theme === 'dark' ? 'light' : 'dark'
+        set({ theme: nextTheme })
       },
 
       logout: () => {
@@ -34,6 +44,7 @@ export const useAuthStore = create<AuthStore>()(
       name: 'auth-storage',
       partialize: state => ({
         usuario: state.usuario,
+        theme: state.theme,
       }),
     }
   )

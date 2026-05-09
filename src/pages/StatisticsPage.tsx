@@ -87,20 +87,20 @@ export const StatisticsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
-      <div className="border-b border-gray-200 px-6 py-6">
+      <div className="border-b border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 py-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <TrendingUp size={32} className="text-blue-600" />
             Estadísticas
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-slate-400 mt-2">
             Rendimiento en la resolución de incidencias
           </p>
 
           {usuario && (
-            <p className="text-xs text-gray-500 mt-3 font-medium">
+            <p className="text-xs text-gray-500 dark:text-slate-400 mt-3 font-medium">
               {usuario.rol === 1 && 'Mostrando estadísticas globales (Admin)'}
               {usuario.rol === 2 &&
                 'Mostrando solo tus incidencias reportadas (Profesor)'}
@@ -115,7 +115,7 @@ export const StatisticsPage = () => {
       <div className="p-6">
         <div className="max-w-6xl mx-auto space-y-8">
           {/* GRAFICA DONUT */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               {/* GRÁFICO */}
               <div className="flex items-center justify-center relative">
@@ -156,8 +156,8 @@ export const StatisticsPage = () => {
                       style={{ backgroundColor: item.color }}
                     />
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">{item.name}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="font-medium text-gray-900 dark:text-slate-100">{item.name}</p>
+                      <p className="text-sm text-gray-600 dark:text-slate-400">
                         {item.value} incidencias
                       </p>
                     </div>
@@ -169,25 +169,25 @@ export const StatisticsPage = () => {
 
           {/* RESUMEN */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-2xl border bg-blue-50 p-6">
-              <p className="text-sm font-semibold">Total</p>
-              <p className="text-4xl font-black text-blue-900">
+            <div className="rounded-2xl border border-blue-200 bg-blue-50 dark:border-blue-400/20 dark:bg-slate-900 p-6">
+              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">Total</p>
+              <p className="text-4xl font-black text-blue-900 dark:text-blue-200">
                 {totalIncidencias}
               </p>
               <AlertCircle className="text-blue-600 mt-2" />
             </div>
 
-            <div className="rounded-2xl border bg-green-50 p-6">
-              <p className="text-sm font-semibold">Resueltas</p>
-              <p className="text-4xl font-black text-green-900">
+            <div className="rounded-2xl border border-green-200 bg-green-50 dark:border-emerald-400/20 dark:bg-slate-900 p-6">
+              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">Resueltas</p>
+              <p className="text-4xl font-black text-green-900 dark:text-emerald-200">
                 {incidenciasResueltas}
               </p>
               <Check className="text-green-600 mt-2" />
             </div>
 
-            <div className="rounded-2xl border bg-orange-50 p-6">
-              <p className="text-sm font-semibold">En Proceso</p>
-              <p className="text-4xl font-black text-orange-900">
+            <div className="rounded-2xl border border-orange-200 bg-orange-50 dark:border-orange-400/20 dark:bg-slate-900 p-6">
+              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">En Proceso</p>
+              <p className="text-4xl font-black text-orange-900 dark:text-orange-200">
                 {incidenciasEnCurso}
               </p>
               <Clock className="text-orange-600 mt-2" />
@@ -195,8 +195,8 @@ export const StatisticsPage = () => {
           </div>
 
           {/* MENSAJE */}
-          <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6">
-            <p className="text-center font-semibold text-blue-900">
+          <div className="rounded-2xl border border-blue-200 bg-blue-50 dark:border-blue-400/20 dark:bg-slate-900 p-6">
+            <p className="text-center font-semibold text-blue-900 dark:text-blue-200">
               {getMensajeEstado()}
             </p>
           </div>

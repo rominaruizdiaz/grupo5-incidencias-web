@@ -1,3 +1,85 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --app-bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --border: #e5e7eb;
+}
+
+html.dark {
+  color-scheme: dark;
+  --app-bg: #0f172a;
+  --surface: #111827;
+  --surface-2: #1f2937;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: #334155;
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--text-primary);
+}
+
+html.dark body {
+  background: var(--app-bg);
+  color: var(--text-primary);
+}
+
+@layer base {
+  html.dark .bg-white {
+    background-color: var(--surface) !important;
+  }
+
+  html.dark .bg-gray-50 {
+    background-color: var(--surface-2) !important;
+  }
+
+  html.dark .bg-gray-100 {
+    background-color: #1f2937 !important;
+  }
+
+  html.dark .bg-gray-200 {
+    background-color: #334155 !important;
+  }
+
+  html.dark .border-gray-200 {
+    border-color: var(--border) !important;
+  }
+
+  html.dark .border-gray-300 {
+    border-color: #475569 !important;
+  }
+
+  html.dark .text-gray-900 {
+    color: var(--text-primary) !important;
+  }
+
+  html.dark .text-gray-600,
+  html.dark .text-gray-700,
+  html.dark .text-gray-500,
+  html.dark .text-gray-400 {
+    color: var(--text-muted) !important;
+  }
+
+  html.dark .bg-blue-100 {
+    background-color: #1e40af !important;
+    color: #bfdbfe !important;
+  }
+
+  html.dark .bg-purple-100 {
+    background-color: #5b21b6 !important;
+    color: #ddd6fe !important;
+  }
+
+  html.dark .bg-orange-100 {
+    background-color: #c2410c !important;
+    color: #fee2e2 !important;
+  }
+}

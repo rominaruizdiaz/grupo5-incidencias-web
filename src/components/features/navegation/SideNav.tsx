@@ -19,14 +19,14 @@ export const SideNav = () => {
     mx-2 px-3 py-2
     ${collapsed ? 'justify-center px-0' : ''}`
 
-  const active = 'bg-blue-100 text-blue-700 shadow-sm'
-  const inactive = 'text-gray-600 hover:bg-gray-100'
+  const active = 'bg-blue-100 text-blue-700 shadow-sm dark:bg-blue-900 dark:text-blue-100'
+  const inactive = 'text-gray-600 hover:bg-gray-100 dark:text-slate-400 dark:hover:bg-slate-800'
 
   return (
     <aside
       className={`
         hidden md:flex flex-col
-        bg-white border-r border-gray-200
+        bg-white dark:bg-slate-950 border-r border-gray-200 dark:border-slate-800
         transition-all duration-300
         ${collapsed ? 'w-20' : 'w-64'}
       `}

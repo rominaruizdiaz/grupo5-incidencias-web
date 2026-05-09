@@ -5,6 +5,8 @@ import { Mail, Shield, User } from 'lucide-react'
 
 export const UserProfilePage = () => {
   const usuario = useAuthStore(state => state.usuario)
+  const theme = useAuthStore(state => state.theme)
+  const toggleTheme = useAuthStore(state => state.toggleTheme)
 
   if (!usuario) return null
 
@@ -35,16 +37,16 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <div className="from-blue-50 to-indigo-50 flex flex-col">
+    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-4 sm:py-6 shrink-0">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+      <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 px-4 sm:px-6 py-4 sm:py-6 shrink-0">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
           Mi Perfil
         </h1>
       </div>
 
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 pb-16 overflow-hidden">
-        <div className="bg-white w-full h-full max-w-3xl p-6 space-y-6 sm:rounded-2xl sm:shadow-sm sm:border sm:border-gray-200 sm:p-8 flex flex-col">
+        <div className="bg-white dark:bg-slate-900 w-full h-full max-w-3xl p-6 space-y-6 sm:rounded-2xl sm:shadow-sm sm:border sm:border-gray-200 dark:sm:border-slate-700 sm:p-8 flex flex-col">
           {/* AVATAR + NOMBRE */}
           <div className="flex flex-col items-center text-center gap-4">
             <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
@@ -113,8 +115,30 @@ export const UserProfilePage = () => {
             )}
           </div>
 
+          <div className="rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 p-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-600 dark:text-slate-400 uppercase tracking-wide">
+                Tema
+              </p>
+              <p className="text-sm font-medium text-gray-900 dark:text-white mt-1">
+                Activar modo oscuro
+              </p>
+            </div>
+
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={theme === 'dark'}
+                onChange={toggleTheme}
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-colors dark:bg-slate-700" />
+              <span className="absolute left-1 top-1 bg-white border border-gray-300 rounded-full h-4 w-4 transition-transform peer-checked:translate-x-5 dark:border-slate-500" />
+            </label>
+          </div>
+
           {/* LOGOUT */}
-          <div className="mt-auto pt-4 border-t border-gray-200 flex justify-end">
+          <div className="mt-auto pt-4 border-t border-gray-200 dark:border-slate-700 flex justify-end">
             <div className="w-full flex justify-end">
               <LogoutButton />
             </div>
