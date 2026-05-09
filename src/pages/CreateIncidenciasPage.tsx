@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'
 import { getDepartamentos } from '@/services/departamentos'
@@ -10,9 +10,29 @@ export const CreateIncidenciaPage = () => {
   const form = useIncidenciaForm()
   const [departamentos, setDepartamentos] = useState<Departamento[]>([])
 
-  useEffect(() => {
-    getDepartamentos().then(setDepartamentos)
+  const fetchDepartamentos = useCallback(async () => {
+    const data = await getDepartamentos()
+    setDepartamentos(data)
   }, [])
+
+  useEffect(() => {
+    fetchDepartamentos()
+  }, [fetchDepartamentos])
+
+  useEffect(() => {
+    const handleDepartamentosUpdated = () => {
+      fetchDepartamentos()
+    }
+
+    window.addEventListener('departamentosUpdated', handleDepartamentosUpdated)
+
+    return () => {
+      window.removeEventListener(
+        'departamentosUpdated',
+        handleDepartamentosUpdated
+      )
+    }
+  }, [fetchDepartamentos])
 
   // Técnicos (Rol 3) no pueden crear incidencias
   if (usuario?.rol === 3) {

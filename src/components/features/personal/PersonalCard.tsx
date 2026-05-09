@@ -8,12 +8,12 @@ export function PersonalCard({
   onDelete,
 }: PersonalCardProps) {
   return (
-    <div className="md:hidden bg-slate-950 border border-slate-800 rounded-3xl shadow-sm p-4 mb-4">
+    <div className="md:hidden bg-white border border-gray-200 rounded-3xl shadow-sm p-4 mb-4 dark:bg-slate-950 dark:border-slate-800">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-white">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
           {usuario.nombre}
         </h3>
-        <p className="text-sm text-slate-400">{usuario.email}</p>
+        <p className="text-sm text-slate-600 dark:text-slate-400">{usuario.email}</p>
       </div>
 
       <div className="mb-4 space-y-2">

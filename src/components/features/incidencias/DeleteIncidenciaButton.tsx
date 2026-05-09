@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Trash2 } from 'lucide-react'
 import { useDeleteIncidencia } from '@/hooks/incidencias/useDeleteIncidencia'
 
 type Props = {
@@ -23,9 +24,11 @@ export const DeleteIncidenciaButton = ({ id }: Props) => {
     <button
       onClick={handleDelete}
       disabled={loading}
-      className="bg-red-600 text-white p-2 w-full"
+      className="bg-red-600 text-white p-2 w-full rounded-lg flex items-center justify-center gap-2"
+      aria-label="Borrar incidencia"
+      title="Borrar incidencia"
     >
-      Borrar incidencia
+      <Trash2 size={16} />
     </button>
   )
 }

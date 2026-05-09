@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useObtenerTecnicos } from '@/hooks/personal/useObtenerTecnicos'
+import { getEtiquetas } from '@/services/etiquetas'
 import { X, User, Badge } from 'lucide-react'
 import type { Etiqueta } from '@/types'
 
@@ -24,6 +25,20 @@ export const AsignarTecnicoModal = ({
   const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<number | null>(
     null
   )
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([])
+
+  useEffect(() => {
+    const fetchEtiquetas = async () => {
+      try {
+        const data = await getEtiquetas()
+        setEtiquetas(data)
+      } catch (err) {
+        console.error('Error cargando etiquetas:', err)
+      }
+    }
+
+    fetchEtiquetas()
+  }, [])
 
   if (!isOpen) return null
 
@@ -113,15 +128,18 @@ export const AsignarTecnicoModal = ({
                       <p className="text-xs text-gray-500">{tecnico.email}</p>
                       {tecnico.especialidades.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
-                          {tecnico.especialidades.map(etiquetaId => (
-                            <span
-                              key={etiquetaId}
-                              className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded"
-                            >
-                              <Badge size={12} />
-                              ID: {etiquetaId}
-                            </span>
-                          ))}
+                          {tecnico.especialidades.map(etiquetaId => {
+                            const etiqueta = etiquetas.find(e => e.id === etiquetaId)
+                            return (
+                              <span
+                                key={etiquetaId}
+                                className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded"
+                              >
+                                <Badge size={12} />
+                                {etiqueta ? etiqueta.nombre : `ID: ${etiquetaId}`}
+                              </span>
+                            )
+                          })}
                         </div>
                       )}
                     </div>

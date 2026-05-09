@@ -11,17 +11,17 @@ export function PersonalSection({
   if (usuarios.length === 0) {
     return (
       <div className="page-card text-center">
-        <p className="text-slate-400">No hay usuarios para mostrar</p>
+        <p className="text-slate-600 dark:text-slate-400">No hay usuarios para mostrar</p>
       </div>
     )
   }
 
   return (
-    <div className="hidden md:block page-card overflow-hidden">
+    <div className="hidden md:block page-card overflow-hidden bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <table className="w-full">
-        <thead className="bg-slate-950 border-b border-slate-800">
+        <thead className="bg-gray-50 border-b border-gray-200 dark:bg-slate-950 dark:border-slate-800">
           <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
+            <th className="px-6 py-3 text-left text-sm font-medium text-slate-900 dark:text-slate-300">
               Nombre
             </th>
             <th className="px-6 py-3 text-left text-sm font-medium text-slate-300">
@@ -38,13 +38,13 @@ export function PersonalSection({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800">
+        <tbody className="divide-y divide-gray-200 dark:divide-slate-800">
           {usuarios.map(usuario => (
-            <tr key={usuario.id} className="hover:bg-slate-900">
-              <td className="px-6 py-4 text-sm text-slate-100">
+            <tr key={usuario.id} className="hover:bg-gray-100 dark:hover:bg-slate-900">
+              <td className="px-6 py-4 text-sm text-slate-900 dark:text-slate-100">
                 {usuario.nombre}
               </td>
-              <td className="px-6 py-4 text-sm text-slate-400">
+              <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
                 {usuario.email}
               </td>
               <td className="px-6 py-4">

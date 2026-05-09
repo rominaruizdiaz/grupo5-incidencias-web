@@ -86,15 +86,15 @@ export function PersonalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* HEADER */}
-      <div className="border-b border-gray-200 px-6 py-6">
+      <div className="border-b border-gray-200 bg-white px-6 py-6 dark:border-slate-700 dark:bg-slate-950">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2 dark:text-white">
             <Users size={32} className="text-blue-600" />
             Gestión de Personal
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 mt-2 dark:text-slate-400">
             Administra usuarios y sus departamentos
           </p>
         </div>

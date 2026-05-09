@@ -120,7 +120,7 @@
       "titulo": "Problema con el proyector del aula 01",
       "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
       "categoria": "Hardware",
-      "ubicacion": "Aula 01",
+      "ubicacion": "Aula 01 ",
       "estado": "En curso",
       "urgencia": "Alta",
       "fecha": "2024-04-15T08:30:00Z",
@@ -165,7 +165,7 @@
       "fecha": "2024-04-13T11:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 3,
-      "fechaResolucion": "2026-04-26T10:02:51.233Z"
+      "fechaResolucion": "2026-05-09T13:19:10.039Z"
     },
     {
       "titulo": "sadasd",
@@ -233,7 +233,7 @@
   ],
   "departamentos": [
     {
-      "nombre": "Aula 01 ds",
+      "nombre": "Aula 01 ",
       "id": 1
     },
     {
@@ -255,6 +255,10 @@
       "id": 5,
       "nombre": "Biblioteca",
       "fechaCreacion": "2024-01-10"
+    },
+    {
+      "nombre": "a",
+      "id": 6
     }
   ],
   "usuarioEtiqueta": [
@@ -641,6 +645,33 @@
       "fechaCreacion": "2026-04-28T02:18:41.148Z",
       "idIncidenciaVinculada": 11,
       "id": 25
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:18:09.624Z",
+      "idIncidenciaVinculada": 5,
+      "id": 26
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Pantalla de monitor rota\" ha sido reabierta. Estado: Activo",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:19:05.310Z",
+      "idIncidenciaVinculada": 5,
+      "id": 27
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:19:10.039Z",
+      "idIncidenciaVinculada": 5,
+      "id": 28
     }
   ],
   "mensajesIncidencia": [
@@ -783,6 +814,27 @@
       "mensaje": "Ayaya cambió el estado a: En curso",
       "fecha": "2026-04-28T02:18:41.085Z",
       "id": 20
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:18:09.683Z",
+      "id": 21
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi reabrió la incidencia con estado: Activo",
+      "fecha": "2026-05-09T13:19:05.376Z",
+      "id": 22
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:19:10.102Z",
+      "id": 23
     }
   ]
 }

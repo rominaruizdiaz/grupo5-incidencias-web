@@ -17,9 +17,10 @@ import { useAuthStore } from '@/store/auth.store'
 import { useParams } from 'react-router-dom'
 import { DeleteIncidenciaButton } from '@/components/features/incidencias/DeleteIncidenciaButton'
 import { getEtiquetas } from '@/services/etiquetas'
+import { getDepartamentos } from '@/services/departamentos'
 import { getIncidenciaById } from '@/services/incidencias'
 import { getEtiquetasPorUsuario } from '@/services/usuarioEtiquetas'
-import { type Incidencia, IncidenciaEstado } from '@/types'
+import { type Departamento, type Incidencia, IncidenciaEstado } from '@/types'
 import {
   ArrowLeft,
   Trash2,
@@ -54,6 +55,7 @@ export const IncidenciaDetailPage = () => {
   )
   const [etiquetasUsuario, setEtiquetasUsuario] = useState<number[]>([])
   const [etiquetas, setEtiquetas] = useState<any[]>([])
+  const [departamentos, setDepartamentos] = useState<Departamento[]>([])
 
   let incidencia = incidencias.find(i => i.id === Number(id))
   if (!incidencia && incidenciaDirecta) {
@@ -90,8 +92,12 @@ export const IncidenciaDetailPage = () => {
           const etiquetasDelUsuario = await getEtiquetasPorUsuario(usuario.id)
           setEtiquetasUsuario(etiquetasDelUsuario)
         }
+
+        // Cargar todas las áreas para el formulario de edición
+        const departamentosData = await getDepartamentos()
+        setDepartamentos(departamentosData)
       } catch (err) {
-        console.error('Error cargando etiquetas:', err)
+        console.error('Error cargando datos:', err)
       }
     }
     cargarDatos()
@@ -233,10 +239,10 @@ export const IncidenciaDetailPage = () => {
     (esAdmin || (esTecnico && esAsignado)) && incidencia.estado !== 'Resuelto'
   const puedeAsignar = esAdmin
   const puedeResolver =
-    esAdmin ||
-    (esTecnico &&
-      (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion)) &&
-      incidencia.estado !== 'Resuelto')
+    incidencia.estado !== 'Resuelto' &&
+    (esAdmin ||
+      (esTecnico &&
+        (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion))))
   const puedeEliminar =
     (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
 
@@ -321,6 +327,7 @@ export const IncidenciaDetailPage = () => {
             fecha={incidencia.fecha}
             reportadoPor={getNombreUsuario(incidencia.idUsuarioReporta)}
             loading={form.loading}
+            departamentos={departamentos}
           />
         ) : puedeCambiarEstado && !puedeEditarTextos ? (
           <div className="space-y-6">

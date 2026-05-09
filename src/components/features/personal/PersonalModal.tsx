@@ -89,15 +89,15 @@ export function PersonalModal({
         onClick={onClose}
       />
 
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg z-50 w-96 max-w-full">
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg z-50 w-96 max-w-full dark:bg-slate-950">
         <div className="p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4 dark:text-white">
             Editar Usuario
           </h2>
 
           <form onSubmit={handleSave} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-200">
                 Nombre
               </label>
               <input
@@ -107,12 +107,12 @@ export function PersonalModal({
                   setFormData({ ...formData, nombre: e.target.value })
                 }
                 disabled={loading}
-                className="w-full px-3 py-2 border rounded-md"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-200">
                 Email
               </label>
               <input
@@ -122,12 +122,12 @@ export function PersonalModal({
                   setFormData({ ...formData, email: e.target.value })
                 }
                 disabled={loading}
-                className="w-full px-3 py-2 border rounded-md"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-200">
                 Rol
               </label>
               <select
@@ -139,7 +139,7 @@ export function PersonalModal({
                   })
                 }
                 disabled={loading}
-                className="w-full px-3 py-2 border rounded-md"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
               >
                 {ROLE_OPTIONS.map(option => (
                   <option key={option.value} value={option.value}>
@@ -150,10 +150,10 @@ export function PersonalModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-slate-200">
                 Departamentos
               </label>
-              <div className="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+              <div className="space-y-2 max-h-40 overflow-y-auto border border-gray-300 rounded p-2 bg-white dark:border-slate-700 dark:bg-slate-950">
                 {departamentos.map(depto => (
                   <label
                     key={depto.id}
@@ -178,17 +178,17 @@ export function PersonalModal({
 
             {formData.rol === 3 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-slate-200">
                   Especialidades
                 </label>
-                <p className="text-xs text-gray-500 mb-2">
+                <p className="text-xs text-gray-500 mb-2 dark:text-slate-400">
                   Solo visible para técnicos
                 </p>
-                <div className="space-y-2 max-h-40 overflow-y-auto border rounded p-2">
+                <div className="space-y-2 max-h-40 overflow-y-auto border border-gray-300 rounded p-2 bg-white dark:border-slate-700 dark:bg-slate-950">
                   {etiquetas.map(etiqueta => (
                     <label
                       key={etiqueta.id}
-                      className="flex items-center"
+                      className="flex items-center text-slate-900 dark:text-slate-100"
                     >
                       <input
                         type="checkbox"
@@ -208,12 +208,12 @@ export function PersonalModal({
               </div>
             )}
 
-            <div className="flex gap-2 pt-4 border-t">
+            <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
               <button
                 type="button"
                 onClick={onClose}
                 disabled={loading}
-                className="flex-1 px-4 py-2 border rounded-md"
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 dark:border-slate-700 dark:text-slate-200"
               >
                 Cancelar
               </button>
