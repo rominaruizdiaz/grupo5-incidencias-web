@@ -162,12 +162,16 @@ export const IncidenciaDetailPage = () => {
     }
   }
 
-  const handleEnviarMensaje = async (mensaje: string) => {
-    if (!usuario || !incidencia) return
-    const exito = await enviarMensaje(incidencia.id, usuario.id, mensaje)
+  const handleEnviarMensaje = async (mensaje: string): Promise<boolean> => {
+    if (!usuario || !incidencia) return false
+
+    const exito = await enviarMensaje(incidencia, usuario.id, mensaje)
+
     if (exito) {
       await refreshMensajes()
     }
+
+    return exito
   }
 
   const handleAbrirReabrir = () => {
@@ -242,7 +246,8 @@ export const IncidenciaDetailPage = () => {
     incidencia.estado !== 'Resuelto' &&
     (esAdmin ||
       (esTecnico &&
-        (esAsignado || (!incidencia.idUsuarioAsignado && tieneespecializacion))))
+        (esAsignado ||
+          (!incidencia.idUsuarioAsignado && tieneespecializacion))))
   const puedeEliminar =
     (esCreador && incidencia.estado !== 'Resuelto') || esAdmin
 
@@ -440,28 +445,28 @@ export const IncidenciaDetailPage = () => {
           </>
         )}
 
-        {/* Sección de mensajes, solo visible si tiene acceso */}
         {tieneAccesoAlChat && (
-          <div className="space-y-4 mt-8">
-            <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Registro de Seguimiento
-              </h3>
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 max-h-96 overflow-y-auto mb-4">
-                <MensajesList
-                  mensajes={mensajes}
-                  getNombreUsuario={getNombreUsuario}
-                  usuarioActualId={usuario?.id}
-                  loading={loadingMensajes}
-                />
-              </div>
+          <div className="mt-8 flex flex-col h-[60vh] md:h-[65vh] border-t border-gray-200 pt-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Registro de Seguimiento
+            </h3>
+
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <MensajesList
+                mensajes={mensajes}
+                getNombreUsuario={getNombreUsuario}
+                usuarioActualId={usuario?.id}
+                loading={loadingMensajes}
+              />
             </div>
 
-            <NuevoMensajeInput
-              onEnviar={handleEnviarMensaje}
-              loading={loadingEnviar}
-              disabled={false}
-            />
+            <div className="pt-3 bg-white">
+              <NuevoMensajeInput
+                onEnviar={handleEnviarMensaje}
+                loading={loadingEnviar}
+                disabled={false}
+              />
+            </div>
           </div>
         )}
       </div>
