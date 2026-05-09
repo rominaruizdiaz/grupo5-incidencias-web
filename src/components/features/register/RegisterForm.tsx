@@ -12,10 +12,26 @@ export const RegisterForm = () => {
   const [nombre, setNombre] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [localError, setLocalError] = useState<string | null>(null)
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    setLocalError(null)
+
     if (!nombre || !email || !password) return
+
+    if (!emailPattern.test(email)) {
+      setLocalError('El correo debe tener formato *@*.* y no contener espacios')
+      return
+    }
+
+    if (password.length < 4) {
+      setLocalError('La contraseña debe ser mayor a 4 caracteres')
+      return
+    }
+
     register({ nombre, email, password })
   }
 
@@ -60,6 +76,8 @@ export const RegisterForm = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              title="El correo debe tener formato usuario@dominio.ext y no puede contener espacios"
             />
 
             <Input
@@ -73,9 +91,11 @@ export const RegisterForm = () => {
               required
             />
 
-            {error && (
+            {(localError || error) && (
               <div className="rounded-lg bg-red-50 border border-red-200 p-3">
-                <p className="text-sm font-medium text-red-700">{error}</p>
+                <p className="text-sm font-medium text-red-700">
+                  {localError || error}
+                </p>
               </div>
             )}
 

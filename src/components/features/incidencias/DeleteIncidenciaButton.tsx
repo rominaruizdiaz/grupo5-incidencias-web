@@ -16,8 +16,10 @@ export const DeleteIncidenciaButton = ({ id }: Props) => {
     )
     if (!confirm) return
 
-    await remove(id)
-    navigate('/panel')
+    const success = await remove(id)
+    if (success) {
+      navigate('/panel')
+    }
   }
 
   return (

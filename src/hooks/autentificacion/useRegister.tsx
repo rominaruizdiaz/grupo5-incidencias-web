@@ -28,7 +28,22 @@ export const useRegister = () => {
 
       navigate('/panel')
     } catch (err: any) {
-      setError(err?.message || 'Error en registro')
+      let errorMessage = 'Error en registro'
+
+      // Mapear errores del backend
+      const errorText = err?.response?.data?.message || err?.message || ''
+
+      if (errorText.toLowerCase().includes('email') && errorText.toLowerCase().includes('exists')) {
+        errorMessage = 'Correo ya registrado'
+      } else if (errorText.toLowerCase().includes('email')) {
+        errorMessage = 'Error con el correo: ' + errorText
+      } else if (errorText.toLowerCase().includes('password')) {
+        errorMessage = 'Error con la contraseña: ' + errorText
+      } else {
+        errorMessage = errorText || 'Error en registro'
+      }
+
+      setError(errorMessage)
     } finally {
       setLoading(false)
       setLoadingGlobal(false)

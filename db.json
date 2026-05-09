@@ -84,16 +84,6 @@
       "fotoPerfil": null,
       "fechaRegistro": "2026-04-25T18:25:50.060Z",
       "id": 6
-    },
-    {
-      "email": "Aya@ya.com",
-      "password": "$2a$10$UVJQUA4QR82geqACeOysGOk4AW1rA5OnXoLgb5UVLh2pizGVJn2qO",
-      "nombre": "Ayaya",
-      "rol": 2,
-      "modoOscuro": false,
-      "fotoPerfil": null,
-      "fechaRegistro": "2026-04-27T21:23:28.285Z",
-      "id": 7
     }
   ],
   "etiquetas": [
@@ -121,12 +111,12 @@
       "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
       "categoria": "Hardware",
       "ubicacion": "Aula 01 ",
-      "estado": "En curso",
+      "estado": "Resuelto",
       "urgencia": "Alta",
       "fecha": "2024-04-15T08:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 5,
-      "fechaResolucion": null
+      "fechaResolucion": "2026-05-09T13:24:13.623Z"
     },
     {
       "id": 3,
@@ -672,6 +662,15 @@
       "fechaCreacion": "2026-05-09T13:19:10.039Z",
       "idIncidenciaVinculada": 5,
       "id": 28
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:24:13.623Z",
+      "idIncidenciaVinculada": 1,
+      "id": 29
     }
   ],
   "mensajesIncidencia": [
@@ -835,6 +834,13 @@
       "mensaje": "romi marcó como resuelto: Sin descripción",
       "fecha": "2026-05-09T13:19:10.102Z",
       "id": 23
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:24:13.687Z",
+      "id": 24
     }
   ]
 }
