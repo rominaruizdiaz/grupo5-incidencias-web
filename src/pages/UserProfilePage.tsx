@@ -132,8 +132,8 @@ export const UserProfilePage = () => {
                 checked={theme === 'dark'}
                 onChange={toggleTheme}
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-colors dark:bg-slate-700" />
-              <span className="absolute left-1 top-1 bg-white border border-gray-300 rounded-full h-4 w-4 transition-transform peer-checked:translate-x-5 dark:border-slate-500" />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-colors dark:bg-slate-700 border border-blue-500" />
+              <span className="absolute left-1 top-1 bg-white border border-blue-500 rounded-full h-4 w-4 transition-transform peer-checked:translate-x-5 dark:border-blue-400" />
             </label>
           </div>
 
