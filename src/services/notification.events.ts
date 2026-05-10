@@ -5,4 +5,5 @@ export enum NotificationEvent {
   RESOLUCION = 'resolucion',
   REABRIR = 'reabrir',
   BORRADO = 'incidencia_borrada',
+  CAMBIO_CAMPOS = 'cambio_campos',
 }

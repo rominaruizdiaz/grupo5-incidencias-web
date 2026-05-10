@@ -16,8 +16,6 @@ export const useReabrirIncidencia = () => {
   const reabrirIncidencia = useCallback(
     async (
       idIncidencia: number,
-      idUsuarioAsignado: number | undefined,
-      tituloIncidencia: string,
       nuevoEstado: IncidenciaEstado = IncidenciaEstado.ACTIVO
     ) => {
       try {

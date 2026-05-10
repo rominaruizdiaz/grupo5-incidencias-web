@@ -5,14 +5,16 @@ import { IncidenciaEstado, type Incidencia } from '@/types'
 
 import { useIncidenciaFormState } from './useIncidenciaFormState'
 import { useIncidenciaFormActions } from './useIncidenciaActions'
-import { emitNotification } from '@/services/notification.service'
-import { NotificationEvent } from '@/services/notification.events'
+import { useNotifyIncidenciaChanges } from './useNotifyIncidenciaChanges'
+import { detectIncidenciaChanges } from './useIncidenciaChanges'
+import { crearMensajeTracking } from '@/services/tracking'
 
 export const useIncidenciaForm = (initial?: Incidencia) => {
   const navigate = useNavigate()
   const usuario = useAuthStore(state => state.usuario)
 
   const { create, update } = useIncidenciaFormActions()
+  const { notifyChanges } = useNotifyIncidenciaChanges()
 
   const isEdit = Boolean(initial)
   const form = useIncidenciaFormState(initial)
@@ -40,15 +42,16 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
       const data = buildPayload()
 
       if (isEdit && initial) {
-        await update(initial.id, data)
+        // Actualizar incidencia
+        const updatedIncidencia = await update(initial.id, data)
 
-        await emitNotification({
-          event: NotificationEvent.CAMBIO_ESTADO,
-          incidencia: initial,
-          titulo: 'Actualización',
-          mensaje: 'Incidencia actualizada',
-          actorId: usuario.id,
-        })
+        // Detectar cambios específicos
+        const changes = detectIncidenciaChanges(initial, updatedIncidencia)
+
+        // Notificar cambios y crear mensajes en chat
+        if (changes.length > 0) {
+          await notifyChanges(initial, updatedIncidencia, changes)
+        }
       } else {
         await create({
           ...data,

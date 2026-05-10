@@ -36,6 +36,69 @@ export const NotificationsPage = () => {
     await markAllAsRead(usuario.id)
   }
 
+  const getNotificationStyles = (n: Notificacion) => {
+    if (n.leida) {
+      return `
+        border-slate-200 bg-white
+        dark:border-slate-800 dark:bg-slate-900
+        hover:bg-slate-50 dark:hover:bg-slate-800/60
+      `
+    }
+
+    // Colores específicos según tipo de evento sin leer
+    switch (n.tipoEvento) {
+      case 'asignacion':
+        return `
+          border-amber-200 bg-amber-50
+          dark:border-amber-900 dark:bg-amber-950/30
+          hover:bg-amber-100 dark:hover:bg-amber-950/50
+        `
+      case 'resolucion':
+      case 'reabrir':
+        return `
+          border-green-200 bg-green-50
+          dark:border-green-900 dark:bg-green-950/30
+          hover:bg-green-100 dark:hover:bg-green-950/50
+        `
+      case 'cambio_estado':
+      case 'cambio_campos':
+        return `
+          border-purple-200 bg-purple-50
+          dark:border-purple-900 dark:bg-purple-950/30
+          hover:bg-purple-100 dark:hover:bg-purple-950/50
+        `
+      case 'mensaje_nuevo':
+        return `
+          border-cyan-200 bg-cyan-50
+          dark:border-cyan-900 dark:bg-cyan-950/30
+          hover:bg-cyan-100 dark:hover:bg-cyan-950/50
+        `
+      default:
+        return `
+          border-blue-200 bg-blue-50
+          dark:border-blue-900 dark:bg-blue-950/30
+          hover:bg-blue-100 dark:hover:bg-blue-950/50
+        `
+    }
+  }
+
+  const getIndicatorColor = (n: Notificacion) => {
+    switch (n.tipoEvento) {
+      case 'asignacion':
+        return 'bg-amber-600 dark:bg-amber-400'
+      case 'resolucion':
+      case 'reabrir':
+        return 'bg-green-600 dark:bg-green-400'
+      case 'cambio_estado':
+      case 'cambio_campos':
+        return 'bg-purple-600 dark:bg-purple-400'
+      case 'mensaje_nuevo':
+        return 'bg-cyan-600 dark:bg-cyan-400'
+      default:
+        return 'bg-blue-600 dark:bg-blue-400'
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-600 dark:bg-slate-950 dark:text-slate-300">
@@ -96,19 +159,7 @@ export const NotificationsPage = () => {
                 cursor-pointer rounded-2xl border p-5 transition
                 hover:shadow-sm active:scale-[0.995]
 
-                ${
-                  n.leida
-                    ? `
-                      border-slate-200 bg-white
-                      dark:border-slate-800 dark:bg-slate-900
-                      hover:bg-slate-50 dark:hover:bg-slate-800/60
-                    `
-                    : `
-                      border-blue-200 bg-blue-50
-                      dark:border-blue-900 dark:bg-blue-950/30
-                      hover:bg-blue-100 dark:hover:bg-blue-950/50
-                    `
-                }
+                ${getNotificationStyles(n)}
               `}
             >
               {/* HEADER CARD */}
@@ -122,7 +173,7 @@ export const NotificationsPage = () => {
                 </div>
 
                 {!n.leida && (
-                  <span className="mt-2 h-2.5 w-2.5 rounded-full bg-blue-600 dark:bg-blue-400" />
+                  <span className={`mt-2 h-2.5 w-2.5 rounded-full ${getIndicatorColor(n)}`} />
                 )}
               </div>
 

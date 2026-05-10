@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { useAuthStore } from '@/store/auth.store'
 import { NotificationEvent } from '@/services/notification.events'
 import { emitNotification } from '@/services/notification.service'
+import { crearMensajeTracking } from '@/services/tracking'
 
 export const useCambiarEstado = () => {
   const [loading, setLoading] = useState(false)
@@ -31,6 +32,7 @@ export const useCambiarEstado = () => {
 
         const incidencia = await getIncidenciaById(idIncidencia)
 
+        // Notificar cambio de estado
         await emitNotification({
           event: NotificationEvent.CAMBIO_ESTADO,
           incidencia,
@@ -38,6 +40,12 @@ export const useCambiarEstado = () => {
           mensaje: `Estado cambiado a ${nuevoEstado} en "${incidencia.titulo}"`,
           actorId: usuario?.id,
         })
+
+        // Crear mensaje en el chat
+        if (usuario) {
+          const mensajeCambioEstado = `${usuario.nombre} cambió el estado a: ${nuevoEstado}`
+          await crearMensajeTracking(idIncidencia, usuario, mensajeCambioEstado)
+        }
 
         toast.success(`Estado cambiado a ${nuevoEstado}`)
         return true

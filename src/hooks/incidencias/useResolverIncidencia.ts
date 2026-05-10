@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { useAuthStore } from '@/store/auth.store'
 import { NotificationEvent } from '@/services/notification.events'
 import { emitNotification } from '@/services/notification.service'
+import { crearMensajeTracking } from '@/services/tracking'
 
 export const useResolverIncidencia = () => {
   const [loading, setLoading] = useState(false)
@@ -23,6 +24,7 @@ export const useResolverIncidencia = () => {
 
         const incidencia = await getIncidenciaById(idIncidencia)
 
+        // Notificar resolución
         await emitNotification({
           event: NotificationEvent.RESOLUCION,
           incidencia,
@@ -30,6 +32,12 @@ export const useResolverIncidencia = () => {
           mensaje: `Incidencia resuelta: "${incidencia.titulo}"`,
           actorId: usuario?.id,
         })
+
+        // Crear mensaje en el chat
+        if (usuario) {
+          const mensajeResolucion = `${usuario.nombre} marcó como resuelto${descripcion ? `: ${descripcion}` : ''}`
+          await crearMensajeTracking(idIncidencia, usuario, mensajeResolucion)
+        }
 
         toast.success('Incidencia resuelta')
         return true

@@ -4,10 +4,10 @@ import type {
   Departamento,
 } from '@/types'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
-import { IncidenciaEstado as EstadoEnum } from '@/types'
-import { Input, Textarea, Button, PriorityButtons, SelectCard } from '../../ui'
-import { X, CheckCircle, AlertCircle, Wrench } from 'lucide-react'
+import { Textarea, Button, PriorityButtons, SelectCard } from '../../ui'
+import { X, CheckCircle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { EstadoSelector } from './EstadoSelector'
 
 type Props = {
   mode: 'create' | 'edit'
@@ -25,6 +25,7 @@ type Props = {
   setUrgencia: (v: IncidenciaUrgencia) => void
   estado?: IncidenciaEstado
   setEstado?: (v: IncidenciaEstado) => void
+  onSelectResolved?: () => void
   fecha?: string
   reportadoPor?: string
   departamentos?: Departamento[]
@@ -47,10 +48,10 @@ export const IncidenciaForm = (props: Props) => {
   return (
     <form
       onSubmit={props.onSubmit}
-      className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100"
+      className="min-h-screen bg-slate-950 text-slate-100"
     >
       {/* HEADER */}
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sm:px-6 dark:border-slate-800 dark:bg-slate-950">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950 px-4 py-3 sm:px-6">
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -78,7 +79,7 @@ export const IncidenciaForm = (props: Props) => {
             className="
               w-full bg-transparent font-black outline-none
               text-2xl sm:text-3xl md:text-4xl
-              placeholder:text-slate-400 dark:placeholder:text-slate-600
+              placeholder:text-slate-600
               break-words
             "
             required
@@ -111,7 +112,7 @@ export const IncidenciaForm = (props: Props) => {
 
         {/* DETALLES */}
         <div>
-          <h3 className="mb-2 text-sm font-bold text-slate-900 dark:text-slate-100">
+          <h3 className="mb-2 text-sm font-bold text-slate-100">
             Detalles adicionales
           </h3>
           <Textarea
@@ -124,9 +125,9 @@ export const IncidenciaForm = (props: Props) => {
 
         {/* MODO EDICION */}
         {isEdit && (
-          <div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm">
             {props.fecha && (
-              <p className="text-slate-600 dark:text-slate-400">
+              <p className="text-slate-400">
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   Fecha:
                 </span>{' '}
@@ -135,8 +136,8 @@ export const IncidenciaForm = (props: Props) => {
             )}
 
             {props.reportadoPor && (
-              <p className="text-slate-600 dark:text-slate-400">
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <p className="text-slate-400">
+                <span className="font-semibold text-slate-100">
                   Reportado por:
                 </span>{' '}
                 {props.reportadoPor}
@@ -146,56 +147,12 @@ export const IncidenciaForm = (props: Props) => {
         )}
 
         {/* ESTADO */}
-        {isEdit && props.setEstado && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-              Actualizar Estado
-            </h3>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {[
-                {
-                  state: EstadoEnum.ACTIVO,
-                  label: 'Activo',
-                  icon: AlertCircle,
-                  colors:
-                    'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900',
-                },
-                {
-                  state: EstadoEnum.EN_CURSO,
-                  label: 'En Curso',
-                  icon: Wrench,
-                  colors:
-                    'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-900',
-                },
-                {
-                  state: EstadoEnum.RESUELTO,
-                  label: 'Resuelto',
-                  icon: CheckCircle,
-                  colors:
-                    'bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900',
-                },
-              ].map(({ state, label, icon: Icon, colors }) => (
-                <button
-                  key={state}
-                  type="button"
-                  onClick={() => props.setEstado!(state)}
-                  className={`
-                    flex h-20 items-center justify-center gap-2 rounded-xl border-2 transition
-                    sm:h-24 sm:flex-col sm:gap-1
-                    ${
-                      props.estado === state
-                        ? colors
-                        : 'border-slate-200 bg-white text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400'
-                    }
-                  `}
-                >
-                  <Icon size={20} />
-                  <span className="text-sm font-semibold">{label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+        {isEdit && props.setEstado && props.estado && (
+          <EstadoSelector
+            estado={props.estado}
+            onChange={props.setEstado}
+            onSelectResolved={props.onSelectResolved}
+          />
         )}
 
         {/* BOTON DE ENVIAR */}

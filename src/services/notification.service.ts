@@ -37,6 +37,7 @@ export const emitNotification = async ({
             leida: false,
             fechaCreacion: now,
             idIncidenciaVinculada: incidencia.id,
+            tipoEvento: event,
           })
         )
     )

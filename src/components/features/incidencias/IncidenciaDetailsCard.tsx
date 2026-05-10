@@ -1,17 +1,24 @@
-import type { Incidencia } from '@/types'
+import type { Incidencia, IncidenciaEstado } from '@/types'
 import { StatusBadge } from '../../ui/StatusBadge'
 import { UrgencyBadge } from '../../ui/UrgencyBadge'
+import { EstadoSelector } from './EstadoSelector'
 
 type Props = {
   incidencia: Incidencia
   reportadoPor?: string
   asignadoA?: string
+  puedeCambiarEstado?: boolean
+  onCambiarEstado?: (estado: IncidenciaEstado) => void
+  onSelectResolved?: () => void
 }
 
 export const IncidenciaDetailsCard = ({
   incidencia,
   reportadoPor,
   asignadoA,
+  puedeCambiarEstado = false,
+  onCambiarEstado,
+  onSelectResolved,
 }: Props) => {
   return (
     <div
@@ -84,17 +91,19 @@ export const IncidenciaDetailsCard = ({
 
       {/* GRID DETALLES */}
       <div className="grid grid-cols-2 gap-4 pt-2">
-        <div>
-          <p
-            className="
-            text-xs font-semibold uppercase tracking-wide mb-1
-            text-slate-500 dark:text-slate-400
-          "
-          >
-            Estado
-          </p>
-          <StatusBadge estado={incidencia.estado} />
-        </div>
+        {!puedeCambiarEstado && (
+          <div>
+            <p
+              className="
+              text-xs font-semibold uppercase tracking-wide mb-1
+              text-slate-500 dark:text-slate-400
+            "
+            >
+              Estado
+            </p>
+            <StatusBadge estado={incidencia.estado} />
+          </div>
+        )}
 
         <div>
           <p
@@ -142,6 +151,17 @@ export const IncidenciaDetailsCard = ({
           </p>
         </div>
       </div>
+
+      {/* SELECTOR DE ESTADO */}
+      {puedeCambiarEstado && onCambiarEstado && (
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+          <EstadoSelector
+            estado={incidencia.estado}
+            onChange={onCambiarEstado}
+            onSelectResolved={onSelectResolved}
+          />
+        </div>
+      )}
 
       {/* REPORTADOR */}
       {reportadoPor && (

@@ -9,7 +9,7 @@ export const NotificationBadge = ({ count }: Props) => {
   return (
     <span
       className="
-        absolute -top-1 -right-1
+        absolute -left-1 -top-2
         min-w-4 h-4 px-[5px]
         flex items-center justify-center
 

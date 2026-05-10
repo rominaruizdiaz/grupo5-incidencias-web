@@ -7,46 +7,41 @@ import { NotificationEvent } from '@/services/notification.events'
 import { emitNotification } from '@/services/notification.service'
 import { crearMensajeTracking } from '@/services/tracking'
 
-export const useAsignarTecnico = () => {
+export const useAutoAsignarTecnico = () => {
   const [loading, setLoading] = useState(false)
   const usuario = useAuthStore(state => state.usuario)
 
-  const asignarTecnico = useCallback(
-    async (
-      idIncidencia: number,
-      idUsuarioAsignado: number,
-      nombreTecnico: string
-    ) => {
+  const autoAsignar = useCallback(
+    async (idIncidencia: number) => {
+      if (!usuario) return false
+
       try {
         setLoading(true)
 
-        // actualiza la incidencia con el nuevo tecnico asignado
         await updateIncidencia(idIncidencia, {
-          idUsuarioAsignado,
+          idUsuarioAsignado: usuario.id,
         })
 
         const incidencia = await getIncidenciaById(idIncidencia)
 
-        // Notificar asignación
+        // Notificar auto-asignación
         await emitNotification({
           event: NotificationEvent.ASIGNACION,
           incidencia,
           titulo: 'Asignación',
-          mensaje: `Se asignó técnico a "${incidencia.titulo}"`,
-          actorId: usuario?.id,
+          mensaje: `${usuario.nombre} se auto-asignó a "${incidencia.titulo}"`,
+          actorId: usuario.id,
         })
 
         // Crear mensaje en el chat
-        if (usuario) {
-          const mensajeAsignacion = `${usuario.nombre} asignó la incidencia a ${nombreTecnico}`
-          await crearMensajeTracking(idIncidencia, usuario, mensajeAsignacion)
-        }
+        const mensajeAsignacion = `${usuario.nombre} se auto-asignó a esta incidencia`
+        await crearMensajeTracking(idIncidencia, usuario, mensajeAsignacion)
 
-        toast.success(`Incidencia asignada a ${nombreTecnico}`)
+        toast.success('Te has asignado a la incidencia')
         return true
       } catch (err) {
         console.error(err)
-        toast.error('Error al asignar incidencia')
+        toast.error('Error al asignarte')
         return false
       } finally {
         setLoading(false)
@@ -55,5 +50,5 @@ export const useAsignarTecnico = () => {
     [usuario]
   )
 
-  return { asignarTecnico, loading }
+  return { autoAsignar, loading }
 }

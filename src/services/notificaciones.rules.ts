@@ -15,7 +15,11 @@ export const resolveDestinatarios = (
       )
 
     case NotificationEvent.CAMBIO_ESTADO:
-      return usuarios.filter(u => u.id === incidencia.idUsuarioReporta)
+      return usuarios.filter(
+        u =>
+          u.id === incidencia.idUsuarioReporta ||
+          u.id === incidencia.idUsuarioAsignado
+      )
 
     case NotificationEvent.ASIGNACION:
       return usuarios.filter(
@@ -42,6 +46,13 @@ export const resolveDestinatarios = (
       return usuarios.filter(
         u =>
           u.rol === 1 || // admin
+          u.id === incidencia.idUsuarioReporta ||
+          u.id === incidencia.idUsuarioAsignado
+      )
+
+    case NotificationEvent.CAMBIO_CAMPOS:
+      return usuarios.filter(
+        u =>
           u.id === incidencia.idUsuarioReporta ||
           u.id === incidencia.idUsuarioAsignado
       )
