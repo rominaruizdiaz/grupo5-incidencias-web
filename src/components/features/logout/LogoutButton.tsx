@@ -14,32 +14,70 @@ export const LogoutButton = () => {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-200"
+        className="
+          bg-red-600 text-white
+          hover:bg-red-700 active:bg-red-800
+          dark:bg-red-500 dark:hover:bg-red-600 dark:active:bg-red-700
+
+          font-semibold px-4 py-2 rounded-lg
+          shadow-sm transition
+        "
       >
         Cerrar sesión
       </button>
 
+      {/* MODAL */}
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsModalOpen(false)} />
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg z-50 w-96 max-w-full dark:bg-slate-950">
+          <div
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={() => setIsModalOpen(false)}
+          />
+
+          <div
+            className="
+              fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+              w-96 max-w-[90%]
+              rounded-2xl border
+              border-slate-200 bg-white
+              shadow-xl
+
+              dark:border-slate-800 dark:bg-slate-900
+              z-50
+            "
+          >
             <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 dark:text-white">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                 Confirmar cierre de sesión
               </h2>
-              <p className="text-gray-700 dark:text-slate-200 mb-6">
-                ¿Está seguro de que desea cerrar sesión?
+
+              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+                ¿Seguro que quieres salir del sistema?
               </p>
-              <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
+
+              {/* BOTONES */}
+              <div className="mt-6 flex gap-2 border-t border-slate-200 pt-4 dark:border-slate-800">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 dark:border-slate-700 dark:text-slate-200"
+                  className="
+                    flex-1 rounded-lg border px-4 py-2 text-sm font-medium
+                    border-slate-300 text-slate-700
+                    hover:bg-slate-100
+
+                    dark:border-slate-700 dark:text-slate-200
+                    dark:hover:bg-slate-800
+                  "
                 >
                   Cancelar
                 </button>
+
                 <button
                   onClick={handleConfirmLogout}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                  className="
+                    flex-1 rounded-lg px-4 py-2 text-sm font-semibold text-white
+                    bg-red-600 hover:bg-red-700 active:bg-red-800
+                    dark:bg-red-500 dark:hover:bg-red-600 dark:active:bg-red-700
+                  "
                 >
                   Cerrar sesión
                 </button>

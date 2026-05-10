@@ -65,13 +65,18 @@ export const RegisterForm = () => {
   }
 
   return (
-    <div className="min-h-[100dvh] flex from-blue-50 to-indigo-50">
-      <div className="flex-1 flex items-center justify-center px-6 py-10">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 px-4">
+      <div className="flex-1 flex items-center justify-center px-0 py-10">
+        <div
+          className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8
+        dark:bg-slate-900 dark:border-slate-800 transition"
+        >
           {/* HEADER */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-black text-gray-900">Crear Cuenta</h1>
-            <p className="text-gray-600 text-sm">
+            <h1 className="text-3xl font-black text-gray-900 dark:text-white">
+              Crear Cuenta
+            </h1>
+            <p className="text-gray-600 dark:text-slate-400 text-sm">
               Regístrate en el sistema de incidencias
             </p>
           </div>
@@ -116,7 +121,7 @@ export const RegisterForm = () => {
             />
 
             {/* REGLAS DEL PASSWORD */}
-            <div className="text-xs text-gray-500 space-y-1 pl-1">
+            <div className="text-xs text-gray-500 dark:text-slate-400 space-y-1 pl-1">
               <p>• Mínimo 8 caracteres</p>
               <p>• Al menos una mayúscula</p>
               <p>• Al menos una minúscula</p>
@@ -125,8 +130,11 @@ export const RegisterForm = () => {
 
             {/* ERRORES */}
             {error && (
-              <div className="mt-4 rounded-lg border p-3 bg-red-50 border-red-200">
-                <p className="text-sm font-medium text-red-700">
+              <div
+                className="mt-4 rounded-lg border p-3 bg-red-50 border-red-200
+              dark:bg-red-950/40 dark:border-red-900"
+              >
+                <p className="text-sm font-medium text-red-700 dark:text-red-300">
                   {error === 'EMAIL_EXISTS'
                     ? 'Email ya existente'
                     : 'Error del servidor'}
@@ -147,11 +155,11 @@ export const RegisterForm = () => {
 
           {/* LOGIN */}
           <div className="mt-8 text-center">
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 dark:text-slate-400 text-sm">
               ¿Ya tienes cuenta?{' '}
               <button
                 onClick={() => navigate('/login')}
-                className="font-bold text-blue-600 hover:text-blue-700"
+                className="font-bold text-blue-600 hover:text-blue-500 transition"
               >
                 Inicia sesión
               </button>

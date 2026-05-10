@@ -1,4 +1,3 @@
-import '../styles/DepartamentosPage.css'
 import { useState } from 'react'
 import { useAuthStore } from '@/store/auth.store'
 import { useAdminDepartamentos } from '@/hooks/departamentos/useAdminDepartamentos'
@@ -8,7 +7,6 @@ import { Input, Button } from '@/components/ui'
 
 export function DepartamentosPage() {
   const isAdmin = useAuthStore(state => state.isAdmin())
-
   const { departamentos, crear, actualizar, eliminar } = useAdminDepartamentos()
 
   const [nombre, setNombre] = useState('')
@@ -17,180 +15,153 @@ export function DepartamentosPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-6">
-        <div className="bg-red-50 text-red-700 p-6 rounded-lg border border-red-200 max-w-md text-center">
-          <p className="font-semibold"> No autorizado</p>
-          <p className="text-sm mt-2">
-            No tienes permiso para acceder a esta página
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 p-6">
+        <div className="max-w-md rounded-2xl border border-red-200 bg-red-50 p-6 text-center dark:border-red-900 dark:bg-slate-900">
+          <p className="font-bold text-red-600 dark:text-red-400">
+            No autorizado
+          </p>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            No tienes permiso para acceder a esta sección
           </p>
         </div>
       </div>
     )
   }
 
-  const handleCrearDepartamento = async () => {
-    if (!nombre.trim()) {
-      toast.error('El nombre del departamento no puede estar vacío')
-      return
-    }
-    try {
-      await crear(nombre)
-      setNombre('')
-      toast.success('Departamento creado')
-    } catch (err) {
-      toast.error('Error al crear departamento')
-    }
+  const handleCrear = async () => {
+    if (!nombre.trim()) return toast.error('Nombre requerido')
+    await crear(nombre)
+    setNombre('')
+    toast.success('Departamento creado')
   }
 
-  const handleEditarDepartamento = async (id: number) => {
-    if (!editNombre.trim()) {
-      toast.error('El nombre no puede estar vacío')
-      return
-    }
-    try {
-      await actualizar(id, editNombre)
-      setEditId(null)
-      toast.success('Departamento actualizado')
-    } catch (err) {
-      toast.error('Error al actualizar departamento')
-    }
+  const handleEditar = async (id: number) => {
+    if (!editNombre.trim()) return toast.error('Nombre requerido')
+    await actualizar(id, editNombre)
+    setEditId(null)
+    toast.success('Actualizado')
   }
 
-  const handleEliminarDepartamento = async (id: number) => {
-    if (confirm('¿Estás seguro de que quieres eliminar este departamento?')) {
-      try {
-        await eliminar(id)
-        toast.success('Departamento eliminado')
-      } catch (err) {
-        toast.error('Error al eliminar departamento')
-      }
-    }
+  const handleEliminar = async (id: number) => {
+    if (!confirm('¿Eliminar este departamento?')) return
+    await eliminar(id)
+    toast.success('Eliminado')
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="border-b border-gray-200 px-6 py-6">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-            <Building size={32} className="text-blue-600" />
-            Gestión de Departamentos
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      {/* HEADER (igual estilo PanelPage) */}
+      <div className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+        <div className="mx-auto max-w-[1800px] px-4 py-5 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-black tracking-tight flex items-center gap-2">
+            <Building className="text-blue-600 dark:text-blue-400" />
+            Departamentos
           </h1>
-          <p className="text-gray-600 mt-2">
-            Administra departamentos y sus configuraciones
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Gestión de estructura organizativa
           </p>
         </div>
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* CREATE DEPARTAMENTO */}
-          <div className="rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
-              Crear Nuevo Departamento
-            </h2>
-            <div className="flex gap-3">
-              <Input
-                type="text"
-                value={nombre}
-                onChange={e => setNombre(e.target.value)}
-                placeholder="Nombre del departamento"
-                onKeyDown={e => e.key === 'Enter' && handleCrearDepartamento()}
-              />
-              <Button
-                onClick={handleCrearDepartamento}
-                variant="primary"
-                size="md"
-                icon={<Plus size={18} />}
-              >
-                Crear
-              </Button>
-            </div>
-          </div>
+      <div className="mx-auto max-w-[1800px] px-4 py-6 sm:px-6 lg:px-8 space-y-6">
+        {/* CREAR */}
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <h2 className="text-lg font-bold mb-4">Crear departamento</h2>
 
-          {/* LISTAR DEPARTAMENTOS */}
-          <div className="rounded-2xl bg-white border border-gray-200 p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
-              {departamentos.length === 0
-                ? 'No hay departamentos'
-                : `Departamentos (${departamentos.length})`}
-            </h2>
-            <div className="space-y-2">
-              {departamentos.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
-                  <Building size={32} className="mx-auto mb-2 opacity-50" />
-                  <p>
-                    No hay departamentos creados. Crea uno arriba para comenzar.
-                  </p>
-                </div>
-              ) : (
-                departamentos.map(d => (
-                  <div
-                    key={d.id}
-                    className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-4 rounded-xl transition border border-gray-200"
-                  >
-                    {editId === d.id ? (
-                      <input
-                        type="text"
-                        defaultValue={d.nombre}
-                        onChange={e => setEditNombre(e.target.value)}
-                        className="flex-1 px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white font-medium"
-                        autoFocus
-                      />
-                    ) : (
-                      <div className="flex items-center gap-3 flex-1">
-                        <Building
-                          size={20}
-                          className="text-blue-600 flex-shrink-0"
-                        />
-                        <span className="text-gray-900 font-semibold">
-                          {d.nombre}
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex gap-2 ml-4 flex-shrink-0">
-                      {editId === d.id ? (
-                        <>
-                          <button
-                            onClick={() => handleEditarDepartamento(d.id!)}
-                            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium text-sm transition"
-                          >
-                            Guardar
-                          </button>
-                          <button
-                            onClick={() => setEditId(null)}
-                            className="px-4 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg font-medium text-sm transition"
-                          >
-                            Cancelar
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() => {
-                              setEditId(d.id!)
-                              setEditNombre(d.nombre)
-                            }}
-                            className="flex items-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition"
-                          >
-                            <Edit2 size={16} />
-                            Editar
-                          </button>
-                          <button
-                            onClick={() => handleEliminarDepartamento(d.id!)}
-                            className="flex items-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition"
-                          >
-                            <Trash2 size={16} />
-                            Eliminar
-                          </button>
-                        </>
-                      )}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Input
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
+              placeholder="Nombre del departamento"
+              onKeyDown={e => e.key === 'Enter' && handleCrear()}
+            />
+
+            <Button icon={<Plus size={18} />} onClick={handleCrear}>
+              Crear
+            </Button>
+          </div>
+        </div>
+
+        {/* LISTA */}
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <h2 className="text-lg font-bold mb-4">
+            {departamentos.length === 0
+              ? 'Sin departamentos'
+              : `Departamentos (${departamentos.length})`}
+          </h2>
+
+          <div className="space-y-3">
+            {departamentos.length === 0 ? (
+              <div className="text-center py-10 text-slate-500 dark:text-slate-400">
+                <Building className="mx-auto mb-2 opacity-40" />
+                No hay departamentos creados
+              </div>
+            ) : (
+              departamentos.map(d => (
+                <div
+                  key={d.id}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950"
+                >
+                  {/* LEFT */}
+                  {editId === d.id ? (
+                    <input
+                      className="w-full rounded-lg border border-blue-300 px-3 py-2 bg-white dark:bg-slate-900"
+                      defaultValue={d.nombre}
+                      onChange={e => setEditNombre(e.target.value)}
+                      autoFocus
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2 font-medium">
+                      <Building size={16} className="text-blue-500" />
+                      {d.nombre}
                     </div>
+                  )}
+
+                  {/* ACTIONS */}
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    {editId === d.id ? (
+                      <>
+                        <button
+                          onClick={() => handleEditar(d.id!)}
+                          className="px-3 py-2 rounded-lg bg-green-600 text-white text-sm"
+                        >
+                          Guardar
+                        </button>
+
+                        <button
+                          onClick={() => setEditId(null)}
+                          className="px-3 py-2 rounded-lg bg-slate-400 text-white text-sm"
+                        >
+                          Cancelar
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            setEditId(d.id!)
+                            setEditNombre(d.nombre)
+                          }}
+                          className="flex items-center gap-1 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm"
+                        >
+                          <Edit2 size={14} />
+                          Editar
+                        </button>
+
+                        <button
+                          onClick={() => handleEliminar(d.id!)}
+                          className="flex items-center gap-1 px-3 py-2 rounded-lg bg-red-600 text-white text-sm"
+                        >
+                          <Trash2 size={14} />
+                          Eliminar
+                        </button>
+                      </>
+                    )}
                   </div>
-                ))
-              )}
-            </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

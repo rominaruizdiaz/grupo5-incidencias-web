@@ -25,7 +25,8 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       toggleTheme: () => {
-        set({ theme: get().theme === 'dark' ? 'light' : 'dark' })
+        const next = get().theme === 'dark' ? 'light' : 'dark'
+        set({ theme: next })
       },
 
       logout: () => {

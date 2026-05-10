@@ -23,7 +23,7 @@ const ICON_MAP: Record<IncidenciaUrgencia, LucideIcon> = {
 export const PriorityButtons = ({ value, onChange }: Props) => {
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-gray-900">
+      <label className="block text-sm font-semibold text-slate-900 dark:text-slate-100">
         Nivel de Urgencia
       </label>
 
@@ -37,14 +37,20 @@ export const PriorityButtons = ({ value, onChange }: Props) => {
               key={option}
               type="button"
               onClick={() => onChange(option)}
-              className={`h-24 rounded-xl border-2 transition flex flex-col items-center justify-center ${
-                isSelected
-                  ? COLOR_URGENCIA[option]
-                  : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300'
-              }`}
+              className={`
+                h-20 sm:h-24
+                rounded-xl border-2 transition
+                flex flex-col items-center justify-center gap-1
+                text-sm sm:text-base
+                ${
+                  isSelected
+                    ? COLOR_URGENCIA[option]
+                    : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:border-slate-700'
+                }
+              `}
             >
-              <Icon size={26} className="mb-1" />
-              <span className="text-sm font-semibold">{option}</span>
+              <Icon size={24} />
+              <span className="font-semibold">{option}</span>
             </button>
           )
         })}

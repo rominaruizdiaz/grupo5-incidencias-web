@@ -66,6 +66,8 @@ export const usePersonal = () => {
         // actualizar etiquetas si es técnico
         if (usuario.rol === 3) {
           await actualizarEtiquetasUsuario(usuario.id, etiquetas)
+        } else {
+          await actualizarEtiquetasUsuario(usuario.id, [])
         }
 
         await fetchUsuarios()

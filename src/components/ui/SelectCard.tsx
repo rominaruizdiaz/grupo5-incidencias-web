@@ -20,7 +20,6 @@ export const SelectCard = ({
   icon,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
-
   // detecta si el click fue fuera
   const menuRef = useRef<HTMLDivElement>(null)
 
@@ -40,22 +39,29 @@ export const SelectCard = ({
 
   return (
     <div className="space-y-2">
-      <label className="block text-xs font-medium text-gray-600 uppercase tracking-wide">
+      <label className="block text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
         {label}
       </label>
 
-      {/* FLECHA ANIMADA */}
       <div ref={menuRef} className="relative">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full rounded-2xl bg-gray-50 border border-gray-200 px-4 py-3 text-left text-sm font-medium text-gray-900 hover:bg-gray-100 transition flex items-center justify-between"
+          className="
+            flex w-full items-center justify-between
+            rounded-2xl border px-4 py-3 text-left text-sm font-medium transition
+            bg-slate-50 text-slate-900 border-slate-200 hover:bg-slate-100
+            dark:bg-slate-900 dark:text-slate-100 dark:border-slate-800 dark:hover:bg-slate-800
+          "
         >
-          <div className="flex items-center gap-3 flex-1">
-            {icon && <span className="text-lg flex-shrink-0">{icon}</span>}
+          <div className="flex flex-1 items-center gap-3">
+            {icon && <span className="flex-shrink-0 text-lg">{icon}</span>}
+
             <span
               className={
-                selectedOption ? 'text-gray-900 font-semibold' : 'text-gray-500'
+                selectedOption
+                  ? 'font-semibold text-slate-900 dark:text-slate-100'
+                  : 'text-slate-500 dark:text-slate-500'
               }
             >
               {selectedOption?.nombre || placeholder}
@@ -64,18 +70,29 @@ export const SelectCard = ({
 
           <ChevronDown
             size={20}
-            className={`flex-shrink-0 text-gray-600 transition ${isOpen ? 'rotate-180' : ''}`}
+            className={`
+              flex-shrink-0 text-slate-500 transition
+              ${isOpen ? 'rotate-180' : ''}
+            `}
           />
         </button>
 
+        {/* DROPDOWN */}
         {isOpen && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white rounded-xl border border-gray-200 shadow-lg">
+          <div
+            className="
+              absolute left-0 right-0 top-full z-50 mt-2
+              rounded-xl border shadow-lg
+              bg-white border-slate-200
+              dark:bg-slate-900 dark:border-slate-800
+            "
+          >
             {options.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-gray-500">
+              <div className="px-4 py-6 text-center text-sm text-slate-500">
                 No hay opciones disponibles
               </div>
             ) : (
-              <ul className="max-h-48 overflow-y-auto">
+              <ul className="max-h-52 overflow-y-auto">
                 {options.map((option, idx) => (
                   <li key={option.id}>
                     <button
@@ -84,15 +101,19 @@ export const SelectCard = ({
                         onChange(option.nombre)
                         setIsOpen(false)
                       }}
-                      className={`w-full px-4 py-3 text-left text-sm transition ${
-                        idx !== options.length - 1
-                          ? 'border-b border-gray-100'
-                          : ''
-                      } ${
-                        selectedOption?.id === option.id
-                          ? 'bg-blue-50 text-blue-700 font-semibold'
-                          : 'text-gray-700 hover:bg-gray-50'
-                      }`}
+                      className={`
+                        w-full px-4 py-3 text-left text-sm transition
+                        ${
+                          idx !== options.length - 1
+                            ? 'border-b border-slate-100 dark:border-slate-800'
+                            : ''
+                        }
+                        ${
+                          selectedOption?.id === option.id
+                            ? 'bg-blue-50 text-blue-700 font-semibold dark:bg-blue-950/40 dark:text-blue-300'
+                            : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800'
+                        }
+                      `}
                     >
                       {option.nombre}
                     </button>

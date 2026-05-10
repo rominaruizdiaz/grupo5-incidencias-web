@@ -1,4 +1,3 @@
-import '../styles/IncidenciaDetailPage.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IncidenciaForm } from '@/components/features/incidencias/IncidenciaForm'

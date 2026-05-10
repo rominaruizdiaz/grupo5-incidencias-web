@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import '../styles/AreasPage.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { getDepartamentos } from '@/services/departamentos'
@@ -63,31 +62,31 @@ export function AreasPage() {
   }
 
   return (
-    <div className="bg-white">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       {/* HEADER */}
-      <div className="border-b border-gray-200 px-6 py-6">
-        <h1 className="text-3xl font-bold text-gray-900">Mis Áreas</h1>
-        <p className="text-gray-600 text-sm mt-2">
-          Departamentos asignados e incidencias asociadas
-        </p>
+      <div className="border-b border-slate-200 px-4 py-6 dark:border-slate-800 sm:px-6">
+        <div className="mx-auto max-w-4xl">
+          <h1 className="text-2xl font-bold sm:text-3xl">Mis Áreas</h1>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            Departamentos asignados e incidencias asociadas
+          </p>
+        </div>
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6 max-w-4xl mx-auto">
+      <div className="mx-auto max-w-4xl p-4 sm:p-6">
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
               <div
                 key={i}
-                className="h-20 bg-gray-100 rounded-2xl animate-pulse"
+                className="h-20 animate-pulse rounded-2xl bg-slate-100 dark:bg-slate-800"
               />
             ))}
           </div>
         ) : departamentosInfo.length === 0 ? (
-          <div className="text-center py-12">
-            {/* SVG bandera de españa */}
-            <div className="text-4xl mb-3"></div>
-            <p className="text-gray-500 text-sm">
+          <div className="py-12 text-center">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               No estás asignado a ningún departamento
             </p>
           </div>
@@ -100,24 +99,23 @@ export function AreasPage() {
               return (
                 <div
                   key={area.id}
-                  className="rounded-2xl bg-gray-50 border border-gray-200 overflow-hidden"
+                  className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900"
                 >
                   {/* HEADER DE AREA */}
                   <button
                     onClick={() =>
                       setExpandedDepartamento(isExpanded ? null : area.id!)
                     }
-                    className="w-full px-4 py-4 flex items-center justify-between hover:bg-gray-100 transition text-left"
+                    className="flex w-full items-center justify-between px-4 py-4 text-left transition hover:bg-slate-100 dark:hover:bg-slate-800"
                   >
-                    <div className="flex items-center gap-3 flex-1">
-                      <div className="p-2 bg-blue-100 rounded-lg">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
                         <MapPin size={20} className="text-blue-600" />
                       </div>
+
                       <div className="min-w-0">
-                        <h3 className="font-bold text-gray-900">
-                          {area.nombre}
-                        </h3>
-                        <p className="text-xs text-gray-600 mt-1">
+                        <h3 className="truncate font-bold">{area.nombre}</h3>
+                        <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
                           {incidenciasArea.length}{' '}
                           {incidenciasArea.length === 1
                             ? 'incidencia'
@@ -125,7 +123,8 @@ export function AreasPage() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex-shrink-0 text-gray-600 transition">
+
+                    <div className="text-slate-600 dark:text-slate-400">
                       {isExpanded ? (
                         <ChevronUp size={20} />
                       ) : (
@@ -136,11 +135,11 @@ export function AreasPage() {
 
                   {/* LISTA DE INCIDENCIAS */}
                   {isExpanded && (
-                    <div className="border-t border-gray-200 px-4 py-4 bg-white space-y-3">
+                    <div className="space-y-3 border-t border-slate-200 bg-white px-4 py-4 dark:border-slate-800 dark:bg-slate-950">
                       {incidenciasArea.length === 0 ? (
-                        <div className="text-center py-6 text-gray-500 text-sm">
+                        <p className="py-4 text-center text-sm text-slate-500 dark:text-slate-400">
                           No hay incidencias en esta área
-                        </div>
+                        </p>
                       ) : (
                         incidenciasArea.map(incidencia => (
                           <IncidenciaCardNew

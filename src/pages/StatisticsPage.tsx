@@ -15,22 +15,17 @@ export const StatisticsPage = () => {
       try {
         const data = await getIncidencias()
 
-        // Filtrar según el rol del usuario
         let filtradas = data
+
         if (usuario) {
           if (usuario.rol === 2) {
-            // Profesor: solo sus incidencias (idUsuarioReporta = su id)
             filtradas = data.filter(i => i.idUsuarioReporta === usuario.id)
           } else if (usuario.rol === 3) {
-            // Técnico: solo sus asignaciones (idUsuarioAsignado = su id)
             filtradas = data.filter(i => i.idUsuarioAsignado === usuario.id)
           }
-          // Admin (rol 1): ve todas, sin filtro
         }
 
         setIncidencias(filtradas)
-      } catch (err) {
-        console.error('Error cargando incidencias:', err)
       } finally {
         setLoading(false)
       }
@@ -41,32 +36,28 @@ export const StatisticsPage = () => {
 
   if (loading) {
     return (
-      <div className="page-wrapper flex items-center justify-center">
-        <div className="page-content">
-          <p className="text-slate-400">Cargando estadísticas...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-600 dark:bg-slate-950 dark:text-slate-300">
+        Cargando estadísticas...
       </div>
     )
   }
 
-  // Cálculos de métricas
   const totalIncidencias = incidencias.length
   const incidenciasResueltas = incidencias.filter(
     i => i.estado === IncidenciaEstado.RESUELTO
   ).length
 
-  const incidenciasPendientes = totalIncidencias - incidenciasResueltas
-
   const incidenciasEnCurso = incidencias.filter(
     i => i.estado === IncidenciaEstado.EN_CURSO
   ).length
 
+  const incidenciasPendientes = totalIncidencias - incidenciasResueltas
+
   const porcentajeResuelto =
     totalIncidencias > 0 ? (incidenciasResueltas / totalIncidencias) * 100 : 0
 
-  // Datos para el gráfico
   const chartData = [
-    { name: 'Resueltas', value: incidenciasResueltas, color: '#10b981' },
+    { name: 'Resueltas', value: incidenciasResueltas, color: '#22c55e' },
     { name: 'En Proceso', value: incidenciasEnCurso, color: '#f59e0b' },
     {
       name: 'Pendientes',
@@ -75,131 +66,123 @@ export const StatisticsPage = () => {
     },
   ]
 
-  // Mensaje de estado
   const getMensajeEstado = () => {
-    if (totalIncidencias === 0)
-      return 'El sistema está al día. No hay incidencias registradas.'
-    if (porcentajeResuelto === 100)
-      return '¡Excelente trabajo! Todas las incidencias han sido solucionadas.'
-    if (porcentajeResuelto >= 50)
-      return 'Buen ritmo. Más de la mitad de los problemas ya están resueltos.'
-    return 'Hay trabajo por delante. Revisad las incidencias urgentes primero.'
+    if (totalIncidencias === 0) return 'Sin incidencias registradas'
+    if (porcentajeResuelto === 100) return 'Todo resuelto'
+    if (porcentajeResuelto >= 50) return 'Buen progreso'
+    return 'Trabajo pendiente'
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-      {/* HEADER */}
-      <div className="border-b border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-6 py-6">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <TrendingUp size={32} className="text-blue-600" />
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      {/* HEADER (igual PanelPage) */}
+      <div className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+        <div className="mx-auto max-w-[1800px] px-4 py-5 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-black tracking-tight flex items-center gap-2">
+            <TrendingUp className="text-blue-600 dark:text-blue-400" />
             Estadísticas
           </h1>
-          <p className="text-gray-600 dark:text-slate-400 mt-2">
-            Rendimiento en la resolución de incidencias
+
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Rendimiento de incidencias
           </p>
 
           {usuario && (
-            <p className="text-xs text-gray-500 dark:text-slate-400 mt-3 font-medium">
-              {usuario.rol === 1 && 'Mostrando estadísticas globales (Admin)'}
-              {usuario.rol === 2 &&
-                'Mostrando solo tus incidencias reportadas (Profesor)'}
-              {usuario.rol === 3 &&
-                'Mostrando solo tus incidencias asignadas (Técnico)'}
+            <p className="text-xs text-slate-500 dark:text-slate-500 mt-3">
+              {usuario.rol === 1 && 'Vista global'}
+              {usuario.rol === 2 && 'Solo tus incidencias'}
+              {usuario.rol === 3 && 'Solo asignadas'}
             </p>
           )}
         </div>
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* GRAFICA DONUT */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              {/* GRÁFICO */}
-              <div className="flex items-center justify-center relative">
-                <ResponsiveContainer width="100%" height={280}>
-                  <PieChart>
-                    <Pie
-                      data={chartData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={80}
-                      outerRadius={120}
-                      dataKey="value"
-                      startAngle={90}
-                      endAngle={450}
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell key={index} fill={entry.color} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+      <div className="mx-auto max-w-[1800px] px-4 py-6 sm:px-6 lg:px-8 space-y-6">
+        {/* GRÁFICO */}
+        <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* DONUT */}
+            <div className="relative flex justify-center">
+              <ResponsiveContainer width="100%" height={280}>
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={120}
+                    dataKey="value"
+                    startAngle={90}
+                    endAngle={450}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={index} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
 
-                {/* CENTRO DEL DONUT */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <div className="text-4xl font-bold text-green-600">
-                    {Math.round(porcentajeResuelto)}%
-                  </div>
-                  <p className="text-gray-600 text-sm">Resuelto</p>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-4xl font-black text-green-600 dark:text-green-400">
+                  {Math.round(porcentajeResuelto)}%
                 </div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Resuelto
+                </p>
               </div>
+            </div>
 
-              {/* LEYENDA */}
-              <div className="space-y-4">
-                {chartData.map(item => (
-                  <div key={item.name} className="flex items-center gap-3">
-                    <div
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-900 dark:text-slate-100">{item.name}</p>
-                      <p className="text-sm text-gray-600 dark:text-slate-400">
-                        {item.value} incidencias
-                      </p>
-                    </div>
+            {/* LEYENDA */}
+            <div className="space-y-4">
+              {chartData.map(item => (
+                <div key={item.name} className="flex items-center gap-3">
+                  <div
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
+                      {item.value} incidencias
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* RESUMEN */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-2xl border border-blue-200 bg-blue-50 dark:border-blue-400/20 dark:bg-slate-900 p-6">
-              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">Total</p>
-              <p className="text-4xl font-black text-blue-900 dark:text-blue-200">
-                {totalIncidencias}
-              </p>
-              <AlertCircle className="text-blue-600 mt-2" />
-            </div>
-
-            <div className="rounded-2xl border border-green-200 bg-green-50 dark:border-emerald-400/20 dark:bg-slate-900 p-6">
-              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">Resueltas</p>
-              <p className="text-4xl font-black text-green-900 dark:text-emerald-200">
-                {incidenciasResueltas}
-              </p>
-              <Check className="text-green-600 mt-2" />
-            </div>
-
-            <div className="rounded-2xl border border-orange-200 bg-orange-50 dark:border-orange-400/20 dark:bg-slate-900 p-6">
-              <p className="text-sm font-semibold text-slate-900 dark:text-slate-200">En Proceso</p>
-              <p className="text-4xl font-black text-orange-900 dark:text-orange-200">
-                {incidenciasEnCurso}
-              </p>
-              <Clock className="text-orange-600 mt-2" />
-            </div>
-          </div>
-
-          {/* MENSAJE */}
-          <div className="rounded-2xl border border-blue-200 bg-blue-50 dark:border-blue-400/20 dark:bg-slate-900 p-6">
-            <p className="text-center font-semibold text-blue-900 dark:text-blue-200">
-              {getMensajeEstado()}
+        {/* CARDS */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <p className="text-sm text-slate-500">Total</p>
+            <p className="text-4xl font-black text-blue-600 dark:text-blue-400">
+              {totalIncidencias}
             </p>
+            <AlertCircle className="text-blue-500 mt-2" />
           </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <p className="text-sm text-slate-500">Resueltas</p>
+            <p className="text-4xl font-black text-green-600 dark:text-green-400">
+              {incidenciasResueltas}
+            </p>
+            <Check className="text-green-500 mt-2" />
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+            <p className="text-sm text-slate-500">En proceso</p>
+            <p className="text-4xl font-black text-yellow-600 dark:text-yellow-400">
+              {incidenciasEnCurso}
+            </p>
+            <Clock className="text-yellow-500 mt-2" />
+          </div>
+        </div>
+
+        {/* MENSAJE */}
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center dark:border-slate-800 dark:bg-slate-900">
+          <p className="font-medium">{getMensajeEstado()}</p>
         </div>
       </div>
     </div>

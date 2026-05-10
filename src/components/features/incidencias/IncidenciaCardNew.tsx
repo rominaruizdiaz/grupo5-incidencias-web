@@ -8,28 +8,40 @@ type Props = {
 }
 
 export const IncidenciaCardNew = ({ incidencia, onClick }: Props) => {
-  const statusColor = COLOR_ESTADO[incidencia.estado] || 'bg-gray-300'
+  const statusColor = COLOR_ESTADO[incidencia.estado] || 'bg-slate-300'
 
   return (
     <div
       onClick={onClick}
-      className="group rounded-2xl bg-white border border-gray-200 p-4 hover:shadow-md transition-all duration-200 cursor-pointer hover:border-gray-300"
+      className="
+        group cursor-pointer
+        rounded-2xl border border-slate-200
+        bg-white p-4
+        transition-all duration-200
+        hover:border-slate-300 hover:shadow-md
+        dark:border-slate-800 dark:bg-slate-900
+        dark:hover:border-slate-700
+        overflow-hidden
+      "
     >
-      <div className="flex gap-3">
+      <div className="flex items-start gap-3 sm:gap-4">
+        {/* PUNTITO */}
         <div
-          className={`w-3 h-3 rounded-full mt-1 flex-shrink-0 ${statusColor}`}
+          className={`mt-1 h-3 w-3 flex-shrink-0 rounded-full ${statusColor}`}
         />
 
-        <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-gray-900 text-sm leading-tight truncate">
+        {/* CONTENIDO */}
+        <div className="min-w-0 flex-1 overflow-hidden">
+          <h3 className="text-sm sm:text-base font-bold leading-tight break-words">
             {incidencia.titulo}
           </h3>
 
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="mt-1 text-xs text-slate-600 dark:text-slate-400 break-words">
             Aula: {incidencia.ubicacion || 'Sin ubicación'}
           </p>
         </div>
 
+        {/* BADGE */}
         <div className="flex-shrink-0">
           <UrgencyBadge urgencia={incidencia.urgencia} />
         </div>

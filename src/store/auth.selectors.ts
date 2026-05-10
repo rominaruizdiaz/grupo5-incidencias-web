@@ -1,21 +1,23 @@
 import { useAuthStore } from './auth.store'
+import { UserRole } from '@/types'
 import type { Usuario } from '@/types'
 
-// ================= STATE =================
+// STATE
 export const useUsuario = () => useAuthStore(state => state.usuario)
 
 export const useIsLoading = () => useAuthStore(state => state.isLoading)
 
-// ================= ROLES =================
-export const useIsAdmin = () => useAuthStore(state => state.usuario?.rol === 1)
+// ROLES
+export const useIsAdmin = () =>
+  useAuthStore(state => state.usuario?.rol === UserRole.ADMIN)
 
 export const useIsProfesor = () =>
-  useAuthStore(state => state.usuario?.rol === 2)
+  useAuthStore(state => state.usuario?.rol === UserRole.PROFESOR)
 
 export const useIsTecnico = () =>
-  useAuthStore(state => state.usuario?.rol === 3)
+  useAuthStore(state => state.usuario?.rol === UserRole.TECNICO)
 
-// ================= ACTIONS =================
+// ACTIONS
 export const setUsuario = (user: Usuario | null) =>
   useAuthStore.getState().setUsuario(user)
 

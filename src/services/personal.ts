@@ -14,8 +14,16 @@ export const getUsuarioById = async (id: number): Promise<Usuario> => {
 }
 
 // Actualizar usuario
-export const updateUsuario = async (id: number, usuario: Usuario) => {
-  const { data } = await api.patch(`/users/${id}`, usuario)
+export const updateUsuario = async (id: number, usuario: Partial<Usuario>) => {
+  const payload = {
+    nombre: usuario.nombre,
+    email: usuario.email,
+    rol: usuario.rol,
+    modoOscuro: usuario.modoOscuro,
+    fotoPerfil: usuario.fotoPerfil,
+  }
+
+  const { data } = await api.patch(`/users/${id}`, payload)
   return data
 }
 

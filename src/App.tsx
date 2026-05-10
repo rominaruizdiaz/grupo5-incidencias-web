@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { LoginPage } from '@/pages/LoginPage'
@@ -17,19 +16,13 @@ import { RoleRoute } from '@/components/routes/RoleRoute'
 
 import { MainLayout } from '@/components/layout/MainLayout'
 import { AuthLayout } from '@/components/layout/AuthLayout'
-import { useAuthStore } from '@/store/auth.store'
+
 import { IncidenciaDetailPage } from './pages/IncidenciaDetailPage'
 import { DepartamentosPage } from './pages/DepartamentosPage'
 import { AreasPage } from './pages/AreasPage'
-import { AreaDetailPage } from './pages/AreaDetailPage'
 
 function App() {
   const token = localStorage.getItem('token')
-  const theme = useAuthStore(state => state.theme)
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-  }, [theme])
 
   return (
     <Routes>
@@ -66,7 +59,6 @@ function App() {
       >
         <Route path="/panel" element={<PanelPage />} />
         <Route path="/areas" element={<AreasPage />} />
-        <Route path="/areas/:areaId" element={<AreaDetailPage />} />
         <Route path="/createIncidencia" element={<CreateIncidenciaPage />} />
         <Route path="/userProfile" element={<UserProfilePage />} />
         <Route path="/incidencia/:id" element={<IncidenciaDetailPage />} />
