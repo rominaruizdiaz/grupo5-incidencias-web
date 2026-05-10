@@ -25,15 +25,44 @@ export const NavItem = ({
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `${baseClass} ${isActive ? activeClass : inactiveClass}`
+        `
+          ${baseClass}
+          ${isActive ? activeClass : inactiveClass}
+        `
       }
     >
-      <div className="relative flex flex-col items-center justify-center">
-        <Icon size={20} />
-        {badgeCount !== undefined && <NotificationBadge count={badgeCount} />}
-      </div>
+      {({ isActive }) => (
+        <div className="relative flex items-center justify-center gap-1">
+          {/* ICON */}
+          <div
+            className={`
+              transition-all duration-200
+              ${isActive ? 'scale-110' : 'scale-100'}
+            `}
+          >
+            <Icon size={20} />
+          </div>
 
-      <span className="hidden md:block">{label}</span>
+          {/* BADGE */}
+          {badgeCount !== undefined && <NotificationBadge count={badgeCount} />}
+
+          {/* LABEL -> SOLO DESKTOP */}
+          <span
+            className={`
+              hidden md:block
+              text-[11px] font-medium
+              transition-colors
+              ${
+                isActive
+                  ? 'text-blue-600 dark:text-blue-400'
+                  : 'text-slate-500 dark:text-slate-400'
+              }
+            `}
+          >
+            {label}
+          </span>
+        </div>
+      )}
     </NavLink>
   )
 }

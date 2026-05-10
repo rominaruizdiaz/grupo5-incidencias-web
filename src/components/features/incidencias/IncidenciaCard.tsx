@@ -11,26 +11,58 @@ export const IncidenciaCard = ({ incidencia, onClick }: Props) => {
   return (
     <div
       onClick={onClick}
-      className="p-4 border border-slate-800 rounded-3xl cursor-pointer bg-slate-900/90 hover:bg-slate-800 transition"
+      className="
+        p-4 rounded-3xl cursor-pointer
+        border border-slate-200 dark:border-slate-800
+        bg-white dark:bg-slate-900
+        hover:bg-slate-50 dark:hover:bg-slate-800/60
+        transition
+      "
     >
+      {/* HEADER */}
       <div className="flex justify-between items-start gap-2 mb-3">
-        <h2 className="font-bold flex-1 text-white">{incidencia.titulo}</h2>
+        <h2 className="font-bold flex-1 text-slate-900 dark:text-slate-100">
+          {incidencia.titulo}
+        </h2>
+
         {incidencia.ubicacion && (
-          <div className="flex items-center gap-1 text-xs bg-slate-800 text-slate-100 px-2 py-1 rounded-full whitespace-nowrap">
+          <div
+            className="
+            flex items-center gap-1 text-xs
+            px-2 py-1 rounded-full
+            bg-slate-100 text-slate-600
+            dark:bg-slate-800 dark:text-slate-300
+            whitespace-nowrap
+          "
+          >
             <MapPin size={12} />
             {incidencia.ubicacion}
           </div>
         )}
       </div>
 
-      <p className="text-sm text-slate-300">{incidencia.descripcion}</p>
+      {/* DESCRIPCIÓN */}
+      <p className="text-sm text-slate-600 dark:text-slate-400">
+        {incidencia.descripcion}
+      </p>
 
+      {/* TAGS */}
       <div className="flex gap-2 mt-4 text-xs flex-wrap">
-        <span className={`${COLOR_ESTADO[incidencia.estado]} rounded-full px-3 py-1`}> 
+        <span
+          className={`
+          px-3 py-1 rounded-full font-medium
+          ${COLOR_ESTADO[incidencia.estado]}
+        `}
+        >
           {incidencia.estado}
         </span>
 
-        <span className={`${COLOR_URGENCIA[incidencia.urgencia]} rounded-full px-3 py-1`}>
+        <span
+          className={`
+          px-3 py-1 rounded-full font-medium
+          ${COLOR_URGENCIA[incidencia.urgencia]}
+        `}
+        >
           {incidencia.urgencia}
         </span>
       </div>
