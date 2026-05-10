@@ -16,9 +16,7 @@ export const NuevoMensajeInput = ({ onEnviar, loading, disabled }: Props) => {
 
     const ok = await onEnviar(texto)
 
-    if (ok) {
-      setMensaje('')
-    }
+    if (ok) setMensaje('')
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -28,23 +26,52 @@ export const NuevoMensajeInput = ({ onEnviar, loading, disabled }: Props) => {
     }
   }
 
+  const isDisabled = loading || disabled
+
   return (
-    <div className="flex items-end gap-2">
+    <div
+      className="
+      flex items-end gap-2
+      p-2 rounded-xl
+      border border-slate-200 dark:border-slate-800
+      bg-white dark:bg-slate-900
+    "
+    >
+      {/* INPUT */}
       <textarea
         value={mensaje}
         onChange={e => setMensaje(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Escribe un mensaje..."
-        disabled={loading || disabled}
+        disabled={isDisabled}
         rows={2}
-        className="flex-1 resize-none rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          flex-1 resize-none
+          rounded-lg px-3 py-2 text-sm
+          bg-transparent
+          text-slate-900 dark:text-slate-100
+          placeholder:text-slate-400 dark:placeholder:text-slate-500
+
+          focus:outline-none focus:ring-2 focus:ring-blue-500
+          disabled:opacity-50
+        "
       />
 
+      {/* BOTÓN */}
       <button
         type="button"
         onClick={handleEnviar}
-        disabled={loading || disabled || !mensaje.trim()}
-        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white disabled:opacity-50"
+        disabled={isDisabled || !mensaje.trim()}
+        className="
+          flex items-center justify-center gap-2
+          rounded-lg px-4 py-2 text-sm font-semibold
+
+          bg-blue-600 text-white
+          hover:bg-blue-700 active:bg-blue-800
+
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition
+        "
       >
         <Send size={16} />
         {loading ? '...' : 'Enviar'}
