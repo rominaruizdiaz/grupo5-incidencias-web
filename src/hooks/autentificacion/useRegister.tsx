@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import api from '@/services/api'
 import { registerRequest } from '@/services/auth'
 import { useAuthStore } from '@/store/auth.store'
 import type { RegisterRequest } from '@/types'
@@ -21,14 +22,29 @@ export const useRegister = () => {
       setLoadingGlobal(true)
       setError(null)
 
+      const checkEmail = await api.get(`/users?email=${data.email}`)
+
+      if (checkEmail.data.length > 0) {
+        setError('EMAIL_EXISTS')
+        return
+      }
+
       const res = await registerRequest(data)
 
+      if (!res?.user?.id) {
+        throw new Error('USER_ID_MISSING')
+      }
+
       localStorage.setItem('token', res.accessToken)
-      setUsuario(res.user)
+
+      setUsuario({
+        ...res.user,
+        nombre: data.nombre,
+      })
 
       navigate('/panel')
-    } catch (err: any) {
-      setError(err?.message || 'Error en registro')
+    } catch (err) {
+      setError('SERVER_ERROR')
     } finally {
       setLoading(false)
       setLoadingGlobal(false)

@@ -1,49 +1,80 @@
 import { useState } from 'react'
 import { Send } from 'lucide-react'
 
-interface NuevoMensajeInputProps {
-  onEnviar: (mensaje: string) => Promise<void>
+interface Props {
+  onEnviar: (mensaje: string) => Promise<boolean>
   loading?: boolean
   disabled?: boolean
 }
 
-export const NuevoMensajeInput = ({
-  onEnviar,
-  loading,
-  disabled,
-}: NuevoMensajeInputProps) => {
+export const NuevoMensajeInput = ({ onEnviar, loading, disabled }: Props) => {
   const [mensaje, setMensaje] = useState('')
 
   const handleEnviar = async () => {
-    if (!mensaje.trim()) return
-    await onEnviar(mensaje)
-    setMensaje('')
+    const texto = mensaje.trim()
+    if (!texto) return
+
+    const ok = await onEnviar(texto)
+
+    if (ok) setMensaje('')
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && e.ctrlKey) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
       handleEnviar()
     }
   }
 
+  const isDisabled = loading || disabled
+
   return (
-    <div className="flex gap-2 items-end">
+    <div
+      className="
+      flex items-end gap-2
+      p-2 rounded-xl
+      border border-slate-800
+      bg-slate-900
+    "
+    >
+      {/* INPUT */}
       <textarea
         value={mensaje}
-        onChange={(e) => setMensaje(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Escribe una actualización... (Ctrl+Enter para enviar)"
-        disabled={loading || disabled}
-        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-        rows={3}
+        onChange={e => setMensaje(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Escribe un mensaje..."
+        disabled={isDisabled}
+        rows={2}
+        className="
+          flex-1 resize-none
+          rounded-lg px-3 py-2 text-sm
+          bg-transparent
+          text-slate-900 dark:text-slate-100
+          placeholder:text-slate-400 dark:placeholder:text-slate-500
+
+          focus:outline-none focus:ring-2 focus:ring-blue-500
+          disabled:opacity-50
+        "
       />
+
+      {/* BOTÓN */}
       <button
+        type="button"
         onClick={handleEnviar}
-        disabled={loading || disabled || !mensaje.trim()}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 flex items-center gap-2"
+        disabled={isDisabled || !mensaje.trim()}
+        className="
+          flex items-center justify-center gap-2
+          rounded-lg px-4 py-2 text-sm font-semibold
+
+          bg-blue-600 text-white
+          hover:bg-blue-700 active:bg-blue-800
+
+          disabled:opacity-50 disabled:cursor-not-allowed
+          transition
+        "
       >
-        <Send size={18} />
-        Enviar
+        <Send size={16} />
+        {loading ? '...' : 'Enviar'}
       </button>
     </div>
   )

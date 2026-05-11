@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useObtenerTecnicos } from '@/hooks/personal/useObtenerTecnicos'
+import { getEtiquetas } from '@/services/etiquetas'
 import { X, User, Badge } from 'lucide-react'
 import type { Etiqueta } from '@/types'
 
@@ -24,10 +25,23 @@ export const AsignarTecnicoModal = ({
   const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<number | null>(
     null
   )
+  const [etiquetas, setEtiquetas] = useState<Etiqueta[]>([])
+
+  useEffect(() => {
+    const fetchEtiquetas = async () => {
+      try {
+        const data = await getEtiquetas()
+        setEtiquetas(data)
+      } catch (err) {
+        console.error('Error cargando etiquetas:', err)
+      }
+    }
+
+    fetchEtiquetas()
+  }, [])
 
   if (!isOpen) return null
 
-  // Filtrar técnicos que tengan la especialidad (si aplica)
   const tecnicosDisponibles = etiquetaActual
     ? tecnicos.filter(t => t.especialidades.includes(etiquetaActual.id!))
     : tecnicos
@@ -49,46 +63,54 @@ export const AsignarTecnicoModal = ({
 
   return (
     <>
+      {/* OVERLAY */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
         onClick={onClose}
       />
 
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-lg z-50 w-96 max-w-full">
+      {/* MODAL */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 max-w-full rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
         <div className="p-6">
+          {/* HEADER */}
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-white">
               Asignar Técnico
             </h2>
-            <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded">
+
+            <button
+              onClick={onClose}
+              className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            >
               <X size={20} />
             </button>
           </div>
 
+          {/* INFO CATEGORIA */}
           {categoria && (
-            <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-sm text-blue-900">
+            <div className="mb-4 p-3 rounded-xl border border-blue-900/40 bg-blue-950/30">
+              <p className="text-sm text-blue-200">
                 <strong>Categoría:</strong> {categoria}
               </p>
+
               {etiquetaActual && (
-                <p className="text-xs text-blue-700 mt-1">
-                  Filtrando técnicos con esta especialidad
+                <p className="text-xs text-blue-400 mt-1">
+                  Filtrando técnicos por especialidad
                 </p>
               )}
             </div>
           )}
 
+          {/* LISTADO */}
           {loadingTecnicos ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-slate-400">
               Cargando técnicos...
             </div>
           ) : tecnicosDisponibles.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500">
-                {etiquetaActual
-                  ? 'No hay técnicos con esta especialidad'
-                  : 'No hay técnicos disponibles'}
-              </p>
+            <div className="text-center py-8 text-slate-400">
+              {etiquetaActual
+                ? 'No hay técnicos con esta especialidad'
+                : 'No hay técnicos disponibles'}
             </div>
           ) : (
             <div className="space-y-2 max-h-96 overflow-y-auto">
@@ -96,32 +118,47 @@ export const AsignarTecnicoModal = ({
                 <button
                   key={tecnico.id}
                   onClick={() => setTecnicoSeleccionado(tecnico.id)}
-                  className={`w-full p-3 rounded-lg border-2 transition text-left ${
-                    tecnicoSeleccionado === tecnico.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                  className={`
+                    w-full p-3 rounded-xl border text-left transition
+                    ${
+                      tecnicoSeleccionado === tecnico.id
+                        ? 'border-blue-500 bg-blue-950/40'
+                        : 'border-slate-800 bg-slate-950 hover:bg-slate-800'
+                    }
+                  `}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="p-2 bg-gray-100 rounded">
-                      <User size={18} className="text-gray-600" />
+                    {/* ICON */}
+                    <div className="p-2 rounded-lg bg-slate-800">
+                      <User size={18} className="text-slate-300" />
                     </div>
+
+                    {/* INFO */}
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">
-                        {tecnico.nombre}
-                      </p>
-                      <p className="text-xs text-gray-500">{tecnico.email}</p>
+                      <p className="font-medium text-white">{tecnico.nombre}</p>
+
+                      <p className="text-xs text-slate-400">{tecnico.email}</p>
+
+                      {/* ESPECIALIDADES */}
                       {tecnico.especialidades.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
-                          {tecnico.especialidades.map(etiquetaId => (
-                            <span
-                              key={etiquetaId}
-                              className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded"
-                            >
-                              <Badge size={12} />
-                              ID: {etiquetaId}
-                            </span>
-                          ))}
+                          {tecnico.especialidades.map(etiquetaId => {
+                            const etiqueta = etiquetas.find(
+                              e => e.id === etiquetaId
+                            )
+
+                            return (
+                              <span
+                                key={etiquetaId}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs bg-slate-800 text-slate-300"
+                              >
+                                <Badge size={12} />
+                                {etiqueta
+                                  ? etiqueta.nombre
+                                  : `ID: ${etiquetaId}`}
+                              </span>
+                            )
+                          })}
                         </div>
                       )}
                     </div>
@@ -131,18 +168,20 @@ export const AsignarTecnicoModal = ({
             </div>
           )}
 
-          <div className="flex gap-2 pt-4 border-t">
+          {/* BOTONES */}
+          <div className="flex gap-2 pt-4 border-t border-slate-800 mt-4">
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
+              className="flex-1 px-4 py-2 rounded-xl border border-slate-700 text-slate-300 hover:bg-slate-800 transition"
             >
               Cancelar
             </button>
+
             <button
               onClick={handleAsignar}
               disabled={!tecnicoSeleccionado || loading || loadingTecnicos}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+              className="flex-1 px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 disabled:bg-slate-700 transition"
             >
               {loading ? 'Asignando...' : 'Asignar'}
             </button>

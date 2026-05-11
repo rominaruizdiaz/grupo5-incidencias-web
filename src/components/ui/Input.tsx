@@ -23,27 +23,31 @@ export const Input = ({
   return (
     <div className="space-y-2">
       {label && (
-        <label className="block text-sm font-semibold text-gray-900">
+        <label className="block text-sm font-semibold text-slate-900 dark:text-slate-100">
           {label}
         </label>
       )}
 
       <div className="relative">
         {icon && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400">
             {icon}
           </div>
         )}
 
         <input
           type={inputType}
-          className={`w-full rounded-xl border-2 px-4 py-3 text-sm font-medium outline-none transition 
-            ${icon ? 'pl-12' : ''} 
+          className={`
+            w-full rounded-xl border-2 px-4 py-3 text-sm font-medium outline-none transition
+
+            ${icon ? 'pl-12' : ''}
+
             ${
               error
-                ? 'border-red-300 bg-red-50 text-red-900 placeholder:text-red-400'
-                : 'border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-500 hover:border-gray-300 focus:border-blue-500 focus:bg-white'
-            }`}
+                ? 'border-red-300 bg-red-50 text-red-900 placeholder:text-red-400 dark:border-red-800 dark:bg-red-950/40 dark:text-red-200'
+                : 'border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:bg-white dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-600 dark:hover:border-slate-700 dark:focus:bg-slate-900'
+            }
+          `}
           {...props}
         />
 
@@ -52,14 +56,18 @@ export const Input = ({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900 transition"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         )}
       </div>
 
-      {error && <p className="text-xs font-medium text-red-600">{error}</p>}
+      {error && (
+        <p className="text-xs font-medium text-red-600 dark:text-red-400">
+          {error}
+        </p>
+      )}
     </div>
   )
 }

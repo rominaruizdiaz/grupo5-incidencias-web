@@ -31,7 +31,15 @@ export const IncidenciasKanban = ({ incidencias, loading }: Props) => {
     const empty = !loading && items.length === 0
 
     return (
-      <div className="flex flex-col bg-gray-50 border border-gray-200 rounded-2xl p-4 min-h-[200px]">
+      <div
+        className="
+        flex flex-col rounded-2xl border
+        border-slate-200 bg-white p-4 min-h-[220px]
+
+        dark:border-slate-700
+        dark:bg-slate-950
+      "
+      >
         <h3 className={`font-bold mb-3 ${color}`}>
           {title} ({items.length})
         </h3>
@@ -41,12 +49,17 @@ export const IncidenciasKanban = ({ incidencias, loading }: Props) => {
             {[1, 2].map(i => (
               <div
                 key={i}
-                className="h-20 bg-gray-200 rounded-xl animate-pulse"
+                className="h-20 rounded-xl bg-slate-200 animate-pulse dark:bg-slate-800"
               />
             ))}
           </div>
         ) : empty ? (
-          <div className="flex flex-1 items-center justify-center text-sm text-gray-400 text-center py-10">
+          <div
+            className="
+            flex flex-1 items-center justify-center text-sm
+            text-slate-400 dark:text-slate-500 text-center py-10
+          "
+          >
             Aún no hay incidencias en esta categoría
           </div>
         ) : (
@@ -68,19 +81,19 @@ export const IncidenciasKanban = ({ incidencias, loading }: Props) => {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <Column
         title="Alta prioridad"
-        color="text-red-600"
+        color="text-red-600 dark:text-red-400"
         items={columnas.alta}
       />
 
       <Column
         title="Media prioridad"
-        color="text-amber-600"
+        color="text-amber-600 dark:text-amber-400"
         items={columnas.media}
       />
 
       <Column
         title="Baja prioridad"
-        color="text-cyan-600"
+        color="text-cyan-600 dark:text-cyan-400"
         items={columnas.baja}
       />
     </div>

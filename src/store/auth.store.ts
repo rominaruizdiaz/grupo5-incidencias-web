@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 import { UserRole } from '@/types'
 import type { AuthStore } from './auth.types'
@@ -10,6 +10,7 @@ export const useAuthStore = create<AuthStore>()(
     (set, get) => ({
       usuario: null,
       isLoading: false,
+      theme: 'light',
 
       setUsuario: (usuario: Usuario | null) => {
         set({ usuario, isLoading: false })
@@ -19,8 +20,18 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: value })
       },
 
+      setTheme: (theme: 'light' | 'dark') => {
+        set({ theme })
+      },
+
+      toggleTheme: () => {
+        const next = get().theme === 'dark' ? 'light' : 'dark'
+        set({ theme: next })
+      },
+
       logout: () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('auth-storage')
         set({ usuario: null, isLoading: false })
       },
 
@@ -32,8 +43,10 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: state => ({
         usuario: state.usuario,
+        theme: state.theme,
       }),
     }
   )

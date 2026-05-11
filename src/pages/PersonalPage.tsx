@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import '../styles/PersonalPage.css'
 import { useAuthStore } from '@/store/auth.store'
 
 import { usePersonal } from '@/hooks/personal/usePersonal'
@@ -86,28 +85,95 @@ export function PersonalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* HEADER */}
-      <div className="border-b border-gray-200 px-6 py-6">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-            <Users size={32} className="text-blue-600" />
-            Gestión de Personal
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Administra usuarios y sus departamentos
-          </p>
+      <div
+        className="
+        sticky top-0 z-20
+        border-b border-slate-200
+        bg-white/90 backdrop-blur
+        dark:border-slate-800 dark:bg-slate-950/90
+      "
+      >
+        <div
+          className="
+          mx-auto flex w-full max-w-[1800px]
+          flex-col gap-4
+          px-4 py-4
+          sm:px-6
+          lg:flex-row lg:items-center lg:justify-between lg:px-8
+        "
+        >
+          {/* TEXTO */}
+          <div className="min-w-0 flex-1">
+            <h1
+              className="
+              flex items-center gap-3
+              text-2xl font-black tracking-tight
+              sm:text-3xl lg:text-4xl
+            "
+            >
+              <Users
+                size={32}
+                className="flex-shrink-0 text-blue-600 dark:text-blue-400"
+              />
+
+              <span className="truncate">Gestión de Personal</span>
+            </h1>
+
+            <p
+              className="
+              mt-2
+              text-sm text-slate-600
+              dark:text-slate-400
+              sm:text-base
+            "
+            >
+              Administra usuarios y sus departamentos
+            </p>
+          </div>
+
+          {/* STATS */}
+          <div
+            className="
+            flex w-full items-center justify-center
+            rounded-2xl border border-slate-200
+            bg-slate-100 px-4 py-3
+            text-sm font-semibold text-slate-700
+            dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300
+            sm:w-auto
+          "
+          >
+            {usuariosFiltrados.length} usuarios
+          </div>
         </div>
       </div>
 
       {/* CONTENIDO */}
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <div
+        className="
+        mx-auto w-full max-w-[1800px]
+        px-3 py-4
+        sm:px-6 sm:py-6
+        lg:px-8
+      "
+      >
+        <div className="space-y-5 sm:space-y-6">
+          {/* ERROR */}
           {error && (
-            <div className="bg-red-50 border border-gray-200 text-red-700 p-4 rounded-lg">
+            <div
+              className="
+              rounded-2xl border border-red-200
+              bg-red-50 p-4
+              text-sm font-medium text-red-700
+              dark:border-red-900 dark:bg-red-950/40 dark:text-red-300
+            "
+            >
               {error}
             </div>
           )}
+
+          {/* FILTROS */}
 
           <PersonalFilters
             filters={filters}
@@ -116,15 +182,33 @@ export function PersonalPage() {
             loading={loading || loadingMapa}
           />
 
-          <PersonalSection
-            usuarios={usuariosFiltrados}
-            departamentos={departamentos}
-            onEditUsuario={handleEdit}
-            onDeleteUsuario={handleDelete}
-            loading={loading}
-          />
+          {/* DESKTOP TABLE */}
+          <div className="hidden md:block">
+            <div
+              className="
+      rounded-3xl
+      border border-slate-200
+      bg-white shadow-sm
+      dark:border-slate-800
+      dark:bg-slate-900
+    "
+            >
+              <div className="w-full overflow-x-auto">
+                <div className="p-4 lg:p-6">
+                  <PersonalSection
+                    usuarios={usuariosFiltrados}
+                    departamentos={departamentos}
+                    onEditUsuario={handleEdit}
+                    onDeleteUsuario={handleDelete}
+                    loading={loading}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
-          <div className="md:hidden space-y-4">
+          {/* MOBILE CARDS */}
+          <div className="grid grid-cols-1 gap-4 md:hidden">
             {usuariosFiltrados.map(u => (
               <PersonalCard
                 key={u.id}
@@ -136,6 +220,30 @@ export function PersonalPage() {
             ))}
           </div>
 
+          {/* EMPTY */}
+          {!loading && usuariosFiltrados.length === 0 && (
+            <div
+              className="
+              rounded-3xl border border-slate-200
+              bg-white px-6 py-14
+              text-center
+              dark:border-slate-800 dark:bg-slate-900
+            "
+            >
+              <Users
+                size={42}
+                className="mx-auto mb-4 text-slate-400 dark:text-slate-600"
+              />
+
+              <h3 className="text-lg font-bold">No hay usuarios disponibles</h3>
+
+              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                Ajusta los filtros o añade nuevos usuarios.
+              </p>
+            </div>
+          )}
+
+          {/* MODAL */}
           <PersonalModal
             usuario={selectedUsuario}
             departamentos={departamentos}

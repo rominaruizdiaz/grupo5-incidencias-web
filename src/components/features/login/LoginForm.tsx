@@ -10,77 +10,70 @@ export const LoginForm = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-[100dvh] flex flex-col from-blue-50 to-indigo-50">
-      {/* FORMULARIO */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10">
-        <div className="w-full max-w-md lg:max-w-lg bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8">
-          {' '}
-          {/* HEADER */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">
-              Bienvenido
-            </h1>
-            <p className="text-gray-600 text-sm sm:text-base">
-              Organiza y eleva la gestión de tu centro.
-            </p>
-          </div>
-          {/* FORMULARIO */}
-          <form
-            onSubmit={e => {
-              e.preventDefault()
-              login()
-            }}
-            className="space-y-4"
+    <div className="min-h-[100dvh] flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 px-4">
+      {/* CARD */}
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-lg dark:border-slate-800 dark:bg-slate-900 sm:p-8">
+        {/* HEADER */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl">
+            Bienvenido
+          </h1>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 sm:text-base">
+            Organiza y eleva la gestión de tu centro.
+          </p>
+        </div>
+
+        {/* FORM */}
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            login()
+          }}
+          className="space-y-4"
+        >
+          <Input
+            type="email"
+            label="Correo electrónico"
+            placeholder="tu@email.com"
+            icon={<Mail size={20} />}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            error={error ? 'Credenciales inválidas' : undefined}
+            required
+          />
+
+          <Input
+            type="password"
+            label="Contraseña"
+            placeholder="••••••••"
+            icon={<Lock size={20} />}
+            showPasswordToggle
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+
+          <Button
+            type="submit"
+            loading={loading}
+            size="lg"
+            className="w-full mt-6"
           >
-            <Input
-              type="email"
-              label="Correo electrónico"
-              placeholder="tu@email.com"
-              icon={<Mail size={20} />}
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              error={error ? 'Credenciales inválidas' : undefined}
-              required
-            />
+            Iniciar Sesión
+          </Button>
+        </form>
 
-            <Input
-              type="password"
-              label="Contraseña"
-              placeholder="••••••••"
-              icon={<Lock size={20} />}
-              showPasswordToggle
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-
-            {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3">
-                <p className="text-sm font-medium text-red-700">{error}</p>
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              loading={loading}
-              size="lg"
-              className="w-full mt-6"
+        {/* REGISTER */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            ¿No tienes una cuenta?{' '}
+            <button
+              onClick={() => navigate('/register')}
+              className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition"
             >
-              Iniciar Sesión
-            </Button>
-          </form>
-          {/* ¿NO ESTAS REGISTRADO? */}
-          <div className="mt-8 text-center">
-            <p className="text-gray-600 text-sm">
-              ¿No tienes una cuenta?{' '}
-              <button
-                onClick={() => navigate('/register')}
-                className="font-bold text-blue-600 hover:text-blue-700 transition"
-              >
-                Regístrate
-              </button>
-            </p>
-          </div>
+              Regístrate
+            </button>
+          </p>
         </div>
       </div>
     </div>

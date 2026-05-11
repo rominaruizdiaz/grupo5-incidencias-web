@@ -13,35 +13,77 @@ export const RegisterForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitted, setSubmitted] = useState(false)
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+
+  // VALIDACIONES
+  const nombreError = submitted
+    ? !nombre
+      ? 'El nombre es obligatorio'
+      : nombre.length < 3
+        ? 'Mínimo 3 caracteres'
+        : !nombreRegex.test(nombre)
+          ? 'Solo letras y espacios'
+          : ''
+    : ''
+
+  const emailError = submitted
+    ? !email
+      ? 'El email es obligatorio'
+      : !emailRegex.test(email)
+        ? 'Email inválido'
+        : ''
+    : ''
+
+  const passwordError = submitted
+    ? !password
+      ? 'La contraseña es obligatoria'
+      : !passwordRegex.test(password)
+        ? 'Mínimo 8 caracteres, mayúscula, minúscula y número'
+        : ''
+    : ''
+
+  const isValid =
+    nombreRegex.test(nombre) &&
+    emailRegex.test(email) &&
+    passwordRegex.test(password)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!nombre || !email || !password) return
-    register({ nombre, email, password })
+    setSubmitted(true)
+
+    if (!isValid) return
+
+    await register({
+      nombre,
+      email,
+      password,
+    })
   }
 
   return (
-    <div
-      className="
-      min-h-[100dvh]
-      flex
-      from-blue-50 to-indigo-50
-    "
-    >
-      {/* FORMULARIO*/}
-      <div className="flex-1 flex items-center justify-center px-6 py-10">
-        <div className="w-full max-w-md lg:max-w-lg bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 px-4">
+      <div className="flex-1 flex items-center justify-center px-0 py-10">
+        <div
+          className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-6 sm:p-8
+        dark:bg-slate-900 dark:border-slate-800 transition"
+        >
           {/* HEADER */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">
+            <h1 className="text-3xl font-black text-gray-900 dark:text-white">
               Crear Cuenta
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base">
+            <p className="text-gray-600 dark:text-slate-400 text-sm">
               Regístrate en el sistema de incidencias
             </p>
           </div>
 
           {/* FORM */}
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* NOMBRE */}
             <Input
               type="text"
               label="Nombre completo"
@@ -49,9 +91,11 @@ export const RegisterForm = () => {
               icon={<User size={20} />}
               value={nombre}
               onChange={e => setNombre(e.target.value)}
+              error={submitted ? nombreError : ''}
               required
             />
 
+            {/* EMAIL */}
             <Input
               type="email"
               label="Correo electrónico"
@@ -59,9 +103,11 @@ export const RegisterForm = () => {
               icon={<Mail size={20} />}
               value={email}
               onChange={e => setEmail(e.target.value)}
+              error={submitted ? emailError : ''}
               required
             />
 
+            {/* PASSWORD */}
             <Input
               type="password"
               label="Contraseña"
@@ -70,15 +116,33 @@ export const RegisterForm = () => {
               showPasswordToggle
               value={password}
               onChange={e => setPassword(e.target.value)}
+              error={submitted ? passwordError : ''}
               required
             />
 
+            {/* REGLAS DEL PASSWORD */}
+            <div className="text-xs text-gray-500 dark:text-slate-400 space-y-1 pl-1">
+              <p>• Mínimo 8 caracteres</p>
+              <p>• Al menos una mayúscula</p>
+              <p>• Al menos una minúscula</p>
+              <p>• Al menos un número</p>
+            </div>
+
+            {/* ERRORES */}
             {error && (
-              <div className="rounded-lg bg-red-50 border border-red-200 p-3">
-                <p className="text-sm font-medium text-red-700">{error}</p>
+              <div
+                className="mt-4 rounded-lg border p-3 bg-red-50 border-red-200
+              dark:bg-red-950/40 dark:border-red-900"
+              >
+                <p className="text-sm font-medium text-red-700 dark:text-red-300">
+                  {error === 'EMAIL_EXISTS'
+                    ? 'Email ya existente'
+                    : 'Error del servidor'}
+                </p>
               </div>
             )}
 
+            {/* BOTÓN */}
             <Button
               type="submit"
               loading={loading}
@@ -91,11 +155,11 @@ export const RegisterForm = () => {
 
           {/* LOGIN */}
           <div className="mt-8 text-center">
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 dark:text-slate-400 text-sm">
               ¿Ya tienes cuenta?{' '}
               <button
                 onClick={() => navigate('/login')}
-                className="font-bold text-blue-600 hover:text-blue-700"
+                className="font-bold text-blue-600 hover:text-blue-500 transition"
               >
                 Inicia sesión
               </button>

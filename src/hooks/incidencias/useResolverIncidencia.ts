@@ -1,58 +1,49 @@
 import { useCallback, useState } from 'react'
-import { updateIncidencia } from '@/services/incidencias'
-import { createNotificacion } from '@/services/notificaciones'
-import { crearMensajeTracking, mensajesResolucion } from '@/services/tracking'
-import { useAuthStore } from '@/store/auth.store'
+import { updateIncidencia, getIncidenciaById } from '@/services/incidencias'
 import { IncidenciaEstado } from '@/types'
 import toast from 'react-hot-toast'
 
-// logica de resolver una incidencia
+import { useAuthStore } from '@/store/auth.store'
+import { NotificationEvent } from '@/services/notification.events'
+import { emitNotification } from '@/services/notification.service'
+import { crearMensajeTracking } from '@/services/tracking'
+
 export const useResolverIncidencia = () => {
   const [loading, setLoading] = useState(false)
   const usuario = useAuthStore(state => state.usuario)
 
-  const resolverIncidencia = useCallback(
-    async (
-      idIncidencia: number,
-      idUsuarioReporta: number,
-      tituloIncidencia: string,
-      descripcionResolucion?: string
-    ) => {
+  const resolver = useCallback(
+    async (idIncidencia: number, descripcion?: string) => {
       try {
         setLoading(true)
 
-        const ahora = new Date().toISOString()
-
-        // actualizar estado como resuelta
         await updateIncidencia(idIncidencia, {
           estado: IncidenciaEstado.RESUELTO,
-          fechaResolucion: ahora,
+          fechaResolucion: new Date().toISOString(),
         })
 
-        // generar notificación al creador
-        await createNotificacion({
-          idUsuarioDestino: idUsuarioReporta,
-          titulo: 'Incidencia Resuelta',
-          mensaje: `Tu incidencia "${tituloIncidencia}" ha sido resuelta${descripcionResolucion ? ': ' + descripcionResolucion : ''}`,
-          leida: false,
-          fechaCreacion: ahora,
-          idIncidenciaVinculada: idIncidencia,
+        const incidencia = await getIncidenciaById(idIncidencia)
+
+        // Notificar resolución
+        await emitNotification({
+          event: NotificationEvent.RESOLUCION,
+          incidencia,
+          titulo: 'resolucion',
+          mensaje: `Incidencia resuelta: "${incidencia.titulo}"`,
+          actorId: usuario?.id,
         })
 
-        // crear mensaje de tracking
+        // Crear mensaje en el chat
         if (usuario) {
-          const mensajeTracking = mensajesResolucion.resuelto(
-            usuario.nombre,
-            descripcionResolucion
-          )
-          await crearMensajeTracking(idIncidencia, usuario, mensajeTracking)
+          const mensajeResolucion = `${usuario.nombre} marcó como resuelto${descripcion ? `: ${descripcion}` : ''}`
+          await crearMensajeTracking(idIncidencia, usuario, mensajeResolucion)
         }
 
-        toast.success('Incidencia marcada como resuelta')
+        toast.success('Incidencia resuelta')
         return true
       } catch (err) {
         console.error('Error resolviendo incidencia:', err)
-        toast.error('Error al resolver incidencia')
+        toast.error('Error al resolver')
         return false
       } finally {
         setLoading(false)
@@ -61,5 +52,5 @@ export const useResolverIncidencia = () => {
     [usuario]
   )
 
-  return { resolverIncidencia, loading }
+  return { resolver, loading }
 }

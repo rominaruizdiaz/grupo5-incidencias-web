@@ -4,10 +4,10 @@ import type {
   Departamento,
 } from '@/types'
 import { CATEGORIAS_DEFECTO } from '@/utils/constants'
-import { IncidenciaEstado as EstadoEnum } from '@/types'
-import { Input, Textarea, Button, PriorityButtons, SelectCard } from '../../ui'
-import { X, CheckCircle, AlertCircle, Wrench } from 'lucide-react'
+import { Textarea, Button, PriorityButtons, SelectCard } from '../../ui'
+import { X, CheckCircle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { EstadoSelector } from './EstadoSelector'
 
 type Props = {
   mode: 'create' | 'edit'
@@ -25,11 +25,12 @@ type Props = {
   setUrgencia: (v: IncidenciaUrgencia) => void
   estado?: IncidenciaEstado
   setEstado?: (v: IncidenciaEstado) => void
+  onSelectResolved?: () => void
   fecha?: string
   reportadoPor?: string
   departamentos?: Departamento[]
+  readOnlyFields?: boolean
 }
-
 export const IncidenciaForm = (props: Props) => {
   const isEdit = props.mode === 'edit'
   const navigate = useNavigate()
@@ -45,25 +46,29 @@ export const IncidenciaForm = (props: Props) => {
   }))
 
   return (
-    <form onSubmit={props.onSubmit} className="min-h-screen bg-white">
+    <form
+      onSubmit={props.onSubmit}
+      className="min-h-screen bg-slate-950 text-slate-100"
+    >
       {/* HEADER */}
-      <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950 px-4 py-3 sm:px-6">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="text-gray-600 hover:text-gray-900 transition"
+          className="text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
         >
-          <X size={24} />
+          <X size={22} />
         </button>
 
-        <h1 className="text-lg font-bold text-gray-900">
+        <h1 className="text-center text-sm font-bold sm:text-base md:text-lg">
           {isEdit ? 'Gestión de Incidencia' : 'Reportar Incidencia'}
         </h1>
 
         <div className="w-6" />
       </div>
 
-      <div className="px-6 py-8 max-w-2xl mx-auto space-y-6">
+      {/* CONTENIDO */}
+      <div className="mx-auto w-full max-w-4xl space-y-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-10">
         {/* TITULO */}
         <div>
           <input
@@ -71,37 +76,43 @@ export const IncidenciaForm = (props: Props) => {
             value={props.titulo}
             onChange={e => props.setTitulo(e.target.value)}
             placeholder="¿Qué problema hay?"
-            className="w-full text-3xl font-black text-gray-900 bg-transparent outline-none placeholder:text-gray-300"
+            className="
+              w-full bg-transparent font-black outline-none
+              text-2xl sm:text-3xl md:text-4xl
+              placeholder:text-slate-600
+              break-words
+            "
             required
           />
         </div>
 
-        {/* DEPARTAMENTO */}
-        <SelectCard
-          label="Área / Aula afectada"
-          value={props.ubicacion || null}
-          placeholder="Seleccionar área..."
-          options={departamentosForSelect}
-          onChange={props.setUbicacion}
-          icon=""
-        />
+        {/* SELECTS */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <SelectCard
+            label="Área / Aula afectada"
+            value={props.ubicacion || null}
+            placeholder="Seleccionar área..."
+            options={departamentosForSelect}
+            onChange={props.setUbicacion}
+            icon=""
+          />
 
-        {/* CATEGORIA */}
-        <SelectCard
-          label="Tipo de problema"
-          value={props.categoria || null}
-          placeholder="Seleccionar tipo..."
-          options={categoriasForSelect}
-          onChange={props.setCategoria}
-          icon=""
-        />
+          <SelectCard
+            label="Tipo de problema"
+            value={props.categoria || null}
+            placeholder="Seleccionar tipo..."
+            options={categoriasForSelect}
+            onChange={props.setCategoria}
+            icon=""
+          />
+        </div>
 
         {/* URGENCIA */}
         <PriorityButtons value={props.urgencia} onChange={props.setUrgencia} />
 
         {/* DETALLES */}
         <div>
-          <h3 className="text-sm font-bold text-gray-900 mb-3 block">
+          <h3 className="mb-2 text-sm font-bold text-slate-100">
             Detalles adicionales
           </h3>
           <Textarea
@@ -114,77 +125,49 @@ export const IncidenciaForm = (props: Props) => {
 
         {/* MODO EDICION */}
         {isEdit && (
-          <div className="rounded-xl bg-gray-50 border border-gray-200 p-4 space-y-2">
+          <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm">
             {props.fecha && (
-              <p className="text-sm text-gray-600">
-                <strong className="text-gray-900">Fecha:</strong> {props.fecha}
+              <p className="text-slate-400">
+                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                  Fecha:
+                </span>{' '}
+                {props.fecha}
               </p>
             )}
+
             {props.reportadoPor && (
-              <p className="text-sm text-gray-600">
-                <strong className="text-gray-900">Reportado por:</strong>{' '}
+              <p className="text-slate-400">
+                <span className="font-semibold text-slate-100">
+                  Reportado por:
+                </span>{' '}
                 {props.reportadoPor}
               </p>
             )}
           </div>
         )}
 
-        {/* ESTADO DEL MANTENIMIENTO */}
-        {isEdit && props.setEstado && (
-          <div className="space-y-3">
-            <h3 className="text-sm font-bold text-gray-900">
-              Actualizar Estado
-            </h3>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                {
-                  state: EstadoEnum.ACTIVO,
-                  label: 'Activo',
-                  icon: AlertCircle,
-                  colors: 'bg-red-50 border-red-200 text-red-700',
-                },
-                {
-                  state: EstadoEnum.EN_CURSO,
-                  label: 'En Curso',
-                  icon: Wrench,
-                  colors: 'bg-orange-50 border-orange-200 text-orange-700',
-                },
-                {
-                  state: EstadoEnum.RESUELTO,
-                  label: 'Resuelto',
-                  icon: CheckCircle,
-                  colors: 'bg-green-50 border-green-200 text-green-700',
-                },
-              ].map(({ state, label, icon: Icon, colors }) => (
-                <button
-                  key={state}
-                  type="button"
-                  onClick={() => props.setEstado!(state)}
-                  className={`h-24 rounded-xl border-2 transition flex flex-col items-center justify-center ${
-                    props.estado === state
-                      ? `border-current ${colors}`
-                      : 'border-gray-200 text-gray-500 bg-gray-50 hover:border-gray-300'
-                  }`}
-                >
-                  <Icon size={24} className="mb-1" />
-                  <span className="text-xs font-semibold">{label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+        {/* ESTADO */}
+        {isEdit && props.setEstado && props.estado && (
+          <EstadoSelector
+            estado={props.estado}
+            onChange={props.setEstado}
+            onSelectResolved={props.onSelectResolved}
+          />
         )}
 
         {/* BOTON DE ENVIAR */}
-        <Button
-          type="submit"
-          size="lg"
-          loading={props.loading}
-          className="mt-8"
-          disabled={!props.titulo || !props.ubicacion || !props.categoria}
-        >
-          <CheckCircle size={20} />
-          {isEdit ? 'Guardar cambios' : 'Enviar Aviso'}
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="submit"
+            size="lg"
+            loading={props.loading}
+            className="w-full"
+            disabled={!props.titulo || !props.ubicacion || !props.categoria}
+          >
+            <CheckCircle size={20} />
+            {isEdit ? 'Guardar cambios' : 'Enviar Aviso'}
+          </Button>
+        </div>
       </div>
     </form>
   )

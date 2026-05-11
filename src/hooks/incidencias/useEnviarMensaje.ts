@@ -1,48 +1,55 @@
 import { useCallback, useState } from 'react'
-import { createMensaje } from '@/services/mensajes'
-import type { MensajeIncidencia } from '@/types'
 import toast from 'react-hot-toast'
-import { useNotifications } from '../notificaciones/useNotifications'
 
-// enviar mensajes dentro de la incidencia
+import { createMensaje } from '@/services/mensajes'
+import type { Incidencia } from '@/types'
+
+import { emitNotification } from '@/services/notification.service'
+import { NotificationEvent } from '@/services/notification.events'
+
 export const useEnviarMensaje = () => {
   const [loading, setLoading] = useState(false)
-  const { notificarCambio } = useNotifications()
 
   const enviarMensaje = useCallback(
-    async (incidencia: any, idUsuario: number, mensaje: string) => {
+    async (
+      incidencia: Incidencia,
+      idUsuario: number,
+      mensaje: string
+    ): Promise<boolean> => {
       if (!mensaje.trim()) {
-        toast.error('El mensaje no puede estar vacío')
+        toast.error('Mensaje vacío')
         return false
       }
 
       try {
         setLoading(true)
 
-        const now = new Date().toISOString()
-
-        const nuevoMensaje: MensajeIncidencia = {
+        await createMensaje({
           idIncidencia: incidencia.id,
           idUsuario,
           mensaje: mensaje.trim(),
-          fecha: now,
-        }
+          fecha: new Date().toISOString(),
+        })
 
-        await createMensaje(nuevoMensaje)
-
-        await notificarCambio(incidencia, 'Nuevo comentario en la incidencia')
+        await emitNotification({
+          event: NotificationEvent.MENSAJE_NUEVO,
+          incidencia,
+          titulo: 'Nuevo mensaje',
+          mensaje: 'Nuevo comentario en la incidencia',
+          actorId: idUsuario,
+        })
 
         toast.success('Mensaje enviado')
         return true
       } catch (err) {
-        console.error('Error enviando mensaje:', err)
+        console.error(err)
         toast.error('Error al enviar mensaje')
         return false
       } finally {
         setLoading(false)
       }
     },
-    [notificarCambio]
+    []
   )
 
   return { enviarMensaje, loading }

@@ -9,7 +9,13 @@
       "modoOscuro": false,
       "rol": 1,
       "fechaRegistro": "2024-01-15T10:00:00Z",
-      "departamentos": [1, 4, 5, 3, 2]
+      "departamentos": [
+        1,
+        4,
+        5,
+        3,
+        2
+      ]
     },
     {
       "id": 2,
@@ -78,16 +84,6 @@
       "fotoPerfil": null,
       "fechaRegistro": "2026-04-25T18:25:50.060Z",
       "id": 6
-    },
-    {
-      "email": "Aya@ya.com",
-      "password": "$2a$10$UVJQUA4QR82geqACeOysGOk4AW1rA5OnXoLgb5UVLh2pizGVJn2qO",
-      "nombre": "Ayaya",
-      "rol": 2,
-      "modoOscuro": false,
-      "fotoPerfil": null,
-      "fechaRegistro": "2026-04-27T21:23:28.285Z",
-      "id": 7
     }
   ],
   "etiquetas": [
@@ -114,13 +110,13 @@
       "titulo": "Problema con el proyector del aula 01",
       "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
       "categoria": "Hardware",
-      "ubicacion": "Aula 01",
-      "estado": "En curso",
+      "ubicacion": "Aula 01 ",
+      "estado": "Resuelto",
       "urgencia": "Alta",
       "fecha": "2024-04-15T08:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 5,
-      "fechaResolucion": null
+      "fechaResolucion": "2026-05-09T13:24:13.623Z"
     },
     {
       "id": 3,
@@ -159,7 +155,7 @@
       "fecha": "2024-04-13T11:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 3,
-      "fechaResolucion": "2026-04-26T10:02:51.233Z"
+      "fechaResolucion": "2026-05-09T13:19:10.039Z"
     },
     {
       "titulo": "sadasd",
@@ -227,7 +223,7 @@
   ],
   "departamentos": [
     {
-      "nombre": "Aula 01 ds",
+      "nombre": "Aula 01 ",
       "id": 1
     },
     {
@@ -249,6 +245,10 @@
       "id": 5,
       "nombre": "Biblioteca",
       "fechaCreacion": "2024-01-10"
+    },
+    {
+      "nombre": "a",
+      "id": 6
     }
   ],
   "usuarioEtiqueta": [
@@ -635,6 +635,42 @@
       "fechaCreacion": "2026-04-28T02:18:41.148Z",
       "idIncidenciaVinculada": 11,
       "id": 25
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:18:09.624Z",
+      "idIncidenciaVinculada": 5,
+      "id": 26
+    },
+    {
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Reabierta",
+      "mensaje": "La incidencia \"Pantalla de monitor rota\" ha sido reabierta. Estado: Activo",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:19:05.310Z",
+      "idIncidenciaVinculada": 5,
+      "id": 27
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:19:10.039Z",
+      "idIncidenciaVinculada": 5,
+      "id": 28
+    },
+    {
+      "idUsuarioDestino": 2,
+      "titulo": "Incidencia Resuelta",
+      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta",
+      "leida": false,
+      "fechaCreacion": "2026-05-09T13:24:13.623Z",
+      "idIncidenciaVinculada": 1,
+      "id": 29
     }
   ],
   "mensajesIncidencia": [
@@ -777,6 +813,34 @@
       "mensaje": "Ayaya cambió el estado a: En curso",
       "fecha": "2026-04-28T02:18:41.085Z",
       "id": 20
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:18:09.683Z",
+      "id": 21
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi reabrió la incidencia con estado: Activo",
+      "fecha": "2026-05-09T13:19:05.376Z",
+      "id": 22
+    },
+    {
+      "idIncidencia": 5,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:19:10.102Z",
+      "id": 23
+    },
+    {
+      "idIncidencia": 1,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto: Sin descripción",
+      "fecha": "2026-05-09T13:24:13.687Z",
+      "id": 24
     }
   ]
 }

@@ -3,22 +3,20 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { IncidenciaEstado, type Incidencia } from '@/types'
 
-import { crearMensajeTracking } from '@/services/tracking'
 import { useIncidenciaFormState } from './useIncidenciaFormState'
 import { useIncidenciaFormActions } from './useIncidenciaActions'
-import { useNotifications } from '../notificaciones/useNotifications'
-import { ESTADO_TRACKING_MAP } from '@/config/estadoTrackingMap'
+import { useNotifyIncidenciaChanges } from './useNotifyIncidenciaChanges'
+import { detectIncidenciaChanges } from './useIncidenciaChanges'
+import { crearMensajeTracking } from '@/services/tracking'
 
-// centralización de la lógica del formulario para crear, editar incidencia
 export const useIncidenciaForm = (initial?: Incidencia) => {
   const navigate = useNavigate()
   const usuario = useAuthStore(state => state.usuario)
 
   const { create, update } = useIncidenciaFormActions()
-  const { notificarCambio } = useNotifications()
+  const { notifyChanges } = useNotifyIncidenciaChanges()
 
   const isEdit = Boolean(initial)
-
   const form = useIncidenciaFormState(initial)
 
   const [loading, setLoading] = useState(false)
@@ -36,41 +34,25 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!usuario) {
-      setError('Usuario no autenticado')
-      return
-    }
-
-    if (!form.titulo.trim() || !form.descripcion.trim()) {
-      setError('Completa los campos obligatorios')
-      return
-    }
+    if (!usuario) return setError('Usuario no autenticado')
 
     try {
       setLoading(true)
-      setError(null)
 
       const data = buildPayload()
 
-      // EDITAR
       if (isEdit && initial) {
-        await update(initial.id, data)
+        // Actualizar incidencia
+        const updatedIncidencia = await update(initial.id, data)
 
-        const estadoCambiado = initial.estado !== form.estado
+        // Detectar cambios específicos
+        const changes = detectIncidenciaChanges(initial, updatedIncidencia)
 
-        if (estadoCambiado) {
-          const config = ESTADO_TRACKING_MAP[form.estado]
-
-          const mensaje = config.mensaje(usuario.nombre)
-
-          await crearMensajeTracking(initial.id, usuario, mensaje)
-
-          await notificarCambio(initial, config.accion)
+        // Notificar cambios y crear mensajes en chat
+        if (changes.length > 0) {
+          await notifyChanges(initial, updatedIncidencia, changes)
         }
-      }
-
-      // CREAR
-      else {
+      } else {
         await create({
           ...data,
           estado: IncidenciaEstado.ACTIVO,
@@ -81,17 +63,11 @@ export const useIncidenciaForm = (initial?: Incidencia) => {
       navigate('/panel')
     } catch (err) {
       console.error(err)
-      setError('Error al guardar la incidencia')
+      setError('Error guardando incidencia')
     } finally {
       setLoading(false)
     }
   }
 
-  return {
-    ...form,
-    loading,
-    error,
-    isEdit,
-    submit,
-  }
+  return { ...form, loading, error, isEdit, submit }
 }

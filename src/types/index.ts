@@ -79,9 +79,6 @@ export interface UsuarioDepartamento {
   usuarioId: number
   departamentoId: number
 }
-
-// ================= NOTIFICACIONES =================
-
 // ================= NOTIFICACIONES =================
 
 export interface Notificacion {
@@ -93,6 +90,7 @@ export interface Notificacion {
   fechaCreacion: string
   fechaEnvio?: string
   idIncidenciaVinculada?: number | null
+  tipoEvento?: string
 }
 
 // ================= MENSAJES =================

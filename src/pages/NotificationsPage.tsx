@@ -19,118 +19,200 @@ export const NotificationsPage = () => {
   } = useNotificacionesStore()
 
   useEffect(() => {
-    if (usuario?.id) {
-      refresh(usuario.id)
-    }
+    if (usuario?.id) refresh(usuario.id)
   }, [usuario, refresh])
 
   const handleClick = async (n: Notificacion) => {
     if (!n.id) return
 
-    try {
-      await markAsRead(n.id)
-      if (n.idIncidenciaVinculada) {
-        navigate(`/incidencia/${n.idIncidenciaVinculada}`)
-      }
-    } catch (error) {
-      console.error('Error al marcar la notificación como leída:', error)
+    await markAsRead(n.id)
+    if (n.idIncidenciaVinculada) {
+      navigate(`/incidencia/${n.idIncidenciaVinculada}`)
     }
   }
 
   const handleMarkAll = async () => {
     if (!usuario?.id) return
-    try {
-      await markAllAsRead(usuario.id)
-    } catch (error) {
-      console.error(
-        'Error al marcar todas las notificaciones como leídas:',
-        error
-      )
+    await markAllAsRead(usuario.id)
+  }
+
+  const getNotificationStyles = (n: Notificacion) => {
+    if (n.leida) {
+      return `
+        border-slate-200 bg-white
+        dark:border-slate-800 dark:bg-slate-900
+        hover:bg-slate-50 dark:hover:bg-slate-800/60
+      `
+    }
+
+    // Colores específicos según tipo de evento sin leer
+    switch (n.tipoEvento) {
+      case 'asignacion':
+        return `
+          border-amber-200 bg-amber-50
+          dark:border-amber-900 dark:bg-amber-950/30
+          hover:bg-amber-100 dark:hover:bg-amber-950/50
+        `
+      case 'resolucion':
+      case 'reabrir':
+        return `
+          border-green-200 bg-green-50
+          dark:border-green-900 dark:bg-green-950/30
+          hover:bg-green-100 dark:hover:bg-green-950/50
+        `
+      case 'cambio_estado':
+      case 'cambio_campos':
+        return `
+          border-purple-200 bg-purple-50
+          dark:border-purple-900 dark:bg-purple-950/30
+          hover:bg-purple-100 dark:hover:bg-purple-950/50
+        `
+      case 'mensaje_nuevo':
+        return `
+          border-cyan-200 bg-cyan-50
+          dark:border-cyan-900 dark:bg-cyan-950/30
+          hover:bg-cyan-100 dark:hover:bg-cyan-950/50
+        `
+      default:
+        return `
+          border-blue-200 bg-blue-50
+          dark:border-blue-900 dark:bg-blue-950/30
+          hover:bg-blue-100 dark:hover:bg-blue-950/50
+        `
+    }
+  }
+
+  const getIndicatorColor = (n: Notificacion) => {
+    switch (n.tipoEvento) {
+      case 'asignacion':
+        return 'bg-amber-600 dark:bg-amber-400'
+      case 'resolucion':
+      case 'reabrir':
+        return 'bg-green-600 dark:bg-green-400'
+      case 'cambio_estado':
+      case 'cambio_campos':
+        return 'bg-purple-600 dark:bg-purple-400'
+      case 'mensaje_nuevo':
+        return 'bg-cyan-600 dark:bg-cyan-400'
+      default:
+        return 'bg-blue-600 dark:bg-blue-400'
     }
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        Cargando...
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-600 dark:bg-slate-950 dark:text-slate-300">
+        Cargando notificaciones...
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* HEADER */}
-      <div className="bg-white border-b px-6 py-4 flex justify-between">
-        <h1 className="text-xl font-bold">Centro de Avisos</h1>
+      <div className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+        <div className="mx-auto w-full max-w-[1800px] px-4 py-5 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* TEXTO */}
+          <div>
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+              Centro de Avisos
+            </h1>
 
-        {sinLeer > 0 && (
-          <button
-            onClick={handleMarkAll}
-            className="text-blue-600 flex items-center gap-2"
-          >
-            <Check size={18} />
-            Marcar todas
-          </button>
-        )}
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 sm:text-base">
+              {sinLeer > 0 ? `${sinLeer} sin leer` : 'Todo al día'}
+            </p>
+          </div>
+
+          {/* BOTÓN */}
+          {sinLeer > 0 && (
+            <button
+              onClick={handleMarkAll}
+              className="
+                hidden sm:flex items-center gap-2
+                rounded-2xl bg-blue-600 px-5 py-3
+                text-sm font-bold text-white
+                shadow-lg shadow-blue-600/20
+                transition hover:bg-blue-700 active:scale-[0.98]
+              "
+            >
+              <Check size={18} />
+              Marcar todo
+            </button>
+          )}
+        </div>
       </div>
 
       {/* LISTA */}
-      <div className="p-6 space-y-3">
+      <div className="mx-auto w-full max-w-[1800px] px-4 py-6 sm:px-6 lg:px-8 space-y-4">
         {notificaciones.length === 0 ? (
-          <p className="text-gray-500">Sin notificaciones</p>
+          <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center dark:border-slate-800 dark:bg-slate-900">
+            <p className="text-slate-500 dark:text-slate-400">
+              Sin notificaciones
+            </p>
+          </div>
         ) : (
           notificaciones.map(n => (
             <div
               key={n.id}
               onClick={() => handleClick(n)}
-              className={`p-4 rounded-lg border cursor-pointer transition ${
-                n.leida
-                  ? 'bg-white'
-                  : 'bg-blue-50 border-blue-200 hover:bg-blue-100'
-              }`}
+              className={`
+                cursor-pointer rounded-2xl border p-5 transition
+                hover:shadow-sm active:scale-[0.995]
+
+                ${getNotificationStyles(n)}
+              `}
             >
-              <div className="flex justify-between">
-                <span className="font-semibold">{n.titulo}</span>
+              {/* HEADER CARD */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h2 className="text-lg font-bold truncate">{n.titulo}</h2>
+
+                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 break-words">
+                    {n.mensaje}
+                  </p>
+                </div>
+
                 {!n.leida && (
-                  <span className="w-2 h-2 bg-blue-600 rounded-full" />
+                  <span className={`mt-2 h-2.5 w-2.5 rounded-full ${getIndicatorColor(n)}`} />
                 )}
               </div>
 
-              <p className="text-sm text-gray-600">{n.mensaje}</p>
-
-              <p className="text-xs text-gray-500 mt-1 text-right">
-                {n.fechaCreacion ? (
-                  (() => {
-                    const fecha = new Date(n.fechaCreacion)
-                    const fechaValida = !isNaN(fecha.getTime())
-
-                    return fechaValida ? (
-                      fecha
-                        .toLocaleString('es-ES', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: false,
-                        })
-                        .replace(',', '')
-                    ) : (
-                      <span className="italic text-gray-400">
-                        Fecha no disponible
-                      </span>
-                    )
-                  })()
-                ) : (
-                  <span className="italic text-gray-400">
-                    Fecha no disponible
-                  </span>
-                )}
-              </p>
+              {/* FECHA */}
+              <div className="mt-3 text-right">
+                <p className="text-xs text-slate-500 dark:text-slate-500">
+                  {n.fechaCreacion
+                    ? new Date(n.fechaCreacion).toLocaleString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                      })
+                    : 'Fecha no disponible'}
+                </p>
+              </div>
             </div>
           ))
         )}
       </div>
+
+      {/* BOTÓN MOBILE */}
+      {sinLeer > 0 && (
+        <button
+          onClick={handleMarkAll}
+          className="
+            fixed bottom-20 right-5 z-50
+            flex h-14 w-14 items-center justify-center
+            rounded-full bg-blue-600 text-white
+            shadow-xl shadow-blue-600/30
+            hover:scale-105 active:scale-95
+            sm:hidden
+          "
+        >
+          <Check size={22} />
+        </button>
+      )}
     </div>
   )
 }

@@ -10,7 +10,7 @@ export const UrgencyBadge = ({ urgencia }: Props) => {
   const config = COLOR_URGENCIA[urgencia]
 
   return (
-    <div className={`px-3 py-1 rounded-lg text-xs font-bold border ${config}`}>
+    <div className={`rounded-lg border px-3 py-1 text-xs font-bold ${config}`}>
       {urgencia.toUpperCase()}
     </div>
   )

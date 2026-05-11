@@ -9,13 +9,26 @@ export function PersonalFilters({
   loading,
 }: PersonalFiltersProps) {
   return (
-    <div className="page-card mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Filtro por Rol */}
-        <div>
-          <label className="block text-sm font-medium text-slate-200 mb-1">
+    <div
+      className="
+        rounded-3xl border border-slate-200
+        bg-white p-4 shadow-sm
+        dark:border-slate-800 dark:bg-slate-900
+        sm:p-6
+      "
+    >
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {/* FILTRO ROL */}
+        <div className="space-y-2">
+          <label
+            className="
+              block text-sm font-semibold
+              text-slate-900 dark:text-slate-200
+            "
+          >
             Filtrar por Rol
           </label>
+
           <select
             value={filters.rol ?? ''}
             onChange={e =>
@@ -27,9 +40,28 @@ export function PersonalFilters({
               })
             }
             disabled={loading}
-            className="w-full px-3 py-2 border border-slate-700 rounded-2xl bg-slate-950 text-slate-100 focus:outline-none focus:ring-blue-500"
+            className="
+              w-full rounded-2xl border
+              border-slate-200 bg-slate-50
+              px-4 py-3 text-sm font-medium
+              text-slate-900 outline-none transition
+
+              hover:border-slate-300
+              focus:border-blue-500
+              focus:bg-white
+
+              disabled:cursor-not-allowed
+              disabled:opacity-60
+
+              dark:border-slate-700
+              dark:bg-slate-950
+              dark:text-slate-100
+              dark:hover:border-slate-600
+              dark:focus:border-blue-500
+            "
           >
             <option value="">Todos los roles</option>
+
             {ROLE_OPTIONS.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -38,11 +70,17 @@ export function PersonalFilters({
           </select>
         </div>
 
-        {/* Filtro por Departamento */}
-        <div>
-          <label className="block text-sm font-medium text-slate-200 mb-1">
+        {/* FILTRO DEPARTAMENTO */}
+        <div className="space-y-2">
+          <label
+            className="
+              block text-sm font-semibold
+              text-slate-900 dark:text-slate-200
+            "
+          >
             Filtrar por Departamento
           </label>
+
           <select
             value={filters.departamentoId ?? ''}
             onChange={e =>
@@ -54,9 +92,28 @@ export function PersonalFilters({
               })
             }
             disabled={loading}
-            className="w-full px-3 py-2 border border-slate-700 rounded-2xl bg-slate-950 text-slate-100 focus:outline-none focus:ring-blue-500"
+            className="
+              w-full rounded-2xl border
+              border-slate-200 bg-slate-50
+              px-4 py-3 text-sm font-medium
+              text-slate-900 outline-none transition
+
+              hover:border-slate-300
+              focus:border-blue-500
+              focus:bg-white
+
+              disabled:cursor-not-allowed
+              disabled:opacity-60
+
+              dark:border-slate-700
+              dark:bg-slate-950
+              dark:text-slate-100
+              dark:hover:border-slate-600
+              dark:focus:border-blue-500
+            "
           >
             <option value="">Todos los departamentos</option>
+
             {departamentos.map(depto => (
               <option key={depto.id} value={depto.id}>
                 {depto.nombre}
