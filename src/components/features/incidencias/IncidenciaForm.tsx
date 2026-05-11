@@ -48,10 +48,10 @@ export const IncidenciaForm = (props: Props) => {
   return (
     <form
       onSubmit={props.onSubmit}
-      className="min-h-screen bg-slate-950 text-slate-100"
+      className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100"
     >
       {/* HEADER */}
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-800 bg-slate-950 px-4 py-3 sm:px-6">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 sm:px-6">
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -79,7 +79,7 @@ export const IncidenciaForm = (props: Props) => {
             className="
               w-full bg-transparent font-black outline-none
               text-2xl sm:text-3xl md:text-4xl
-              placeholder:text-slate-600
+              placeholder:text-slate-400 dark:placeholder:text-slate-600
               break-words
             "
             required
@@ -112,7 +112,7 @@ export const IncidenciaForm = (props: Props) => {
 
         {/* DETALLES */}
         <div>
-          <h3 className="mb-2 text-sm font-bold text-slate-100">
+          <h3 className="mb-2 text-sm font-bold text-slate-900 dark:text-slate-100">
             Detalles adicionales
           </h3>
           <Textarea
@@ -125,9 +125,9 @@ export const IncidenciaForm = (props: Props) => {
 
         {/* MODO EDICION */}
         {isEdit && (
-          <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-900 p-4 text-sm">
+          <div className="space-y-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-4 text-sm">
             {props.fecha && (
-              <p className="text-slate-400">
+              <p className="text-slate-600 dark:text-slate-400">
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   Fecha:
                 </span>{' '}
@@ -136,8 +136,8 @@ export const IncidenciaForm = (props: Props) => {
             )}
 
             {props.reportadoPor && (
-              <p className="text-slate-400">
-                <span className="font-semibold text-slate-100">
+              <p className="text-slate-600 dark:text-slate-400">
+                <span className="font-semibold text-slate-900 dark:text-slate-100">
                   Reportado por:
                 </span>{' '}
                 {props.reportadoPor}

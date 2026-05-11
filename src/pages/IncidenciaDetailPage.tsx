@@ -86,13 +86,13 @@ export const IncidenciaDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <IncidenciaDetailHeader
         incidenciaId={incidencia.id}
         puedeEliminar={permissions.puedeEliminar}
       />
 
-      <div className="px-6 py-6 max-w-4xl mx-auto space-y-6 dark">
+      <div className="px-6 py-6 max-w-4xl mx-auto space-y-6">
         <IncidenciaActionButtons
           puedeAsignar={permissions.puedeAsignar}
           puedeSelfAsignar={permissions.puedeSelfAsignar}

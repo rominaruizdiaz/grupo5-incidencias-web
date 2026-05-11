@@ -20,8 +20,8 @@ export const IncidenciaMessagesSection = ({
   onEnviarMensaje,
 }: Props) => {
   return (
-    <div className="mt-8 flex flex-col h-[60vh] md:h-[65vh] border-t border-slate-800 pt-6">
-      <h3 className="text-lg font-semibold text-slate-100 mb-4">
+    <div className="mt-8 flex flex-col h-[60vh] md:h-[65vh] border-t border-slate-200 dark:border-slate-800 pt-6">
+      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">
         Registro de Seguimiento
       </h3>
 
@@ -34,7 +34,7 @@ export const IncidenciaMessagesSection = ({
         />
       </div>
 
-      <div className="pt-3 bg-slate-900">
+      <div className="pt-3 bg-white dark:bg-slate-900">
         <NuevoMensajeInput
           onEnviar={onEnviarMensaje}
           loading={loadingEnviar}

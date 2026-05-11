@@ -42,7 +42,7 @@ export const EstadoSelector = ({
   return (
     <div className="space-y-3">
       {label && (
-        <h3 className="text-sm font-bold text-slate-100">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
           {label}
         </h3>
       )}
