@@ -1,0 +1,1 @@
+export { DeleteDepartamentoModal } from './DeleteDepartamentoModal'

@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 1,
-      "nombre": "Admin User",
-      "email": "admin@gmail.com",
+      "nombre": "Admin Instituto",
+      "email": "admin@instituto.edu",
       "password": "$2a$10$l7Qrg.MrTS04NBHnYtSBXe6KjlISGhth2VfI8EUrAphIn.Zr2nR62",
       "fotoPerfil": null,
       "modoOscuro": false,
@@ -11,16 +11,17 @@
       "fechaRegistro": "2024-01-15T10:00:00Z",
       "departamentos": [
         1,
+        2,
+        3,
         4,
         5,
-        3,
-        2
+        6
       ]
     },
     {
       "id": 2,
-      "nombre": "Juan Profesor",
-      "email": "juan@gmail.com",
+      "nombre": "Juan García Profesor",
+      "email": "juan.garcia@instituto.edu",
       "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": false,
@@ -29,13 +30,13 @@
       "departamentos": [
         1,
         2,
-        4
+        3
       ]
     },
     {
       "id": 3,
-      "nombre": "María Técnica",
-      "email": "maria@gmail.com",
+      "nombre": "María López Técnica",
+      "email": "maria.lopez@instituto.edu",
       "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": true,
@@ -43,14 +44,14 @@
       "fechaRegistro": "2024-02-15T10:00:00Z",
       "departamentos": [
         1,
-        3,
-        2
+        2,
+        4
       ]
     },
     {
       "id": 4,
-      "nombre": "Carlos Profesor",
-      "email": "carlos@gmail.com",
+      "nombre": "Carlos Rodríguez Profesor",
+      "email": "carlos.rodriguez@instituto.edu",
       "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": false,
@@ -58,13 +59,14 @@
       "fechaRegistro": "2024-03-01T10:00:00Z",
       "departamentos": [
         2,
-        3
+        3,
+        5
       ]
     },
     {
       "id": 5,
-      "nombre": "Ana Técnica",
-      "email": "ana@gmail.com",
+      "nombre": "Ana Martínez Técnica",
+      "email": "ana.martinez@instituto.edu",
       "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
       "fotoPerfil": null,
       "modoOscuro": false,
@@ -72,18 +74,63 @@
       "fechaRegistro": "2024-03-05T10:00:00Z",
       "departamentos": [
         1,
+        3,
         4
       ]
     },
     {
+      "id": 6,
+      "nombre": "romi",
       "email": "romi@romi.romi",
       "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
-      "nombre": "romi",
+      "fotoPerfil": null,
+      "modoOscuro": false,
       "rol": 1,
+      "fechaRegistro": "2024-03-10T10:00:00Z",
+      "departamentos": [
+        1,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": 7,
+      "nombre": "Laura Directora",
+      "email": "laura.directora@instituto.edu",
+      "password": "$2a$10$44CEk/8eLEqG3X.ecXB1MeZKhU0L/wZ9oXHd6WJduicctiEbR7Dda",
+      "fotoPerfil": null,
+      "modoOscuro": false,
+      "rol": 2,
+      "fechaRegistro": "2024-01-01T10:00:00Z",
+      "departamentos": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "email": "hola@hola.hola",
+      "password": "$2a$10$BUzsrGZatORruWYDDbSfdO/662QloNfAUWsFDMgTYH4.SLb0bi.DG",
+      "nombre": "hola",
+      "rol": 2,
       "modoOscuro": false,
       "fotoPerfil": null,
-      "fechaRegistro": "2026-04-25T18:25:50.060Z",
-      "id": 6
+      "fechaRegistro": "2026-05-11T22:50:31.044Z",
+      "id": 8
+    },
+    {
+      "email": "miau@miau.miau",
+      "password": "$2a$10$8ntwdVJTeUPqruZ64uLK5.FrKp2CO3HyDE2zZCIi40LenRd6gReGy",
+      "nombre": "tecnico",
+      "rol": 3,
+      "modoOscuro": false,
+      "fotoPerfil": null,
+      "fechaRegistro": "2026-05-11T22:59:46.407Z",
+      "id": 9
     }
   ],
   "etiquetas": [
@@ -93,162 +140,325 @@
     },
     {
       "id": 2,
-      "nombre": "Software"
+      "nombre": "Redes"
     },
     {
       "id": 3,
-      "nombre": "Red"
+      "nombre": "Software"
     },
     {
       "id": 4,
-      "nombre": "Otro"
+      "nombre": "Mantenimiento"
+    },
+    {
+      "id": 5,
+      "nombre": "Seguridad"
     }
   ],
   "incidencias": [
     {
       "id": 1,
-      "titulo": "Problema con el proyector del aula 01",
-      "descripcion": "El proyector no enciende, parece que no tiene conexión correcta",
+      "titulo": "Proyector del aula 01 no funciona",
+      "descripcion": "El proyector no enciende. Se probó con diferentes cables pero sin resultado. Puede ser un problema en la fuente de alimentación",
       "categoria": "Hardware",
-      "ubicacion": "Aula 01 ",
+      "ubicacion": "Aula 01",
       "estado": "Resuelto",
       "urgencia": "Alta",
-      "fecha": "2024-04-15T08:30:00Z",
-      "idUsuarioReporta": 2,
-      "idUsuarioAsignado": 5,
-      "fechaResolucion": "2026-05-09T13:24:13.623Z"
-    },
-    {
-      "id": 3,
-      "titulo": "Teclado del laboratorio dañado",
-      "descripcion": "El teclado de la estación 5 tiene varias teclas rotas",
-      "categoria": "Hardware",
-      "ubicacion": "Laboratorio",
-      "estado": "Resuelto",
-      "urgencia": "Baja",
-      "fecha": "2024-04-10T14:20:00Z",
+      "fecha": "2026-05-01T08:30:00Z",
       "idUsuarioReporta": 2,
       "idUsuarioAsignado": 3,
+      "fechaResolucion": "2026-05-02T14:00:00Z"
+    },
+    {
+      "id": 2,
+      "titulo": "Conexión WiFi lenta en planta baja",
+      "descripcion": "Los estudiantes reportan que la conexión WiFi en la planta baja es muy lenta. Afecta especialmente a la zona de biblioteca",
+      "categoria": "Redes",
+      "ubicacion": "Biblioteca",
+      "estado": "En curso",
+      "urgencia": "Media",
+      "fecha": "2026-05-03T09:15:00Z",
+      "idUsuarioReporta": 4,
+      "idUsuarioAsignado": 9,
       "fechaResolucion": null
     },
     {
-      "id": 4,
-      "titulo": "Software de análisis no instala",
-      "descripcion": "No puedo instalar el software de análisis de datos",
-      "categoria": "Software",
-      "ubicacion": "Aula 03",
+      "id": 3,
+      "titulo": "Monitor del laboratorio de informática dañado",
+      "descripcion": "Pantalla del monitor principal está rota. Estación de trabajo 5 no operativa",
+      "categoria": "Hardware",
+      "ubicacion": "Laboratorio de Informática",
       "estado": "Resuelto",
-      "urgencia": "Media",
-      "fecha": "2024-04-16T09:00:00Z",
-      "idUsuarioReporta": 4,
+      "urgencia": "Alta",
+      "fecha": "2026-04-28T10:00:00Z",
+      "idUsuarioReporta": 2,
       "idUsuarioAsignado": 5,
+      "fechaResolucion": "2026-04-30T16:30:00Z"
+    },
+    {
+      "id": 4,
+      "titulo": "Software de diseño no se instala correctamente",
+      "descripcion": "Error al instalar AutoCAD en los equipos del aula de diseño. Mensaje de error: licencia no válida",
+      "categoria": "Software",
+      "ubicacion": "Aula de Diseño",
+      "estado": "En curso",
+      "urgencia": "Media",
+      "fecha": "2026-05-04T11:20:00Z",
+      "idUsuarioReporta": 7,
+      "idUsuarioAsignado": 3,
       "fechaResolucion": null
     },
     {
       "id": 5,
-      "titulo": "Pantalla de monitor rota",
-      "descripcion": "Monitor de la aula tiene la pantalla agrietada",
+      "titulo": "Teclado del aula 02 con teclas rotas",
+      "descripcion": "Varios teclados tienen teclas dañadas que no responden. Afecta a 3 puestos de trabajo",
       "categoria": "Hardware",
-      "ubicacion": "Aula 01",
+      "ubicacion": "Aula 02",
+      "estado": "Resuelto",
+      "urgencia": "Baja",
+      "fecha": "2026-04-25T14:45:00Z",
+      "idUsuarioReporta": 4,
+      "idUsuarioAsignado": 6,
+      "fechaResolucion": "2026-04-27T10:15:00Z"
+    },
+    {
+      "id": 6,
+      "titulo": "Impresora de planta tercera sin papel y sin tóner",
+      "descripcion": "La impresora multifunción de la tercera planta requiere recarga de papel y cartucho de tóner negro",
+      "categoria": "Mantenimiento",
+      "ubicacion": "Planta 3",
+      "estado": "Activo",
+      "urgencia": "Media",
+      "fecha": "2026-05-05T09:30:00Z",
+      "idUsuarioReporta": 7,
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null
+    },
+    {
+      "id": 7,
+      "titulo": "Servidor de archivos con espacio insuficiente",
+      "descripcion": "El servidor alcanzó 98% de capacidad. Necesita limpieza urgente de archivos antiguos",
+      "categoria": "Redes",
+      "ubicacion": "Sala de Servidores",
+      "estado": "En curso",
+      "urgencia": "Alta",
+      "fecha": "2026-05-05T15:00:00Z",
+      "idUsuarioReporta": 1,
+      "idUsuarioAsignado": 6,
+      "fechaResolucion": null
+    },
+    {
+      "id": 8,
+      "titulo": "Videoproyector aula 03 sin conexión HDMI",
+      "descripcion": "El puerto HDMI del proyector no reconoce el cable. Posible problema con el conector",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 03",
       "estado": "Resuelto",
       "urgencia": "Alta",
-      "fecha": "2024-04-13T11:30:00Z",
+      "fecha": "2026-05-02T10:20:00Z",
       "idUsuarioReporta": 2,
-      "idUsuarioAsignado": 3,
-      "fechaResolucion": "2026-05-09T13:19:10.039Z"
+      "idUsuarioAsignado": 5,
+      "fechaResolucion": "2026-05-03T13:00:00Z"
     },
     {
-      "titulo": "sadasd",
-      "descripcion": "sdasdsd",
-      "categoria": "Software",
-      "ubicacion": "Laboratorio",
-      "urgencia": "Media",
-      "estado": "Activo",
-      "idUsuarioReporta": 4,
-      "id": 6
-    },
-    {
-      "titulo": "sad",
-      "descripcion": "sadasd",
-      "categoria": "Hardware",
-      "ubicacion": "Aula 02",
-      "urgencia": "Media",
-      "estado": "En curso",
-      "idUsuarioReporta": 6,
-      "id": 7
-    },
-    {
-      "titulo": "sdsad",
-      "descripcion": "sdad",
-      "categoria": "Hardware",
-      "ubicacion": "Aula 02",
-      "urgencia": "Media",
-      "estado": "Activo",
-      "idUsuarioReporta": 6,
-      "id": 8
-    },
-    {
-      "titulo": "dsad",
-      "descripcion": "sdasd",
-      "categoria": "Hardware",
-      "ubicacion": "Aula 01",
-      "urgencia": "Media",
-      "estado": "En curso",
-      "idUsuarioReporta": 6,
       "id": 9,
+      "titulo": "Sistema de sonido del salón de actos con ruido",
+      "descripcion": "Los altavoces emiten un ruido de retroalimentación cuando se usa el micrófono. Afecta a eventos",
+      "categoria": "Hardware",
+      "ubicacion": "Salón de Actos",
+      "estado": "En curso",
+      "urgencia": "Alta",
+      "fecha": "2026-05-04T16:45:00Z",
+      "idUsuarioReporta": 7,
+      "idUsuarioAsignado": 5,
+      "fechaResolucion": null
+    },
+    {
+      "id": 10,
+      "titulo": "Actualización de Office requiere validación",
+      "descripcion": "Se necesita actualizar Microsoft Office en 25 equipos. Requiere validación de licencias",
+      "categoria": "Software",
+      "ubicacion": "Múltiples aulas",
+      "estado": "Activo",
+      "urgencia": "Baja",
+      "fecha": "2026-05-03T12:00:00Z",
+      "idUsuarioReporta": 4,
+      "idUsuarioAsignado": 9,
+      "fechaResolucion": null
+    },
+    {
+      "id": 11,
+      "titulo": "Controlador WiFi aula 05 necesita reinicio",
+      "descripcion": "El punto de acceso WiFi se congela periódicamente. Requiere reinicio manual cada 2 horas",
+      "categoria": "Redes",
+      "ubicacion": "Aula 05",
+      "estado": "Resuelto",
+      "urgencia": "Media",
+      "fecha": "2026-04-30T08:50:00Z",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": 6,
+      "fechaResolucion": "2026-05-01T11:30:00Z"
+    },
+    {
+      "id": 12,
+      "titulo": "Ratones inalámbricos sin batería",
+      "descripcion": "Varios ratones inalámbricos han agotado la batería. Se necesita cambiar por pilas nuevas",
+      "categoria": "Mantenimiento",
+      "ubicacion": "Laboratorio de Informática",
+      "estado": "Resuelto",
+      "urgencia": "Baja",
+      "fecha": "2026-04-29T14:20:00Z",
+      "idUsuarioReporta": 4,
+      "idUsuarioAsignado": 5,
+      "fechaResolucion": "2026-04-29T16:00:00Z"
+    },
+    {
+      "id": 13,
+      "titulo": "Contaminación en computadoras del aula de dibujo",
+      "descripcion": "Los equipos tienen mucho polvo y virutas de grafito. Necesitan limpieza profunda para evitar sobrecalentamiento",
+      "categoria": "Mantenimiento",
+      "ubicacion": "Aula de Dibujo",
+      "estado": "En curso",
+      "urgencia": "Media",
+      "fecha": "2026-05-02T11:15:00Z",
+      "idUsuarioReporta": 7,
+      "idUsuarioAsignado": 5,
+      "fechaResolucion": null
+    },
+    {
+      "id": 14,
+      "titulo": "Cámara de seguridad en biblioteca sin video",
+      "descripcion": "Una de las cámaras de videovigilancia no transmite imagen. Requiere revisión técnica",
+      "categoria": "Seguridad",
+      "ubicacion": "Biblioteca",
+      "estado": "Activo",
+      "urgencia": "Alta",
+      "fecha": "2026-05-04T13:30:00Z",
+      "idUsuarioReporta": 1,
+      "idUsuarioAsignado": null,
+      "fechaResolucion": null
+    },
+    {
+      "id": 15,
+      "titulo": "Botones de ascensor 2 y 3 con falla",
+      "descripcion": "Los botones del ascensor entre plantas no responden correctamente. El ascensor se mueve lentamente",
+      "categoria": "Mantenimiento",
+      "ubicacion": "Ascensor Central",
+      "estado": "Resuelto",
+      "urgencia": "Alta",
+      "fecha": "2026-04-26T09:00:00Z",
+      "idUsuarioReporta": 1,
+      "idUsuarioAsignado": 6,
+      "fechaResolucion": "2026-04-27T12:00:00Z"
+    },
+    {
+      "id": 16,
+      "titulo": "Antivirus necesita actualización en 40 equipos",
+      "descripcion": "Licencia de antivirus expirada. Se necesita actualizar a la última versión en todos los equipos",
+      "categoria": "Software",
+      "ubicacion": "Toda la institución",
+      "estado": "En curso",
+      "urgencia": "Alta",
+      "fecha": "2026-05-05T10:00:00Z",
+      "idUsuarioReporta": 1,
       "idUsuarioAsignado": 3,
       "fechaResolucion": null
     },
     {
-      "titulo": "AYAYA",
-      "descripcion": "No lo se la vd",
-      "categoria": "Hardware",
-      "ubicacion": "Aula 02",
-      "urgencia": "Media",
+      "id": 17,
+      "titulo": "Cable de red aula 04 dañado",
+      "descripcion": "El cable de red (RJ45) está pelado y causa interferencias. Necesita ser reemplazado",
+      "categoria": "Redes",
+      "ubicacion": "Aula 04",
       "estado": "Resuelto",
-      "idUsuarioReporta": 7,
-      "id": 10,
+      "urgencia": "Media",
+      "fecha": "2026-05-01T14:30:00Z",
+      "idUsuarioReporta": 2,
+      "idUsuarioAsignado": 6,
+      "fechaResolucion": "2026-05-02T10:00:00Z"
+    },
+    {
+      "id": 18,
+      "titulo": "Pizarra digital de aula 01 sin calibración",
+      "descripcion": "La pizarra digital no responde correctamente al tacto. Está descalibrada",
+      "categoria": "Hardware",
+      "ubicacion": "Aula 01",
+      "estado": "Activo",
+      "urgencia": "Media",
+      "fecha": "2026-05-05T15:40:00Z",
+      "idUsuarioReporta": 4,
+      "idUsuarioAsignado": 9,
       "fechaResolucion": null
     },
     {
-      "titulo": "2Aya",
-      "descripcion": "2222",
+      "id": 19,
+      "titulo": "Respaldo de datos del servidor de correo",
+      "descripcion": "Se necesita hacer respaldo de seguridad del servidor de correo. Mantenimiento preventivo",
+      "categoria": "Software",
+      "ubicacion": "Sala de Servidores",
+      "estado": "Resuelto",
+      "urgencia": "Media",
+      "fecha": "2026-04-24T08:00:00Z",
+      "idUsuarioReporta": 1,
+      "idUsuarioAsignado": 3,
+      "fechaResolucion": "2026-04-24T18:00:00Z"
+    },
+    {
+      "id": 20,
+      "titulo": "Suministro de papel para fotocopiadora",
+      "descripcion": "Se necesita reabastecer papel tamaño A4 y A3 para la fotocopiadora principal",
+      "categoria": "Mantenimiento",
+      "ubicacion": "Sala de Fotocopias",
+      "estado": "En curso",
+      "urgencia": "Baja",
+      "fecha": "2026-05-03T16:20:00Z",
+      "idUsuarioReporta": 7,
+      "idUsuarioAsignado": 9,
+      "fechaResolucion": null
+    },
+    {
+      "titulo": "Incidencia Prueba",
+      "descripcion": "Prueba",
       "categoria": "Hardware",
       "ubicacion": "Aula 01",
       "urgencia": "Media",
-      "estado": "En curso",
-      "idUsuarioReporta": 7,
-      "id": 11
+      "estado": "Activo",
+      "idUsuarioReporta": 8,
+      "id": 21,
+      "fechaResolucion": null,
+      "idUsuarioAsignado": 9
     }
   ],
   "departamentos": [
     {
-      "nombre": "Aula 01 ",
-      "id": 1
+      "id": 1,
+      "nombre": "Aula 01",
+      "fechaCreacion": "2024-01-01"
     },
     {
       "id": 2,
       "nombre": "Aula 02",
-      "fechaCreacion": "2024-01-10"
+      "fechaCreacion": "2024-01-01"
     },
     {
       "id": 3,
       "nombre": "Aula 03",
-      "fechaCreacion": "2024-01-10"
+      "fechaCreacion": "2024-01-01"
     },
     {
       "id": 4,
-      "nombre": "Laboratorio",
-      "fechaCreacion": "2024-01-10"
+      "nombre": "Laboratorio de Informática",
+      "fechaCreacion": "2024-01-01"
     },
     {
       "id": 5,
       "nombre": "Biblioteca",
-      "fechaCreacion": "2024-01-10"
+      "fechaCreacion": "2024-01-01"
     },
     {
-      "nombre": "a",
-      "id": 6
+      "id": 6,
+      "nombre": "Sala de Servidores",
+      "fechaCreacion": "2024-01-01"
     }
   ],
   "usuarioEtiqueta": [
@@ -260,7 +470,7 @@
     {
       "id": 2,
       "usuarioId": 3,
-      "etiquetaId": 2
+      "etiquetaId": 3
     },
     {
       "id": 3,
@@ -270,47 +480,72 @@
     {
       "id": 4,
       "usuarioId": 5,
+      "etiquetaId": 4
+    },
+    {
+      "id": 5,
+      "usuarioId": 3,
+      "etiquetaId": 2
+    },
+    {
+      "id": 6,
+      "usuarioId": 3,
+      "etiquetaId": 5
+    },
+    {
+      "id": 7,
+      "usuarioId": 5,
+      "etiquetaId": 2
+    },
+    {
+      "id": 8,
+      "usuarioId": 6,
+      "etiquetaId": 1
+    },
+    {
+      "id": 9,
+      "usuarioId": 6,
+      "etiquetaId": 2
+    },
+    {
+      "id": 10,
+      "usuarioId": 6,
       "etiquetaId": 3
     },
     {
-      "usuarioId": 3,
+      "id": 11,
+      "usuarioId": 6,
+      "etiquetaId": 4
+    },
+    {
+      "id": 12,
+      "usuarioId": 6,
+      "etiquetaId": 5
+    },
+    {
+      "usuarioId": 9,
       "etiquetaId": 3,
-      "id": 5
+      "id": 13
     },
     {
-      "usuarioId": 3,
-      "etiquetaId": 4,
-      "id": 6
-    },
-    {
-      "usuarioId": 5,
+      "usuarioId": 9,
       "etiquetaId": 2,
-      "id": 7
+      "id": 14
     },
     {
-      "usuarioId": 5,
-      "etiquetaId": 4,
-      "id": 8
-    },
-    {
-      "usuarioId": 7,
+      "usuarioId": 9,
       "etiquetaId": 1,
-      "id": 9
+      "id": 15
     },
     {
-      "usuarioId": 7,
-      "etiquetaId": 2,
-      "id": 10
-    },
-    {
-      "usuarioId": 7,
-      "etiquetaId": 3,
-      "id": 11
-    },
-    {
-      "usuarioId": 7,
+      "usuarioId": 9,
       "etiquetaId": 4,
-      "id": 12
+      "id": 16
+    },
+    {
+      "usuarioId": 9,
+      "etiquetaId": 5,
+      "id": 17
     }
   ],
   "usuarioDepartamento": [
@@ -326,351 +561,420 @@
     },
     {
       "id": 3,
+      "usuarioId": 2,
+      "departamentoId": 3
+    },
+    {
+      "id": 4,
       "usuarioId": 3,
       "departamentoId": 1
     },
     {
-      "id": 4,
+      "id": 5,
+      "usuarioId": 3,
+      "departamentoId": 2
+    },
+    {
+      "id": 6,
+      "usuarioId": 3,
+      "departamentoId": 4
+    },
+    {
+      "id": 7,
       "usuarioId": 4,
       "departamentoId": 2
     },
     {
-      "id": 5,
+      "id": 8,
       "usuarioId": 4,
       "departamentoId": 3
     },
     {
-      "id": 6,
+      "id": 9,
+      "usuarioId": 4,
+      "departamentoId": 5
+    },
+    {
+      "id": 10,
       "usuarioId": 5,
       "departamentoId": 1
     },
     {
-      "id": 7,
+      "id": 11,
+      "usuarioId": 5,
+      "departamentoId": 3
+    },
+    {
+      "id": 12,
       "usuarioId": 5,
       "departamentoId": 4
     },
     {
-      "id": 8,
+      "id": 13,
+      "usuarioId": 6,
+      "departamentoId": 1
+    },
+    {
+      "id": 14,
+      "usuarioId": 6,
+      "departamentoId": 4
+    },
+    {
+      "id": 15,
+      "usuarioId": 6,
+      "departamentoId": 5
+    },
+    {
+      "id": 16,
+      "usuarioId": 6,
+      "departamentoId": 6
+    },
+    {
+      "id": 17,
+      "usuarioId": 7,
+      "departamentoId": 1
+    },
+    {
+      "id": 18,
+      "usuarioId": 7,
+      "departamentoId": 2
+    },
+    {
+      "id": 19,
+      "usuarioId": 7,
+      "departamentoId": 3
+    },
+    {
+      "id": 20,
+      "usuarioId": 7,
+      "departamentoId": 4
+    },
+    {
+      "id": 21,
+      "usuarioId": 7,
+      "departamentoId": 5
+    },
+    {
+      "id": 22,
+      "usuarioId": 7,
+      "departamentoId": 6
+    },
+    {
+      "id": 23,
       "usuarioId": 1,
       "departamentoId": 1
     },
     {
+      "id": 24,
       "usuarioId": 1,
-      "departamentoId": 4,
-      "id": 9
+      "departamentoId": 2
     },
     {
+      "id": 25,
       "usuarioId": 1,
-      "departamentoId": 5,
-      "id": 10
+      "departamentoId": 3
     },
     {
-      "usuarioId": 3,
-      "departamentoId": 3,
-      "id": 12
-    },
-    {
-      "usuarioId": 3,
-      "departamentoId": 2,
-      "id": 13
-    },
-    {
+      "id": 26,
       "usuarioId": 1,
-      "departamentoId": 3,
-      "id": 14
+      "departamentoId": 4
     },
     {
+      "id": 27,
       "usuarioId": 1,
-      "departamentoId": 2,
-      "id": 15
+      "departamentoId": 5
     },
     {
-      "usuarioId": 2,
-      "departamentoId": 4,
-      "id": 17
+      "id": 28,
+      "usuarioId": 1,
+      "departamentoId": 6
     },
     {
-      "usuarioId": 2,
-      "departamentoId": 5,
-      "id": 18
-    },
-    {
-      "usuarioId": 2,
-      "departamentoId": 3,
-      "id": 19
-    },
-    {
-      "usuarioId": 7,
+      "usuarioId": 9,
       "departamentoId": 1,
-      "id": 20
+      "id": 29
     },
     {
-      "usuarioId": 7,
+      "usuarioId": 9,
       "departamentoId": 2,
-      "id": 21
+      "id": 30
+    },
+    {
+      "usuarioId": 9,
+      "departamentoId": 3,
+      "id": 31
+    },
+    {
+      "usuarioId": 9,
+      "departamentoId": 4,
+      "id": 32
+    },
+    {
+      "usuarioId": 9,
+      "departamentoId": 5,
+      "id": 33
+    },
+    {
+      "usuarioId": 9,
+      "departamentoId": 6,
+      "id": 34
     }
   ],
   "notificaciones": [
     {
       "id": 1,
-      "idUsuarioDestino": 2,
+      "idUsuarioDestino": 3,
       "titulo": "Incidencia Asignada",
-      "mensaje": "Se te ha asignado una nueva incidencia: Problema con el proyector",
+      "mensaje": "Se te ha asignado: Proyector del aula 01 no funciona",
       "leida": false,
-      "fechaCreacion": "2024-04-15T08:30:00Z",
+      "fechaCreacion": "2026-05-01T08:30:00Z",
       "idIncidenciaVinculada": 1
     },
     {
       "id": 2,
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Actualizada",
-      "mensaje": "La incidencia ha sido actualizada por el administrador",
+      "idUsuarioDestino": 6,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Conexión WiFi lenta en planta baja",
       "leida": true,
-      "fechaCreacion": "2024-04-14T10:00:00Z",
+      "fechaCreacion": "2026-05-03T09:15:00Z",
       "idIncidenciaVinculada": 2
     },
     {
       "id": 3,
       "idUsuarioDestino": 5,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Felicidades! Resolviste una incidencia",
-      "leida": false,
-      "fechaCreacion": "2024-04-12T16:45:00Z",
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Monitor del laboratorio de informática dañado",
+      "leida": true,
+      "fechaCreacion": "2026-04-28T10:00:00Z",
       "idIncidenciaVinculada": 3
     },
     {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta: sdd",
+      "id": 4,
+      "idUsuarioDestino": 3,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Software de diseño no se instala correctamente",
       "leida": false,
-      "fechaCreacion": "2026-04-26T09:47:35.563Z",
-      "idIncidenciaVinculada": 1,
-      "id": 4
+      "fechaCreacion": "2026-05-04T11:20:00Z",
+      "idIncidenciaVinculada": 4
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: En curso",
+      "id": 5,
+      "idUsuarioDestino": 6,
+      "titulo": "Incidencia Asignada",
+      "mensaje": "Se te ha asignado: Teclado del aula 02 con teclas rotas",
       "leida": true,
-      "fechaCreacion": "2026-04-26T10:02:11.546Z",
-      "idIncidenciaVinculada": 1,
-      "id": 5
+      "fechaCreacion": "2026-04-25T14:45:00Z",
+      "idIncidenciaVinculada": 5
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Teclado del laboratorio dañado\" ha sido reabierta. Estado: En curso",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:02:45.569Z",
-      "idIncidenciaVinculada": 3,
+      "idUsuarioDestino": 4,
+      "titulo": "resolucion",
+      "mensaje": "Incidencia resuelta: \"Actualización de Office requiere validación\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T22:34:51.836Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "resolucion",
       "id": 6
     },
     {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta: sdas",
+      "idUsuarioDestino": 4,
+      "titulo": "reabrir",
+      "mensaje": "Incidencia reabierta: \"Actualización de Office requiere validación\"",
       "leida": false,
-      "fechaCreacion": "2026-04-26T10:02:51.233Z",
-      "idIncidenciaVinculada": 5,
+      "fechaCreacion": "2026-05-11T22:38:01.521Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "reabrir",
       "id": 7
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: Activo",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:34:25.776Z",
-      "idIncidenciaVinculada": 1,
+      "idUsuarioDestino": 4,
+      "titulo": "Estado actualizado",
+      "mensaje": "romi cambió estado de \"Activo\" a \"En curso\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T22:38:05.787Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "cambio_campos",
       "id": 8
     },
     {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta",
+      "idUsuarioDestino": 4,
+      "titulo": "Estado actualizado",
+      "mensaje": "romi cambió estado de \"En curso\" a \"Activo\"",
       "leida": false,
-      "fechaCreacion": "2026-04-26T10:34:44.560Z",
-      "idIncidenciaVinculada": 1,
+      "fechaCreacion": "2026-05-11T22:38:33.498Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "cambio_campos",
       "id": 9
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Asignada",
-      "mensaje": "Se te ha asignado: Problema con el proyector del aula 01",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:37:57.080Z",
-      "idIncidenciaVinculada": 1,
+      "idUsuarioDestino": 4,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Conexión WiFi lenta en planta baja\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T23:03:06.143Z",
+      "idIncidenciaVinculada": 2,
+      "tipoEvento": "asignacion",
       "id": 10
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Incidencia Asignada",
-      "mensaje": "Se te ha asignado: Problema con el proyector del aula 01",
+      "idUsuarioDestino": 9,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Conexión WiFi lenta en planta baja\"",
       "leida": false,
-      "fechaCreacion": "2026-04-26T10:38:03.558Z",
-      "idIncidenciaVinculada": 1,
+      "fechaCreacion": "2026-05-11T23:03:06.143Z",
+      "idIncidenciaVinculada": 2,
+      "tipoEvento": "asignacion",
       "id": 11
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: Activo",
+      "idUsuarioDestino": 4,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Actualización de Office requiere validación\"",
       "leida": false,
-      "fechaCreacion": "2026-04-26T10:38:10.936Z",
-      "idIncidenciaVinculada": 1,
+      "fechaCreacion": "2026-05-11T23:03:12.178Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "asignacion",
       "id": 12
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Problema con el proyector del aula 01\" ha sido reabierta. Estado: En curso",
+      "idUsuarioDestino": 9,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Actualización de Office requiere validación\"",
       "leida": false,
-      "fechaCreacion": "2026-04-26T10:38:39.256Z",
-      "idIncidenciaVinculada": 1,
+      "fechaCreacion": "2026-05-11T23:03:12.178Z",
+      "idIncidenciaVinculada": 10,
+      "tipoEvento": "asignacion",
       "id": 13
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Asignada",
-      "mensaje": "Se te ha asignado: dsad",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:40:01.367Z",
-      "idIncidenciaVinculada": 9,
+      "idUsuarioDestino": 5,
+      "titulo": "reabrir",
+      "mensaje": "Incidencia reabierta: \"Suministro de papel para fotocopiadora\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T23:03:16.480Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "reabrir",
       "id": 14
     },
     {
-      "idUsuarioDestino": 6,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"dsad\" ha sido resuelta: dsad",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:45:16.286Z",
-      "idIncidenciaVinculada": 9,
+      "idUsuarioDestino": 7,
+      "titulo": "reabrir",
+      "mensaje": "Incidencia reabierta: \"Suministro de papel para fotocopiadora\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T23:03:16.480Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "reabrir",
       "id": 15
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"dsad\" ha sido reabierta. Estado: En curso",
-      "leida": true,
-      "fechaCreacion": "2026-04-26T10:45:21.462Z",
-      "idIncidenciaVinculada": 9,
+      "idUsuarioDestino": 7,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Suministro de papel para fotocopiadora\"",
+      "leida": false,
+      "fechaCreacion": "2026-05-11T23:03:19.809Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "asignacion",
       "id": 16
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 9,
+      "titulo": "Asignación",
+      "mensaje": "Se asignó técnico a \"Suministro de papel para fotocopiadora\"",
       "leida": false,
-      "fechaCreacion": "2026-04-27T23:24:15.333Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:03:19.809Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "asignacion",
       "id": 17
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 7,
+      "titulo": "Estado actualizado",
+      "mensaje": "romi cambió estado de \"Activo\" a \"En curso\"",
       "leida": false,
-      "fechaCreacion": "2026-04-27T23:24:15.333Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:03:23.695Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "cambio_campos",
       "id": 18
     },
     {
-      "idUsuarioDestino": 1,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 9,
+      "titulo": "Estado actualizado",
+      "mensaje": "romi cambió estado de \"Activo\" a \"En curso\"",
       "leida": false,
-      "fechaCreacion": "2026-04-27T23:24:15.333Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:03:23.695Z",
+      "idIncidenciaVinculada": 20,
+      "tipoEvento": "cambio_campos",
       "id": 19
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 4,
+      "titulo": "Asignación",
+      "mensaje": "tecnico se auto-asignó a \"Pizarra digital de aula 01 sin calibración\"",
       "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:30.960Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:07:14.309Z",
+      "idIncidenciaVinculada": 18,
+      "tipoEvento": "asignacion",
       "id": 20
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 4,
+      "titulo": "Cambio de estado",
+      "mensaje": "Estado cambiado a En curso en \"Pizarra digital de aula 01 sin calibración\"",
       "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:30.960Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:07:17.596Z",
+      "idIncidenciaVinculada": 18,
+      "tipoEvento": "cambio_estado",
       "id": 21
     },
     {
-      "idUsuarioDestino": 1,
-      "titulo": "Cambio de estado a Resuelto",
-      "mensaje": "Cambio de estado a Resuelto en \"AYAYA\"",
+      "idUsuarioDestino": 4,
+      "titulo": "resolucion",
+      "mensaje": "Incidencia resuelta: \"Pizarra digital de aula 01 sin calibración\"",
       "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:30.960Z",
-      "idIncidenciaVinculada": 10,
+      "fechaCreacion": "2026-05-11T23:07:19.512Z",
+      "idIncidenciaVinculada": 18,
+      "tipoEvento": "resolucion",
       "id": 22
     },
     {
-      "idUsuarioDestino": 3,
-      "titulo": "Cambio de estado a En Curso",
-      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
+      "idUsuarioDestino": 4,
+      "titulo": "reabrir",
+      "mensaje": "Incidencia reabierta: \"Pizarra digital de aula 01 sin calibración\"",
       "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:41.148Z",
-      "idIncidenciaVinculada": 11,
+      "fechaCreacion": "2026-05-11T23:07:23.817Z",
+      "idIncidenciaVinculada": 18,
+      "tipoEvento": "reabrir",
       "id": 23
     },
     {
-      "idUsuarioDestino": 5,
-      "titulo": "Cambio de estado a En Curso",
-      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
-      "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:41.148Z",
-      "idIncidenciaVinculada": 11,
+      "idUsuarioDestino": 8,
+      "titulo": "Asignación",
+      "mensaje": "tecnico se auto-asignó a \"Incidencia Prueba\"",
+      "leida": true,
+      "fechaCreacion": "2026-05-11T23:15:35.162Z",
+      "idIncidenciaVinculada": 21,
+      "tipoEvento": "asignacion",
       "id": 24
     },
     {
-      "idUsuarioDestino": 1,
-      "titulo": "Cambio de estado a En Curso",
-      "mensaje": "Cambio de estado a En Curso en \"2Aya\"",
-      "leida": false,
-      "fechaCreacion": "2026-04-28T02:18:41.148Z",
-      "idIncidenciaVinculada": 11,
+      "idUsuarioDestino": 8,
+      "titulo": "Nuevo mensaje",
+      "mensaje": "Nuevo comentario en la incidencia",
+      "leida": true,
+      "fechaCreacion": "2026-05-11T23:15:47.759Z",
+      "idIncidenciaVinculada": 21,
+      "tipoEvento": "mensaje_nuevo",
       "id": 25
     },
     {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
-      "leida": false,
-      "fechaCreacion": "2026-05-09T13:18:09.624Z",
-      "idIncidenciaVinculada": 5,
+      "idUsuarioDestino": 9,
+      "titulo": "Nuevo mensaje",
+      "mensaje": "Nuevo comentario en la incidencia",
+      "leida": true,
+      "fechaCreacion": "2026-05-11T23:16:01.472Z",
+      "idIncidenciaVinculada": 21,
+      "tipoEvento": "mensaje_nuevo",
       "id": 26
-    },
-    {
-      "idUsuarioDestino": 3,
-      "titulo": "Incidencia Reabierta",
-      "mensaje": "La incidencia \"Pantalla de monitor rota\" ha sido reabierta. Estado: Activo",
-      "leida": false,
-      "fechaCreacion": "2026-05-09T13:19:05.310Z",
-      "idIncidenciaVinculada": 5,
-      "id": 27
-    },
-    {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Pantalla de monitor rota\" ha sido resuelta",
-      "leida": false,
-      "fechaCreacion": "2026-05-09T13:19:10.039Z",
-      "idIncidenciaVinculada": 5,
-      "id": 28
-    },
-    {
-      "idUsuarioDestino": 2,
-      "titulo": "Incidencia Resuelta",
-      "mensaje": "Tu incidencia \"Problema con el proyector del aula 01\" ha sido resuelta",
-      "leida": false,
-      "fechaCreacion": "2026-05-09T13:24:13.623Z",
-      "idIncidenciaVinculada": 1,
-      "id": 29
     }
   ],
   "mensajesIncidencia": [
@@ -678,169 +982,316 @@
       "id": 1,
       "idIncidencia": 1,
       "idUsuario": 2,
-      "mensaje": "Ya revisé el proyector, parece ser un problema de conexión",
-      "fecha": "2024-04-15T09:00:00Z"
+      "mensaje": "Acabo de reportar que el proyector no enciende",
+      "fecha": "2026-05-01T08:35:00Z"
     },
     {
       "id": 2,
       "idIncidencia": 1,
       "idUsuario": 3,
-      "mensaje": "Estoy en camino a revisar el proyector",
-      "fecha": "2024-04-15T10:30:00Z"
+      "mensaje": "He revisado el equipo. El cable está bien conectado. Probablemente sea la fuente de alimentación",
+      "fecha": "2026-05-01T10:00:00Z"
     },
     {
       "id": 3,
+      "idIncidencia": 1,
+      "idUsuario": 3,
+      "mensaje": "Cambié la fuente de alimentación. Ahora el proyector funciona correctamente",
+      "fecha": "2026-05-02T14:00:00Z"
+    },
+    {
+      "id": 4,
       "idIncidencia": 2,
       "idUsuario": 4,
-      "mensaje": "La conexión WiFi sigue lenta",
-      "fecha": "2024-04-14T11:00:00Z"
+      "mensaje": "La WiFi está muy lenta desde la semana pasada",
+      "fecha": "2026-05-03T09:20:00Z"
     },
     {
+      "id": 5,
+      "idIncidencia": 2,
+      "idUsuario": 6,
+      "mensaje": "Revisando los puntos de acceso. Parece que hay demasiados dispositivos conectados",
+      "fecha": "2026-05-03T11:00:00Z"
+    },
+    {
+      "id": 6,
+      "idIncidencia": 2,
+      "idUsuario": 6,
+      "mensaje": "Estoy optimizando la configuración del AP. Debería mejorar en las próximas horas",
+      "fecha": "2026-05-04T09:30:00Z"
+    },
+    {
+      "id": 7,
+      "idIncidencia": 3,
+      "idUsuario": 2,
+      "mensaje": "El monitor está totalmente roto. No se puede usar esa estación",
+      "fecha": "2026-04-28T10:10:00Z"
+    },
+    {
+      "id": 8,
+      "idIncidencia": 3,
+      "idUsuario": 5,
+      "mensaje": "Reemplazaré el monitor por uno de stock. Tengo disponibles 2 monitores nuevos",
+      "fecha": "2026-04-30T14:00:00Z"
+    },
+    {
+      "id": 9,
+      "idIncidencia": 3,
+      "idUsuario": 5,
+      "mensaje": "Monitor instalado. La estación 5 está nuevamente operativa",
+      "fecha": "2026-04-30T16:30:00Z"
+    },
+    {
+      "id": 10,
+      "idIncidencia": 4,
+      "idUsuario": 7,
+      "mensaje": "Los estudiantes no pueden instalar AutoCAD. Error de licencia",
+      "fecha": "2026-05-04T11:25:00Z"
+    },
+    {
+      "id": 11,
+      "idIncidencia": 4,
+      "idUsuario": 3,
+      "mensaje": "Revisaré el servidor de licencias. Podría ser un problema con la validación",
+      "fecha": "2026-05-04T13:00:00Z"
+    },
+    {
+      "id": 12,
+      "idIncidencia": 5,
+      "idUsuario": 4,
+      "mensaje": "Varios teclados tienen teclas que no funcionan",
+      "fecha": "2026-04-25T14:50:00Z"
+    },
+    {
+      "id": 13,
       "idIncidencia": 5,
       "idUsuario": 6,
-      "mensaje": "dsad",
-      "fecha": "2026-04-26T10:02:55.602Z",
-      "id": 4
+      "mensaje": "Reemplazaré los teclados dañados por nuevos. Tengo en stock",
+      "fecha": "2026-04-27T09:00:00Z"
     },
     {
+      "id": 14,
       "idIncidencia": 5,
       "idUsuario": 6,
-      "mensaje": "asd",
-      "fecha": "2026-04-26T10:02:57.281Z",
-      "id": 5
+      "mensaje": "Se han cambiado 3 teclados. Aula 02 completamente operativa",
+      "fecha": "2026-04-27T10:15:00Z"
     },
     {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "sadasd",
-      "fecha": "2026-04-26T10:14:01.632Z",
-      "id": 6
+      "id": 15,
+      "idIncidencia": 8,
+      "idUsuario": 2,
+      "mensaje": "El puerto HDMI no reconoce ningún cable",
+      "fecha": "2026-05-02T10:25:00Z"
     },
     {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi asignó la incidencia a María Técnica",
-      "fecha": "2026-04-26T10:37:57.116Z",
-      "id": 7
+      "id": 16,
+      "idIncidencia": 8,
+      "idUsuario": 5,
+      "mensaje": "Limpiaré el puerto HDMI. Podría tener suciedad",
+      "fecha": "2026-05-03T10:00:00Z"
     },
     {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi asignó la incidencia a Ana Técnica",
-      "fecha": "2026-04-26T10:38:03.589Z",
-      "id": 8
+      "id": 17,
+      "idIncidencia": 8,
+      "idUsuario": 5,
+      "mensaje": "Limpieza completada. El puerto ahora funciona correctamente",
+      "fecha": "2026-05-03T13:00:00Z"
     },
     {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi reabrió la incidencia con estado: Activo",
-      "fecha": "2026-04-26T10:38:10.998Z",
-      "id": 9
-    },
-    {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi cambió el estado a: En curso",
-      "fecha": "2026-04-26T10:38:18.137Z",
-      "id": 10
-    },
-    {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi cambió el estado a: Activo",
-      "fecha": "2026-04-26T10:38:29.667Z",
-      "id": 11
-    },
-    {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi cambió el estado a: Resuelto",
-      "fecha": "2026-04-26T10:38:33.249Z",
-      "id": 12
-    },
-    {
-      "idIncidencia": 1,
-      "idUsuario": 6,
-      "mensaje": "romi reabrió la incidencia con estado: En curso",
-      "fecha": "2026-04-26T10:38:39.327Z",
-      "id": 13
-    },
-    {
-      "idIncidencia": 9,
-      "idUsuario": 6,
-      "mensaje": "romi asignó la incidencia a María Técnica",
-      "fecha": "2026-04-26T10:40:01.398Z",
-      "id": 14
-    },
-    {
-      "idIncidencia": 9,
-      "idUsuario": 3,
-      "mensaje": "María Técnica marcó como resuelto: dsad",
-      "fecha": "2026-04-26T10:45:16.329Z",
-      "id": 15
-    },
-    {
-      "idIncidencia": 9,
-      "idUsuario": 3,
-      "mensaje": "María Técnica reabrió la incidencia con estado: En curso",
-      "fecha": "2026-04-26T10:45:21.526Z",
-      "id": 16
-    },
-    {
-      "idIncidencia": 10,
-      "idUsuario": 7,
-      "mensaje": "Ayaya cambió el estado a: Resuelto",
-      "fecha": "2026-04-27T23:24:15.275Z",
-      "id": 17
-    },
-    {
-      "idIncidencia": 10,
-      "idUsuario": 7,
-      "mensaje": "Ayaya reabrió la incidencia con estado: Activo",
-      "fecha": "2026-04-28T02:18:17.040Z",
-      "id": 18
-    },
-    {
-      "idIncidencia": 10,
-      "idUsuario": 7,
-      "mensaje": "Ayaya cambió el estado a: Resuelto",
-      "fecha": "2026-04-28T02:18:30.899Z",
-      "id": 19
-    },
-    {
+      "id": 18,
       "idIncidencia": 11,
-      "idUsuario": 7,
-      "mensaje": "Ayaya cambió el estado a: En curso",
-      "fecha": "2026-04-28T02:18:41.085Z",
-      "id": 20
+      "idUsuario": 2,
+      "mensaje": "El WiFi se congela periódicamente",
+      "fecha": "2026-04-30T08:55:00Z"
     },
     {
-      "idIncidencia": 5,
+      "id": 19,
+      "idIncidencia": 11,
       "idUsuario": 6,
-      "mensaje": "romi marcó como resuelto: Sin descripción",
-      "fecha": "2026-05-09T13:18:09.683Z",
-      "id": 21
+      "mensaje": "Reiniciaré el AP y actualizaré el firmware a la última versión",
+      "fecha": "2026-05-01T10:00:00Z"
     },
     {
-      "idIncidencia": 5,
+      "id": 20,
+      "idIncidencia": 11,
+      "idUsuario": 6,
+      "mensaje": "AP actualizado. Monitorearé para asegurar estabilidad",
+      "fecha": "2026-05-01T11:30:00Z"
+    },
+    {
+      "id": 21,
+      "idIncidencia": 12,
+      "idUsuario": 4,
+      "mensaje": "Los ratones no funcionan, necesitan pilas",
+      "fecha": "2026-04-29T14:25:00Z"
+    },
+    {
+      "id": 22,
+      "idIncidencia": 12,
+      "idUsuario": 5,
+      "mensaje": "Cambiaré las pilas de todos los ratones",
+      "fecha": "2026-04-29T15:30:00Z"
+    },
+    {
+      "id": 23,
+      "idIncidencia": 15,
+      "idUsuario": 1,
+      "mensaje": "El ascensor está lento y los botones no responden",
+      "fecha": "2026-04-26T09:05:00Z"
+    },
+    {
+      "id": 24,
+      "idIncidencia": 15,
+      "idUsuario": 6,
+      "mensaje": "Revistaré la unidad de control del ascensor",
+      "fecha": "2026-04-27T10:00:00Z"
+    },
+    {
+      "id": 25,
+      "idIncidencia": 15,
+      "idUsuario": 6,
+      "mensaje": "Reemplacé el módulo de control. Ascensor funcionando normalmente",
+      "fecha": "2026-04-27T12:00:00Z"
+    },
+    {
+      "idIncidencia": 10,
+      "idUsuario": 6,
+      "mensaje": "romi marcó como resuelto",
+      "fecha": "2026-05-11T22:34:51.868Z",
+      "id": 26
+    },
+    {
+      "idIncidencia": 10,
       "idUsuario": 6,
       "mensaje": "romi reabrió la incidencia con estado: Activo",
-      "fecha": "2026-05-09T13:19:05.376Z",
-      "id": 22
+      "fecha": "2026-05-11T22:38:01.552Z",
+      "id": 27
     },
     {
-      "idIncidencia": 5,
+      "idIncidencia": 10,
       "idUsuario": 6,
-      "mensaje": "romi marcó como resuelto: Sin descripción",
-      "fecha": "2026-05-09T13:19:10.102Z",
-      "id": 23
+      "mensaje": "romi cambió estado de \"Activo\" a \"En curso\"",
+      "fecha": "2026-05-11T22:38:05.818Z",
+      "id": 28
     },
     {
-      "idIncidencia": 1,
+      "idIncidencia": 10,
       "idUsuario": 6,
-      "mensaje": "romi marcó como resuelto: Sin descripción",
-      "fecha": "2026-05-09T13:24:13.687Z",
-      "id": 24
+      "mensaje": "romi cambió estado de \"En curso\" a \"Activo\"",
+      "fecha": "2026-05-11T22:38:33.530Z",
+      "id": 29
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 8,
+      "mensaje": "He visto que los cables estan sueltos en el pasillo",
+      "fecha": "2026-05-11T22:52:12.619Z",
+      "id": 30
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 8,
+      "mensaje": "hola cambió urgencia de \"Alta\" a \"Media\"",
+      "fecha": "2026-05-11T22:53:14.232Z",
+      "id": 31
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 8,
+      "mensaje": "hola marcó como resuelto",
+      "fecha": "2026-05-11T22:54:05.506Z",
+      "id": 32
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 8,
+      "mensaje": "hola reabrió la incidencia con estado: Activo",
+      "fecha": "2026-05-11T22:54:16.904Z",
+      "id": 33
+    },
+    {
+      "idIncidencia": 2,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a tecnico",
+      "fecha": "2026-05-11T23:03:06.174Z",
+      "id": 34
+    },
+    {
+      "idIncidencia": 10,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a tecnico",
+      "fecha": "2026-05-11T23:03:12.209Z",
+      "id": 35
+    },
+    {
+      "idIncidencia": 20,
+      "idUsuario": 6,
+      "mensaje": "romi reabrió la incidencia con estado: Activo",
+      "fecha": "2026-05-11T23:03:16.512Z",
+      "id": 36
+    },
+    {
+      "idIncidencia": 20,
+      "idUsuario": 6,
+      "mensaje": "romi asignó la incidencia a tecnico",
+      "fecha": "2026-05-11T23:03:19.841Z",
+      "id": 37
+    },
+    {
+      "idIncidencia": 20,
+      "idUsuario": 6,
+      "mensaje": "romi cambió estado de \"Activo\" a \"En curso\"",
+      "fecha": "2026-05-11T23:03:23.726Z",
+      "id": 38
+    },
+    {
+      "idIncidencia": 18,
+      "idUsuario": 9,
+      "mensaje": "tecnico se auto-asignó a esta incidencia",
+      "fecha": "2026-05-11T23:07:14.340Z",
+      "id": 39
+    },
+    {
+      "idIncidencia": 18,
+      "idUsuario": 9,
+      "mensaje": "tecnico cambió el estado a: En curso",
+      "fecha": "2026-05-11T23:07:17.626Z",
+      "id": 40
+    },
+    {
+      "idIncidencia": 18,
+      "idUsuario": 9,
+      "mensaje": "tecnico marcó como resuelto",
+      "fecha": "2026-05-11T23:07:19.543Z",
+      "id": 41
+    },
+    {
+      "idIncidencia": 18,
+      "idUsuario": 9,
+      "mensaje": "tecnico reabrió la incidencia con estado: Activo",
+      "fecha": "2026-05-11T23:07:23.847Z",
+      "id": 42
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 9,
+      "mensaje": "tecnico se auto-asignó a esta incidencia",
+      "fecha": "2026-05-11T23:15:35.192Z",
+      "id": 43
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 9,
+      "mensaje": "hola",
+      "fecha": "2026-05-11T23:15:47.698Z",
+      "id": 44
+    },
+    {
+      "idIncidencia": 21,
+      "idUsuario": 8,
+      "mensaje": "holaa",
+      "fecha": "2026-05-11T23:16:01.410Z",
+      "id": 45
     }
   ]
 }

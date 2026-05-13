@@ -33,8 +33,8 @@ export const NuevoMensajeInput = ({ onEnviar, loading, disabled }: Props) => {
       className="
       flex items-end gap-2
       p-2 rounded-xl
-      border border-slate-800
-      bg-slate-900
+      border border-slate-300 dark:border-slate-800
+      bg-white dark:bg-slate-900
     "
     >
       {/* INPUT */}

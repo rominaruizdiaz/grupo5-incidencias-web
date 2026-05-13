@@ -8,13 +8,13 @@ export const IncidenciaNotFound = ({ incidenciaId }: Props) => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center p-6">
       <div className="text-center">
         <div className="text-5xl mb-4"></div>
-        <p className="text-gray-900 text-lg font-semibold mb-2">
+        <p className="text-gray-900 dark:text-slate-100 text-lg font-semibold mb-2">
           Incidencia no encontrada
         </p>
-        <p className="text-gray-600 text-sm mb-6">
+        <p className="text-gray-600 dark:text-slate-400 text-sm mb-6">
           No pudimos encontrar la incidencia #{incidenciaId}
         </p>
         <button

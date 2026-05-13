@@ -4,6 +4,8 @@ import { useAdminDepartamentos } from '@/hooks/departamentos/useAdminDepartament
 import toast from 'react-hot-toast'
 import { Plus, Trash2, Edit2, Building } from 'lucide-react'
 import { Input, Button } from '@/components/ui'
+import { DeleteDepartamentoModal } from '@/components/features/departamentos'
+import type { Departamento } from '@/types'
 
 export function DepartamentosPage() {
   const isAdmin = useAuthStore(state => state.isAdmin())
@@ -12,6 +14,9 @@ export function DepartamentosPage() {
   const [nombre, setNombre] = useState('')
   const [editId, setEditId] = useState<number | null>(null)
   const [editNombre, setEditNombre] = useState('')
+  const [departamentoToDelete, setDepartamentoToDelete] =
+    useState<Departamento | null>(null)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   if (!isAdmin) {
     return (
@@ -42,10 +47,18 @@ export function DepartamentosPage() {
     toast.success('Actualizado')
   }
 
-  const handleEliminar = async (id: number) => {
-    if (!confirm('¿Eliminar este departamento?')) return
-    await eliminar(id)
-    toast.success('Eliminado')
+  const handleEliminar = (departamento: Departamento) => {
+    setDepartamentoToDelete(departamento)
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (departamentoToDelete) {
+      await eliminar(departamentoToDelete.id!)
+      toast.success('Departamento eliminado')
+      setDepartamentoToDelete(null)
+      setIsDeleteModalOpen(false)
+    }
   }
 
   return (
@@ -150,7 +163,7 @@ export function DepartamentosPage() {
                         </button>
 
                         <button
-                          onClick={() => handleEliminar(d.id!)}
+                          onClick={() => handleEliminar(d)}
                           className="flex items-center gap-1 px-3 py-2 rounded-lg bg-red-600 text-white text-sm"
                         >
                           <Trash2 size={14} />
@@ -165,6 +178,17 @@ export function DepartamentosPage() {
           </div>
         </div>
       </div>
+
+      {/* DELETE MODAL */}
+      <DeleteDepartamentoModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false)
+          setDepartamentoToDelete(null)
+        }}
+        onConfirm={handleConfirmDelete}
+        nombreDepartamento={departamentoToDelete?.nombre}
+      />
     </div>
   )
 }

@@ -14,6 +14,7 @@ import {
   PersonalFilters,
   PersonalModal,
   PersonalSection,
+  DeleteUsuarioModal,
 } from '@/components/features/personal'
 import { Users } from 'lucide-react'
 
@@ -33,6 +34,9 @@ export function PersonalPage() {
   const [selectedUsuario, setSelectedUsuario] =
     useState<UsuarioWithDepartamentos | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [usuarioToDelete, setUsuarioToDelete] =
+    useState<Usuario | null>(null)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   useEffect(() => {
     getDepartamentos().then(setDepartamentos)
@@ -65,9 +69,16 @@ export function PersonalPage() {
     setIsModalOpen(true)
   }
 
-  const handleDelete = async (u: Usuario) => {
-    if (confirm('¿Estás seguro de que quieres eliminar este usuario?')) {
-      await eliminarUsuario(u.id)
+  const handleDelete = (u: Usuario) => {
+    setUsuarioToDelete(u)
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    if (usuarioToDelete) {
+      await eliminarUsuario(usuarioToDelete.id)
+      setUsuarioToDelete(null)
+      setIsDeleteModalOpen(false)
     }
   }
 
@@ -251,6 +262,18 @@ export function PersonalPage() {
             loading={loading}
             onClose={() => setIsModalOpen(false)}
             onSave={handleSave}
+          />
+
+          {/* DELETE MODAL */}
+          <DeleteUsuarioModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => {
+              setIsDeleteModalOpen(false)
+              setUsuarioToDelete(null)
+            }}
+            onConfirm={handleConfirmDelete}
+            loading={loading}
+            nombreUsuario={usuarioToDelete?.nombre}
           />
         </div>
       </div>
